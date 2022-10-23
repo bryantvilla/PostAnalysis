@@ -1,0 +1,29 @@
+# This workflow will build a .NET project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
+
+name: Build .NET Resume Tool 
+
+on:
+  push:
+    branches: [ '**' ]
+  pull_request:
+    branches: [ '**' ]
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 6.0.x
+        
+    - name: install MAUI workload
+      run: dotnet workload install maui
+    - name: Test
+      run: dotnet test Resume-Generator/Resume-Generator.sln --no-build --verbosity normal
+    - name: Build
+      run: dotnet build Resume-Generator/Resume-Generator/Resume-Generator.csproj -c Release -f:net6.0-windows10.0.19041.0

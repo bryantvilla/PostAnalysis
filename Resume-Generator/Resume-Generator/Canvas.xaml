@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Resume_Generator.Canvas"
+             xmlns:model="clr-namespace:Resume_Generator.Model"
+             BackgroundColor="{StaticResource MainColor}">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="682"/>
+            <ColumnDefinition Width="200"/>
+        </Grid.ColumnDefinitions>
+        <VerticalStackLayout
+            Grid.Column="0">
+            <Button x:Name="ProfileBtn" Text="Profile" Clicked="ProfileBtn_Clicked" Style="{StaticResource UnSelectedBtn}"/>
+            <Button x:Name="PostAnalysisBtn" Text ="Post Analysis" Clicked="PostAnalysisBtn_Clicked" Style="{StaticResource UnSelectedBtn}"/>
+            <Button x:Name="CanvasBtn" Text="Canvas" Style="{StaticResource SelectedBtn}"/>
+            <Button x:Name="LogoutBtn" Text="Sign Out" Clicked="LogoutBtn_Clicked" Style="{StaticResource UnSelectedBtn}"/>
+        </VerticalStackLayout>
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="200"/>
+                </Grid.ColumnDefinitions>
+                <HorizontalStackLayout Grid.Column="0">
+                    <Button x:Name="BackgroundColorBtn" Style="{StaticResource ColorBtn}" Clicked="BackgroundColorBtn_Clicked"/>
+                    <Button x:Name="MainColorBtn" Style="{StaticResource ColorBtn}" Clicked="MainColorBtn_Clicked"/>
+                    <Button x:Name="SecondaryColorBtn" Style="{StaticResource ColorBtn}" Clicked="SecondaryColorBtn_Clicked"/>
+                    <Button x:Name="TertiaryColorBtn" Style="{StaticResource ColorBtn}" Clicked="TertiaryColorBtn_Clicked"/>
+                    <Button x:Name="FontColorBtn" Style="{StaticResource ColorBtn}" Clicked="FontColorBtn_Clicked"/>
+                    <Button x:Name="FontColorSecondaryBtn" Style="{StaticResource ColorBtn}" Clicked="FontColorSecondaryBtn_Clicked"/>
+
+                </HorizontalStackLayout>
+                <Button Grid.Column="1" Text="Generate" Style="{StaticResource Generate}" Clicked="Generate_Clicked"/>
+
+            </Grid>
+            <Grid x:Name="CanvasBoundary" Grid.Row="1" HeightRequest="964" VerticalOptions="Start">
+
+            </Grid>
+        </Grid>
+        <ScrollView 
+            VerticalScrollBarVisibility="Always" 
+            Grid.Column="2">
+            <VerticalStackLayout><!--I WILL COME BACK L8R AND MAKE THIS DYNAMIC-->
+                <Grid>
+                    <Image Source="resume1.jpg" Style="{StaticResource Icon}"/>
+                    <ImageButton x:Name="Icon1" Source="resume1.jpg" Style="{StaticResource IconBtn}" Clicked="Icon1_Clicked"/>
+                </Grid>
+                <Grid>
+                    <Image Source="resume2.jpg" Style="{StaticResource Icon}"/>
+                    <ImageButton x:Name="Icon2" Source="resume2.jpg" Style="{StaticResource IconBtn}" Clicked="Icon2_Clicked"/>
+                </Grid>
+                <Grid>
+                    <Image Source="resume4.jpg" Style="{StaticResource Icon}"/>
+                    <ImageButton x:Name="Icon4" Source="resume4.jpg" Style="{StaticResource IconBtn}" Clicked="Icon4_Clicked"/>
+                </Grid>
+                <Grid>
+                    <Image Source="resume5.png" Style="{StaticResource Icon}"/>
+                    <ImageButton x:Name="Icon5" Source="resume5.png" Style="{StaticResource IconBtn}"/>
+                </Grid>
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>
