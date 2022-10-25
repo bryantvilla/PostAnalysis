@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiApp2.MainPage">
+    <Border>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.25*"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <VerticalStackLayout
+                Grid.Column="0"
+                BackgroundColor="Aqua">
+                <Button
+                x:Name="ProfileBtn"
+                Text="Profile"
+                SemanticProperties.Hint="Counts the number of times you click"
+                Clicked="ProfileBtnClicked" 
+                BackgroundColor="Transparent"
+                HorizontalOptions="CenterAndExpand"/>
+                <Button
+                x:Name="EducationBtn"
+                Text="Education"
+                SemanticProperties.Hint="Counts the number of times you click"
+                Clicked="EducationBtnClicked" 
+                BackgroundColor="Transparent"
+                HorizontalOptions="CenterAndExpand"/>
+                <Button
+                x:Name="ExperienceBtn"
+                Text="Experience"
+                SemanticProperties.Hint="Counts the number of times you click"
+                Clicked="ExperienceBtnClicked" 
+                BackgroundColor="Transparent"
+                HorizontalOptions="CenterAndExpand"/>
+                <Button
+                x:Name="PostAnalysisBtn"
+                Text="Post Analysis"
+                SemanticProperties.Hint="Counts the number of times you click"
+                Clicked="PostAnalysisBtnClicked" 
+                BackgroundColor="Transparent"
+                HorizontalOptions="CenterAndExpand"/>
+                <Button
+                x:Name="GenerateBtn"
+                Text="Generate"
+                SemanticProperties.Hint="Counts the number of times you click"
+                Clicked="GenerateBtnClicked" 
+                BackgroundColor="Transparent"
+                HorizontalOptions="CenterAndExpand"/>
+            </VerticalStackLayout>
+        </Grid>
+    </Border>
+</ContentPage>
