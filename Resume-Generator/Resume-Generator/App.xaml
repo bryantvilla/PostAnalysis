@@ -1,0 +1,48 @@
+﻿<?xml version = "1.0" encoding = "UTF-8" ?>
+<Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:Resume_Generator"
+             x:Class="Resume_Generator.App"
+             >
+    <Application.Resources>
+        <Color x:Key="MainColor">#4A7C59</Color>
+        <Color x:Key="SecondColor">#8FC0A9</Color>
+        <Color x:Key="FontColor">#FAF3DD</Color>
+        <Color x:Key="HighlightColor">#C8D5B9</Color>
+        <Color x:Key="DetailColor">#68B0AB</Color>
+
+
+        <Style TargetType="Button" x:Key="SelectedBtn">
+            <Setter Property="BackgroundColor" Value="{StaticResource MainColor}"/>
+            <Setter Property="TextColor" Value="{StaticResource DetailColor}"/>
+        </Style>
+        <Style TargetType="Button" x:Key="UnSelectedBtn">
+            <Setter Property="BackgroundColor" Value="{StaticResource SecondColor}"/>
+            <Setter Property="TextColor" Value="{StaticResource FontColor}"/>
+        </Style>
+        <Style TargetType="ImageButton" x:Key="IconBtn">
+            <Setter Property="Margin" Value="10"/>
+            <Setter Property="HeightRequest" Value="200"/>
+            <Setter Property="WidthRequest" Value="180"/>
+        </Style>
+        <Style TargetType="Image" x:Key="Icon">
+            <Setter Property="Margin" Value="10"/>
+            <Setter Property="HeightRequest" Value="180"/>
+            <Setter Property="MaximumWidthRequest" Value="150"/>
+        </Style>
+        <Style TargetType="Button" x:Key="ColorBtn">
+            <Setter Property="WidthRequest" Value="25"/>
+            <Setter Property="HeightRequest" Value="25"/>
+            <Setter Property="BorderWidth" Value="0,0,0,2"/>
+            <Setter Property="Margin" Value="2"/>
+            <Setter Property="BorderColor" Value="DarkGreen"/>
+        </Style>
+        <Style TargetType="Button" x:Key="Generate">
+            <Setter Property="WidthRequest" Value="150"/>
+            <Setter Property="HeightRequest" Value="40"/>
+            <Setter Property="Margin" Value="0,0,0,0"/>
+            <Setter Property="BackgroundColor" Value="{StaticResource SecondColor}"/>
+            <Setter Property="TextColor" Value="{StaticResource FontColor}"/>
+        </Style>
+    </Application.Resources>
+</Application>

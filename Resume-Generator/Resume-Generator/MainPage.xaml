@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Resume_Generator.MainPage"
+             BackgroundColor="{StaticResource MainColor}">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <VerticalStackLayout
+            Grid.Column="0">
+            <Button x:Name="ProfileBtn" Text="Profile" Style="{StaticResource SelectedBtn}"/>
+            <Button x:Name="PostAnalysisBtn" Text="Post Analysis" Style="{StaticResource UnSelectedBtn}" Clicked="PostAnalysisBtn_Clicked"/>
+            <Button x:Name="CanvasBtn" Text="Canvas" Style="{StaticResource UnSelectedBtn}" Clicked="CanvasBtn_Clicked"/>
+            <Button x:Name="LogoutBtn" Text="Sign Out" Style="{StaticResource UnSelectedBtn}" Clicked="LogoutBtn_Clicked"/>
+        </VerticalStackLayout>
+        <Grid Grid.Column="1">
+        </Grid>
+    </Grid>
+
+</ContentPage>
