@@ -11,7 +11,12 @@
         <Color x:Key="HighlightColor">#C8D5B9</Color>
         <Color x:Key="DetailColor">#68B0AB</Color>
 
-
+        <Style TargetType="Label" x:Key="ProfileHeader">
+            <Setter Property="FontAttributes" Value="Bold"/>
+            <Setter Property="FontSize" Value="Large"/>
+            <Setter Property="Margin" Value="10, 0"/>
+            <Setter Property="TextColor" Value="{StaticResource FontColor}"/>
+        </Style>
         <Style TargetType="Button" x:Key="SelectedBtn">
             <Setter Property="BackgroundColor" Value="{StaticResource MainColor}"/>
             <Setter Property="TextColor" Value="{StaticResource DetailColor}"/>
@@ -20,10 +25,56 @@
             <Setter Property="BackgroundColor" Value="{StaticResource SecondColor}"/>
             <Setter Property="TextColor" Value="{StaticResource FontColor}"/>
         </Style>
+        <Style TargetType="Button" x:Key="UpdateBtn">
+            <Setter Property="BackgroundColor" Value="{StaticResource SecondColor}"/>
+            <Setter Property="TextColor" Value="{StaticResource FontColor}"/>
+            <Setter Property="WidthRequest" Value="150"/>
+            <Setter Property="HeightRequest" Value="30"/>
+            <Setter Property="HorizontalOptions" Value="Start"/>
+        </Style>
         <Style TargetType="ImageButton" x:Key="IconBtn">
             <Setter Property="Margin" Value="10"/>
             <Setter Property="HeightRequest" Value="200"/>
             <Setter Property="WidthRequest" Value="180"/>
+        </Style>
+        <Style TargetType="Label" x:Key="subtitle">
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="TextColor" Value="{StaticResource FontColor}"/>
+            <Setter Property="Margin" Value="20,0"/>
+        </Style>
+        <Style TargetType="Entry" x:Key="contactEntrybox">
+            <Setter Property="BackgroundColor" Value="{StaticResource HighlightColor}"/>
+            <Setter Property="WidthRequest" Value="200"/>
+            <Setter Property="HeightRequest" Value="25"/>
+            <Setter Property="Margin" Value="0, 0, 5, 5"/>
+            <Setter Property="HorizontalOptions" Value="Start"/>
+            <Setter Property="TextColor" Value="Black"/>
+            <Setter Property="PlaceholderColor" Value="Grey"/>
+        </Style>
+        <Style TargetType="Entry" x:Key="addressEntrybox">
+            <Setter Property="BackgroundColor" Value="{StaticResource HighlightColor}"/>
+            <Setter Property="WidthRequest" Value="200"/>
+            <Setter Property="HeightRequest" Value="25"/>
+            <Setter Property="Margin" Value="0, 0, 5, 5"/>
+            <Setter Property="HorizontalOptions" Value="Start"/>
+            <Setter Property="TextColor" Value="Black"/>
+            <Setter Property="PlaceholderColor" Value="Grey"/>
+        </Style>
+        <Style TargetType="Entry" x:Key="leftEntrybox">
+            <Setter Property="BackgroundColor" Value="{StaticResource HighlightColor}"/>
+            <Setter Property="WidthRequest" Value="200"/>
+            <Setter Property="HeightRequest" Value="25"/>
+            <Setter Property="Margin" Value="0, 10, 10, 10"/>
+            <Setter Property="TextColor" Value="Black"/>
+            <Setter Property="PlaceholderColor" Value="Grey"/>
+        </Style>
+        <Style TargetType="Entry" x:Key="Entrybox">
+            <Setter Property="BackgroundColor" Value="{StaticResource HighlightColor}"/>
+            <Setter Property="WidthRequest" Value="200"/>
+            <Setter Property="HeightRequest" Value="25"/>
+            <Setter Property="Margin" Value="10"/>
+            <Setter Property="TextColor" Value="Black"/>
+            <Setter Property="PlaceholderColor" Value="Grey"/>
         </Style>
         <Style TargetType="Image" x:Key="Icon">
             <Setter Property="Margin" Value="10"/>
