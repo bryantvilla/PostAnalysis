@@ -14,6 +14,12 @@
         <Style TargetType="Label" x:Key="ProfileHeader">
             <Setter Property="FontAttributes" Value="Bold"/>
             <Setter Property="FontSize" Value="Large"/>
+            <Setter Property="Margin" Value="10,0,0,10"/>
+            <Setter Property="TextColor" Value="{StaticResource FontColor}"/>
+        </Style>
+        <Style TargetType="Label" x:Key="ProfileSubHeader">
+            <Setter Property="FontAttributes" Value="Bold"/>
+            <Setter Property="FontSize" Value="Medium"/>
             <Setter Property="Margin" Value="10, 0"/>
             <Setter Property="TextColor" Value="{StaticResource FontColor}"/>
         </Style>
@@ -41,6 +47,19 @@
             <Setter Property="FontSize" Value="15"/>
             <Setter Property="TextColor" Value="{StaticResource FontColor}"/>
             <Setter Property="Margin" Value="20,0"/>
+        </Style>
+        <Style TargetType="Label" x:Key="postanalysislabel">
+            <Setter Property="Margin" Value="0,15,0,0"/>
+        </Style>
+
+        <Style TargetType="Entry" x:Key="postEntrybox">
+            <Setter Property="BackgroundColor" Value="{StaticResource HighlightColor}"/>
+            <Setter Property="WidthRequest" Value="200"/>
+            <Setter Property="HeightRequest" Value="20"/>
+            <Setter Property="Margin" Value="5, 5, 5, 5"/>
+            <Setter Property="HorizontalOptions" Value="Start"/>
+            <Setter Property="TextColor" Value="Black"/>
+            <Setter Property="PlaceholderColor" Value="Grey"/>
         </Style>
         <Style TargetType="Entry" x:Key="contactEntrybox">
             <Setter Property="BackgroundColor" Value="{StaticResource HighlightColor}"/>

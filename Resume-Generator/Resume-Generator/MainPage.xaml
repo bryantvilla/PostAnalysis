@@ -48,7 +48,7 @@
                                     <ColumnDefinition/>
                                 </Grid.ColumnDefinitions>
                                 <VerticalStackLayout Grid.Column="0">
-                                    <Label Text="Contact" Style="{StaticResource ProfileHeader}"/>
+                                    <Label Text="Contact" Style="{StaticResource ProfileSubHeader}"/>
                                     <Entry x:Name="Email"
                                        Placeholder="Email"
                                        Margin="0, 15, 5,5"
@@ -61,7 +61,7 @@
                                        Style="{StaticResource contactEntrybox}"/>
                                 </VerticalStackLayout>
                                 <VerticalStackLayout Grid.Column="1">
-                                    <Label Text="Address" Style="{StaticResource ProfileHeader}"/>
+                                    <Label Text="Address" Style="{StaticResource ProfileSubHeader}"/>
                                     <Entry x:Name="StreetAddress1"
                                        Placeholder="StreetAddress1"
                                        WidthRequest="400"
@@ -274,8 +274,6 @@
                                 Text="Add / Update3"
                                 Style="{StaticResource UpdateBtn}"/>
                             </HorizontalStackLayout>
-
-
                         </Grid>
                     </Grid><!--WORK EXPERIENCE ENTRIES END-->
                     <Grid>
@@ -384,7 +382,6 @@
                     <Grid>
                         <Label Text="CERTIFICATION TABLES"/>
                     </Grid>
-                    <Label Text="Publications" Style="{StaticResource ProfileHeader}"/>
                 </VerticalStackLayout>
             </ScrollView>
         </Grid>
