@@ -12,6 +12,10 @@ public partial class Startup : ContentPage
     string lastName = "";
     DBManager db;
     List<BasicUser> Users;
+    Dictionary<string, HorizontalStackLayout> rows = new Dictionary<string, HorizontalStackLayout>();
+    Dictionary<string, bool> selected = new Dictionary<string, bool>();
+    Dictionary<string, CheckBox> checkbox = new Dictionary<string, CheckBox>();
+
     public Startup()
     {
         InitializeComponent();
@@ -19,9 +23,7 @@ public partial class Startup : ContentPage
         Users = db.getAllUsers();
         foreach (var user in Users.ToArray()) {
             createRow(user);
-        }
-            
-        
+        }    
     }
     private HorizontalStackLayout createRow(BasicUser user) {
         HorizontalStackLayout row = new HorizontalStackLayout();
@@ -47,7 +49,15 @@ public partial class Startup : ContentPage
         row.Children.Add(lbl2);
         row.Children.Add(lbl3);
         UserList.Children.Add(row);
+        addToDictionaries(user, chckbx, row);
+
         return row;
+    }
+
+    private void addToDictionaries(BasicUser user, CheckBox chck, HorizontalStackLayout row) {
+        selected[user.FileName] = false;
+        checkbox[user.FileName] = chck;
+        rows[user.FileName] = row;
     }
 
     private async void ConfirmBtn_Clicked(object sender, EventArgs e)
@@ -78,13 +88,29 @@ public partial class Startup : ContentPage
 
     private async void DeleteBtn_Clicked(object sender, EventArgs e)
     {
-
+        string text = "";
+        foreach (var val in selected)
+        {
+            text = text + val.Key + " " + val.Value.ToString() + " " + System.Environment.NewLine;
+        }
+        await DisplayAlert("STATUS", text, "OK");
 
     }
 
     private void CheckBox_Changed(object sender, EventArgs e)
     {
-
+        foreach (var val in selected) {
+            if (checkbox[val.Key] == sender) { 
+                if(val.Value == false)
+                {
+                    selected[val.Key] = true;
+                }
+                else
+                {
+                    selected[val.Key] = false;
+                }
+            }
+        }
 
     }
 
