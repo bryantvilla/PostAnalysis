@@ -8,11 +8,31 @@
             Text="Thi is the startup page where you pick the user file"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
-        <Button
+        <VerticalStackLayout x:Name="UserList">
+
+        </VerticalStackLayout>
+        <HorizontalStackLayout>
+            <Button
             x:Name="ConfirmBtn"
             Text="Confirm"
             Clicked="ConfirmBtn_Clicked"
             Style="{StaticResource UnSelectedBtn}"
             WidthRequest="200"/>
+            <Button
+            x:Name="DeleteBtn"
+            Text="Delete"
+            Clicked="DeleteBtn_Clicked"
+            Style="{StaticResource UnSelectedBtn}"
+            WidthRequest="200"/>
+            <Button
+            x:Name="NewBtn"
+            Text="Create New User"
+            Clicked="NewBtn_Clicked"
+            Style="{StaticResource UnSelectedBtn}"
+            WidthRequest="200"/>
+        </HorizontalStackLayout>
+        <VerticalStackLayout x:Name="results">
+            <Label x:Name="testresult"/>
+        </VerticalStackLayout>
     </VerticalStackLayout>
 </ContentPage>
