@@ -212,7 +212,7 @@ namespace Resume_Generator
             tempWork2["Description"] = "Building dynamic and scalable apps. Worked on the google suite in developing many security features for the cloud.";
             WorkExperience.Add(tempWork2);
 
-
+            
 
         }
     }

@@ -52,9 +52,9 @@
                             <Image Source="person_image.jpg" WidthRequest="150" HeightRequest="150"/>
                         </Frame>
                         <Label
-                            x:Name="FirstName" 
-                            BindingContext=""
-                            Text="" 
+                            x:Name="FirstName"
+                            BindingContext="{}"
+                            Text="{}"
                             TextColor="White" 
                             FontAttributes="Bold" 
                             FontSize="Large" 
