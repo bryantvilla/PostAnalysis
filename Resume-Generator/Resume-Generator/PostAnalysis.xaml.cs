@@ -5,6 +5,7 @@ public partial class PostAnalysis : ContentPage
     DBManager db;
     public PostAnalysis(DBManager db)
 	{
+		db = db;
 		InitializeComponent();
 		results.Text = "display results here";
 

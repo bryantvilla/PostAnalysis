@@ -13,6 +13,7 @@ public partial class Canvas : ContentPage
     Color FontColor = new Color(0,250,0);
     public Canvas(DBManager db)
     {
+        db = db;
 		InitializeComponent();
         MainColorBtn.BackgroundColor = MainColor;
         SecondaryColorBtn.BackgroundColor = SecondaryColor;
