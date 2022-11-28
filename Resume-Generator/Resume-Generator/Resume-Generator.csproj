@@ -49,6 +49,15 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <AndroidResource Remove="Model\NewFolder\**" />
+	  <Compile Remove="Model\NewFolder\**" />
+	  <EmbeddedResource Remove="Model\NewFolder\**" />
+	  <MauiCss Remove="Model\NewFolder\**" />
+	  <MauiXaml Remove="Model\NewFolder\**" />
+	  <None Remove="Model\NewFolder\**" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <Compile Update="Canvas.xaml.cs">
 	    <DependentUpon>Canvas.xaml</DependentUpon>
 	  </Compile>
@@ -75,7 +84,6 @@
 
 	<ItemGroup>
 	  <PackageReference Include="ColorPicker.Maui" Version="1.0.0" />
-	  <PackageReference Include="EPP.PresentationFramework" Version="1.0.0" />
 	  <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
 	  <PackageReference Include="nor0x.Maui.ColorPicker" Version="1.0.1" />
 	</ItemGroup>

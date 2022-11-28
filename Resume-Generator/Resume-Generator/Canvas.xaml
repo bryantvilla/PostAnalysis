@@ -2,11 +2,12 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Resume_Generator.Canvas"
+             xmlns:model="clr-namespace:Resume_Generator.Model"
              BackgroundColor="{StaticResource MainColor}">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200"/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="682"/>
             <ColumnDefinition Width="200"/>
         </Grid.ColumnDefinitions>
         <VerticalStackLayout
@@ -35,11 +36,43 @@
                 <Button Grid.Column="1" Text="Generate" Style="{StaticResource Generate}" />
 
             </Grid>
-            <Grid Grid.Row="1">
-                <BoxView BackgroundColor="White"/>
-                <Polygon x:Name ="MainColorTester" Points="40,10 70,80 10,50" StrokeThickness="5"/>
-                <Rectangle x:Name ="SecondaryColorTester" HeightRequest="25" WidthRequest="25" StrokeThickness="5"/>
-                <Label x:Name ="TestingLabel" Text="test text" FontAttributes="Bold"/>
+            <Grid x:Name="CanvasBoundary" Grid.Row="1" Background="White" HeightRequest="964" VerticalOptions="Start">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="275" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="0">
+                        <Polygon x:Name ="MainColorTester" Points="40,10 70,80 10,50" StrokeThickness="5"/>
+                        <Rectangle x:Name ="SecondaryColorTester" HeightRequest="25" WidthRequest="25" StrokeThickness="5"/>
+                        <Label x:Name ="TestingLabel" Text="test text" FontAttributes="Bold"/>
+                        <Rectangle Background="Orange" WidthRequest="300" HeightRequest="300" VerticalOptions="Start"/>
+                        <Rectangle Background="#2E2F34" WidthRequest="300" HeightRequest="650" VerticalOptions="End" Margin="0,0,0,30"/>
+                        <Frame VerticalOptions="Start" WidthRequest="150" HeightRequest="150" CornerRadius="150" Padding="0,0,0,0" Margin="0,65,0,0" BorderColor="Orange">
+                            <Image Source="person_image.jpg" WidthRequest="150" HeightRequest="150"/>
+                        </Frame>
+                        <Label
+                            x:Name="FirstName" 
+                            BindingContext=""
+                            Text="" 
+                            TextColor="White" 
+                            FontAttributes="Bold" 
+                            FontSize="Large" 
+                            HorizontalTextAlignment="Center" 
+                            Margin="0,410,0,0"/>
+                        <Label 
+                            x:Name="Title" 
+                            Text="Lorem Ipsum" 
+                            TextColor="White" 
+                            FontAttributes="None" 
+                            FontSize="Small" 
+                            HorizontalTextAlignment="Center" 
+                            Margin="0,460,0,0"/>
+                        <Image Source="home_icon.svg" VerticalOptions="Start"/>
+                    </Grid>
+                    <Grid Grid.Column="1">
+                    </Grid>
+                </Grid>
             </Grid>
         </Grid>
         <ScrollView 

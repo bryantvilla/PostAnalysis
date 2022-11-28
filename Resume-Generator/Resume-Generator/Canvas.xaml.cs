@@ -7,12 +7,14 @@ namespace Resume_Generator;
 public partial class Canvas : ContentPage
 {
     DBManager db;
+    ResumeManager user;
     Color MainColor = new Color(200,50,0);
     Color SecondaryColor = new Color(0,0,0);
     Color TertiaryColor = new Color(0,0,250);
     Color FontColor = new Color(0,250,0);
     public Canvas(DBManager db)
     {
+        user = new ResumeManager();
         db = db;
 		InitializeComponent();
         MainColorBtn.BackgroundColor = MainColor;

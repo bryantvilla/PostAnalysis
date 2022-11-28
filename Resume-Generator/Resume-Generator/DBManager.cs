@@ -153,4 +153,67 @@ namespace Resume_Generator
             return filename;
         }
     }
+
+    public class ResumeManager
+    {
+        string FirstName;
+        string MiddleName;
+        string LastName;
+        List<Dictionary<string, string>> Education;
+        List<Dictionary<string, string>> WorkExperience;
+        List<Dictionary<string, string>> Skills;
+        List<Dictionary<string, string>> Awards;
+
+        public ResumeManager()
+        {
+            FirstName = "John";
+            MiddleName = "James";
+            LastName = "Doe";
+
+            //Education Dummy Data
+            Education = new List<Dictionary<string, string>>();
+            Dictionary<string, string> tempEd = new Dictionary<string, string>();
+            tempEd["School Name"] = "Florida International University";
+            tempEd["Degree"] = "Bachelors of Science";
+            tempEd["Field of Study"] = "Computer Science";
+            tempEd["City"] = "Miami";
+            tempEd["Province"] = "Florida";
+            tempEd["FromMonth"] = "08";
+            tempEd["FromYear"] = "2017";
+            tempEd["ToMonth"] = "05";
+            tempEd["ToYear"] = "2020";
+            Education.Add(tempEd);
+
+            //Work Experience Dummy Data
+            WorkExperience = new List<Dictionary<string, string>>();
+            Dictionary<string, string> tempWork = new Dictionary<string, string>();
+            tempWork["Company"] = "Google";
+            tempWork["Position"] = "Software Engineer";
+            tempWork["Country"] = "USA";
+            tempWork["City"] = "Mountain View";
+            tempWork["Province"] = "California";
+            tempWork["FromMonth"] = "08";
+            tempWork["FromYear"] = "2020";
+            tempWork["ToMonth"] = "05";
+            tempWork["ToYear"] = "2022";
+            tempWork["Description"] = "Building dynamic and scalable apps. Worked on the google suite in developing many security features for the cloud.";
+            WorkExperience.Add(tempWork);
+
+            Dictionary<string, string> tempWork2 = new Dictionary<string, string>();
+            tempWork2["Company"] = "Google";
+            tempWork2["Position"] = "Software Engineer";
+            tempWork2["Country"] = "USA";
+            tempWork2["City"] = "Mountain View";
+            tempWork2["Province"] = "California";
+            tempWork2["FromMonth"] = "05";
+            tempWork2["FromYear"] = "2022";
+            tempWork2["ToMonth"] = "12";
+            tempWork2["ToYear"] = "2022";
+            tempWork2["Description"] = "Building dynamic and scalable apps. Worked on the google suite in developing many security features for the cloud.";
+            WorkExperience.Add(tempWork2);
+
+
+
+        }
+    }
 }
