@@ -2,9 +2,9 @@
 
 public partial class MainPage : ContentPage
 {
-	
+	DBManager db;
 
-	public MainPage()
+	public MainPage(DBManager db)
 	{
 		InitializeComponent();
 	}
@@ -16,12 +16,12 @@ public partial class MainPage : ContentPage
 
 	private void CanvasBtn_Clicked(object sender, EventArgs e)
 	{
-		Navigation.PushAsync(new Canvas());
+		Navigation.PushAsync(new Canvas(db));
 	}
 
 	private void PostAnalysisBtn_Clicked(object sender, EventArgs e)
 	{
-		Navigation.PushAsync(new PostAnalysis());
+		Navigation.PushAsync(new PostAnalysis(db));
 	}
 }
 

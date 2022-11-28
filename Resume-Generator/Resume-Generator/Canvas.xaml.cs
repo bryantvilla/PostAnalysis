@@ -6,11 +6,12 @@ namespace Resume_Generator;
 
 public partial class Canvas : ContentPage
 {
+    DBManager db;
     Color MainColor = new Color(200,50,0);
     Color SecondaryColor = new Color(0,0,0);
     Color TertiaryColor = new Color(0,0,250);
     Color FontColor = new Color(0,250,0);
-    public Canvas()
+    public Canvas(DBManager db)
     {
 		InitializeComponent();
         MainColorBtn.BackgroundColor = MainColor;
@@ -60,12 +61,12 @@ public partial class Canvas : ContentPage
 
 	private void ProfileBtn_Clicked(object sender, EventArgs e)
 	{
-		Navigation.PushAsync(new MainPage());
+		Navigation.PushAsync(new MainPage(db));
 	}
 
 	private void PostAnalysisBtn_Clicked(object sender, EventArgs e)
 	{
-		Navigation.PushAsync(new PostAnalysis());
+		Navigation.PushAsync(new PostAnalysis(db));
 	}
 
 	private void LogoutBtn_Clicked(object sender, EventArgs e)

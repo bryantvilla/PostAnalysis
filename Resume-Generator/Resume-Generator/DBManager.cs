@@ -62,7 +62,7 @@ namespace Resume_Generator
             return myCollection;
         }
 
-        private string getDBDirectory()
+        public string getDBDirectory()
         {
             string DBPath = System.AppDomain.CurrentDomain.BaseDirectory;
             int index = DBPath.LastIndexOf("bin");
@@ -86,6 +86,7 @@ namespace Resume_Generator
             MiddleName = GetMiddleNameFromName(filename);
 
         }
+
         public string FirstName = "John";
         public string LastName = "Jingleheimerschmit";
         public string MiddleName = "Jacob";

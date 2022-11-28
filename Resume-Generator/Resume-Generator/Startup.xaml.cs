@@ -15,6 +15,7 @@ public partial class Startup : ContentPage
     Dictionary<string, HorizontalStackLayout> rows = new Dictionary<string, HorizontalStackLayout>();
     Dictionary<string, bool> selected = new Dictionary<string, bool>();
     Dictionary<string, CheckBox> checkbox = new Dictionary<string, CheckBox>();
+    Dictionary<string, Button> buttons = new Dictionary<string, Button>();
 
     public Startup()
     {
@@ -32,6 +33,8 @@ public partial class Startup : ContentPage
         Label lbl2 = new Label();
         Label lbl3 = new Label();
         CheckBox chckbx = new CheckBox();
+        Button btn = new Button();
+        btn.Clicked += new EventHandler(ConfirmBtn_Clicked);
         chckbx.CheckedChanged += new EventHandler<CheckedChangedEventArgs>(CheckBox_Changed);
         
         lbl1.Text = user.FirstName;
@@ -49,28 +52,36 @@ public partial class Startup : ContentPage
         row.Children.Add(lbl2);
         row.Children.Add(lbl3);
         UserList.Children.Add(row);
-        addToDictionaries(user, chckbx, row);
+        addToDictionaries(user, chckbx, row, btn);
 
         return row;
     }
 
-    private void addToDictionaries(BasicUser user, CheckBox chck, HorizontalStackLayout row) {
+    private void addToDictionaries(BasicUser user, CheckBox chck, HorizontalStackLayout row, Button btn) {
         selected[user.FileName] = false;
         checkbox[user.FileName] = chck;
         rows[user.FileName] = row;
+        buttons[user.FileName] = btn;
     }
 
     private async void ConfirmBtn_Clicked(object sender, EventArgs e)
     {
         string action = "Retry";
+        string filepath;
         string result;
+        foreach(var btn in buttons)
+        {
+            if (btn.Value == sender) {
+                filepath = btn.Key;
+            }
+        }
         do
         {
             result = await DisplayPromptAsync("Decryption", "Password:");
             if (result == "password")
             {
                 await DisplayAlert("Success!", "file successfully decrypted", "OK");
-                Navigation.PushAsync(new MainPage());
+                Navigation.PushAsync(new MainPage(db));
                 action = "Success";
             }
             else if (result == null)
@@ -88,12 +99,32 @@ public partial class Startup : ContentPage
 
     private async void DeleteBtn_Clicked(object sender, EventArgs e)
     {
-        string text = "";
+        string text = System.Environment.NewLine;
+        List<string> filePaths = new List<string>();
         foreach (var val in selected)
         {
-            text = text + val.Key + " " + val.Value.ToString() + " " + System.Environment.NewLine;
+            if (val.Value) {
+                BasicUser currUser = new BasicUser(val.Key, db.getDBDirectory());
+                filePaths.Add(currUser.FileName);
+                text = text + currUser.FirstName + " " + currUser.MiddleName + " "+ currUser.LastName+ " " + System.Environment.NewLine;
+            }
         }
-        await DisplayAlert("STATUS", text, "OK");
+        string Header = "WARNING: Are you sure? ";
+        string paragraph = "The following users are set to be deleted."+System.Environment.NewLine+" This deletion is permenant and cannot be undone.";
+        bool action = await DisplayAlert(Header, paragraph + text, "Yes", "No");
+        if (action)
+        {
+            foreach (var file in filePaths)
+            {
+                File.Delete(file);
+                UserList.Children.Remove(rows[file]);
+                rows.Remove(file);
+                checkbox.Remove(file);
+                selected.Remove(file);
+            }
+            await DisplayAlert("STATUS", "deletion successful", "OK");
+
+        }
 
     }
 
