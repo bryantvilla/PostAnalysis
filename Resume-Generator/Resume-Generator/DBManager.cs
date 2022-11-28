@@ -20,6 +20,17 @@ namespace Resume_Generator
             return Guid.NewGuid().ToString();
         }
 
+        public ResumeManager createNewResume(string filename)
+        {
+
+            ResumeManager resume = new ResumeManager(LoadJson(filename), filename, DBPath);
+            return resume;
+        }
+
+        public void deleteUser(string file) {
+            File.Delete(file);
+        }
+
         public BasicUser createNewUser(string FrstName, string mdlName, string LstName) {
             string filename = FrstName + "+" + LstName + "=" + generateGUID();
             if (mdlName != "") { 
@@ -28,25 +39,25 @@ namespace Resume_Generator
 
             string newfilePath = DBPath + "\\" + filename + ".json";
             System.IO.File.Copy(DBPath+"\\Default.json", newfilePath);
-            Dictionary<string, Dictionary<string, string>> UserDict = LoadJson(newfilePath);
-            UserDict["Profile"]["firstname"] = FrstName;
-            UserDict["Profile"]["lastname"] = LstName;
-            UserDict["Profile"]["middlename"] = mdlName;
+            Dictionary<string, List<Dictionary<string,string>>> UserDict = LoadJson(newfilePath);
+            UserDict["Profile"][0]["firstname"] = FrstName;
+            UserDict["Profile"][0]["lastname"] = LstName;
+            UserDict["Profile"][0]["middlename"] = mdlName;
             updateJson(UserDict, newfilePath);
             return new BasicUser(newfilePath, DBPath);
 
         }
 
-        private void updateJson(Dictionary<string, Dictionary<string, string>> myDictionary, string filename) {
+        private void updateJson(Dictionary<string, List<Dictionary<string, string>>> myDictionary, string filename) {
             var updatedDict = JsonConvert.SerializeObject(myDictionary);
             File.WriteAllText(filename, updatedDict);
         }
 
-        public Dictionary<string, Dictionary<string, string>> LoadJson(string myFileName)
+        public Dictionary<string, List<Dictionary<string, string>>> LoadJson(string myFileName)
         {
-            Dictionary<string, Dictionary<string, string>> mydictionary = new Dictionary<string, Dictionary<string, string>>();
+            Dictionary<string, List<Dictionary<string, string>>> mydictionary = new Dictionary<string, List<Dictionary<string, string>>>();
             var text = File.ReadAllText(myFileName);
-            mydictionary = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, string>>>(text);
+            mydictionary = JsonConvert.DeserializeObject<Dictionary<string, List<Dictionary<string, string>>>>(text);
             return mydictionary;
         }
 
@@ -156,64 +167,171 @@ namespace Resume_Generator
 
     public class ResumeManager
     {
-        string FirstName;
-        string MiddleName;
-        string LastName;
-        List<Dictionary<string, string>> Education;
-        List<Dictionary<string, string>> WorkExperience;
-        List<Dictionary<string, string>> Skills;
-        List<Dictionary<string, string>> Awards;
+        public String FirstName;
+        public String MiddleName;
+        public String LastName;
+        Dictionary<string, List<Dictionary<string, string>>> User;
+        String filename;
+        String DBPath;
+        public Dictionary<string, string> Profile;
+        public List<Dictionary<string, string>> Education;
+        public List<Dictionary<string, string>> Experience;
+        public List<Dictionary<string, string>> Skills;
+        public List<Dictionary<string, string>> Certifications;
 
-        public ResumeManager()
+        public ResumeManager(Dictionary<string, List<Dictionary<string, string>>> User, string filename, string DBPath)
         {
-            FirstName = "John";
-            MiddleName = "James";
-            LastName = "Doe";
-
-            //Education Dummy Data
-            Education = new List<Dictionary<string, string>>();
-            Dictionary<string, string> tempEd = new Dictionary<string, string>();
-            tempEd["School Name"] = "Florida International University";
-            tempEd["Degree"] = "Bachelors of Science";
-            tempEd["Field of Study"] = "Computer Science";
-            tempEd["City"] = "Miami";
-            tempEd["Province"] = "Florida";
-            tempEd["FromMonth"] = "08";
-            tempEd["FromYear"] = "2017";
-            tempEd["ToMonth"] = "05";
-            tempEd["ToYear"] = "2020";
-            Education.Add(tempEd);
-
-            //Work Experience Dummy Data
-            WorkExperience = new List<Dictionary<string, string>>();
-            Dictionary<string, string> tempWork = new Dictionary<string, string>();
-            tempWork["Company"] = "Google";
-            tempWork["Position"] = "Software Engineer";
-            tempWork["Country"] = "USA";
-            tempWork["City"] = "Mountain View";
-            tempWork["Province"] = "California";
-            tempWork["FromMonth"] = "08";
-            tempWork["FromYear"] = "2020";
-            tempWork["ToMonth"] = "05";
-            tempWork["ToYear"] = "2022";
-            tempWork["Description"] = "Building dynamic and scalable apps. Worked on the google suite in developing many security features for the cloud.";
-            WorkExperience.Add(tempWork);
-
-            Dictionary<string, string> tempWork2 = new Dictionary<string, string>();
-            tempWork2["Company"] = "Google";
-            tempWork2["Position"] = "Software Engineer";
-            tempWork2["Country"] = "USA";
-            tempWork2["City"] = "Mountain View";
-            tempWork2["Province"] = "California";
-            tempWork2["FromMonth"] = "05";
-            tempWork2["FromYear"] = "2022";
-            tempWork2["ToMonth"] = "12";
-            tempWork2["ToYear"] = "2022";
-            tempWork2["Description"] = "Building dynamic and scalable apps. Worked on the google suite in developing many security features for the cloud.";
-            WorkExperience.Add(tempWork2);
-
-            
-
+            this.DBPath = DBPath;
+            this.filename = filename;
+            this.User = User;
+            Profile = User["Profile"][0];
+            Education = User["Education"];
+            Experience = User["Experience"];
+            Skills = User["Skills"];
+            Certifications = User["Certifications"];
+            this.FirstName = Profile["FirstName"];
+            this.MiddleName = Profile["MiddleName"];
+            this.LastName = Profile["LastName"];
         }
-    }
+
+        public bool UpdateProfile(String FirstName,
+            String LastName,
+            String MiddleName,
+            String Email,
+            String URL,
+            String PhoneNo,
+            String StreetAddress1,
+            String StreetAddress2,
+            String City,
+            String Province,
+            String Country,
+            String PostalCode) {
+
+            this.FirstName = FirstName;
+            this.LastName = LastName;
+            this.MiddleName = MiddleName;
+            Profile["FirstName"] = FirstName;
+            Profile["MiddleName"] = MiddleName;
+            Profile["LastName"] = LastName;
+            Profile["Email"] = Email;
+            Profile["URL"] = URL;
+            Profile["PhoneNo"] = PhoneNo;
+            Profile["StreetAddress1"] = StreetAddress1;
+            Profile["StreetAddress2"] = StreetAddress2;
+            Profile["City"] = City;
+            Profile["Province"] = Province;
+            Profile["Country"] = Country;
+            Profile["PostalCode"] = PostalCode;
+
+            User["Profile"][0] = this.Profile;
+            updateJson(this.User, filename);
+            string newfilename = createFileName(filename);
+            if (newfilename != filename) {
+                System.IO.File.Copy(filename, newfilename);
+                File.Delete(filename);
+                filename = newfilename;
+            }
+
+            return true;
+        }
+        public void AddToEducation(Dictionary<string, string> item) {
+            Education.Add(item);
+            User["Education"] = this.Education;
+            updateJson(User, filename);
+        }
+        public void AddToExperience(Dictionary<string, string> item)
+        {
+            Education.Add(item);
+            User["Experience"] = this.Experience;
+            updateJson(User, filename);
+        }
+        public void AddToCertifications(Dictionary<string, string> item)
+        {
+            Certifications.Add(item);
+            User["Certifications"] = this.Certifications;
+            updateJson(User, filename);
+        }
+        public void AddToSkills(Dictionary<string, string> item)
+        {
+            Skills.Add(item);
+            User["Skills"] = this.Skills;
+            updateJson(User, filename);
+        }
+
+
+        public void RemoveFromExperience(string itemGUID)
+        {
+            foreach (var entry in this.Experience) {
+                if (entry["ItemGUID"] == itemGUID) {
+                    Experience.Remove(entry);
+                }
+            }
+            User["Experience"] = this.Experience;
+            updateJson(User, filename);
+        }
+
+        public void RemoveFromEducation(string itemGUID)
+        {
+            foreach (var entry in this.Education)
+            {
+                if (entry["ItemGUID"] == itemGUID)
+                {
+                    Education.Remove(entry);
+                    break;
+                }
+            }
+            User["Education"] = this.Education;
+            updateJson(User, filename);
+        }
+
+        public void RemoveFromCertifications(string itemGUID)
+        {
+            foreach (var entry in this.Certifications)
+            {
+                if (entry["ItemGUID"] == itemGUID)
+                {
+                    Certifications.Remove(entry);
+                }
+            }
+            User["Certifications"] = this.Certifications;
+            updateJson(User, filename);
+        }
+
+        public void RemoveFromSkills(string itemGUID)
+        {
+            foreach (var entry in this.Skills)
+            {
+                if (entry["ItemGUID"] == itemGUID)
+                {
+                    Skills.Remove(entry);
+                }
+            }
+            User["Skills"] = this.Skills;
+            updateJson(User, filename);
+        }
+        private void updateJson(Dictionary<string, List<Dictionary<string, string>>> myDictionary, string filename)
+        {
+            var updatedDict = JsonConvert.SerializeObject(myDictionary);
+            File.WriteAllText(filename, updatedDict);
+        }
+        private string GetGUIDFromName(string filename)
+        {
+            filename = filename.Substring(filename.Length - 41);
+            filename = filename.Substring(0, filename.Length - 5);
+            return filename;
+        }
+
+        private string createFileName(string currentfilename){
+            string GUID = GetGUIDFromName(currentfilename);
+            string filename = FirstName + "+" + LastName + "=" + GUID;
+            if (MiddleName != "")
+            {
+                filename = FirstName + "+" + MiddleName + "+" + LastName + "=" + GUID;
+            }
+
+            string newfilePath = DBPath + "\\" + filename + ".json";
+            return newfilePath;
+        }
+        
+}
 }

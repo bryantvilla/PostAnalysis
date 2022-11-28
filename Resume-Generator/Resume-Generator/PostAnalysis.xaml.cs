@@ -2,10 +2,10 @@ namespace Resume_Generator;
 
 public partial class PostAnalysis : ContentPage
 {
-    DBManager db;
-    public PostAnalysis(DBManager db)
+    ResumeManager db;
+    public PostAnalysis(ResumeManager db)
 	{
-		db = db;
+		this.db = db;
 		InitializeComponent();
 		results.Text = "display results here";
 

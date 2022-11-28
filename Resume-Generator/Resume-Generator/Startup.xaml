@@ -3,36 +3,47 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Resume_Generator.Startup"
              BackgroundColor="{StaticResource MainColor}">
-    <VerticalStackLayout>
+    <VerticalStackLayout
+        Margin="80,0,0,0">
         <Label 
-            Text="Thi is the startup page where you pick the user file"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-        <VerticalStackLayout x:Name="UserList">
-
-        </VerticalStackLayout>
-        <HorizontalStackLayout>
-            <Button
-            x:Name="ConfirmBtn"
-            Text="Confirm"
-            Clicked="ConfirmBtn_Clicked"
-            Style="{StaticResource UnSelectedBtn}"
-            WidthRequest="200"/>
-            <Button
+            Text="Resume Generator"
+            VerticalOptions="Start" 
+            FontSize="25"
+            FontAttributes="Bold"
+            TextColor="{StaticResource HighlightColor}"
+            />
+        <VerticalStackLayout
+            Margin="80,30,0,0">
+            <HorizontalStackLayout
+                MinimumWidthRequest="900">
+                <Label
+                Text="Manage Users"
+                FontSize="18"
+                TextColor="{StaticResource FontColor}"
+                />
+                <ImageButton
             x:Name="DeleteBtn"
-            Text="Delete"
             Clicked="DeleteBtn_Clicked"
-            Style="{StaticResource UnSelectedBtn}"
-            WidthRequest="200"/>
-            <Button
+            HeightRequest="20"
+            Margin="4"
+            Source="AppIcon/deleteIcon.png"
+            HorizontalOptions="End"
+            WidthRequest="20"/>
+                <ImageButton
             x:Name="NewBtn"
-            Text="Create New User"
             Clicked="NewBtn_Clicked"
-            Style="{StaticResource UnSelectedBtn}"
-            WidthRequest="200"/>
-        </HorizontalStackLayout>
-        <VerticalStackLayout x:Name="results">
-            <Label x:Name="testresult"/>
+            Source="AppIcon/addIcon.png"
+            HeightRequest="20"
+            Margin="4"
+            HorizontalOptions="End"
+            WidthRequest="20"/>
+            </HorizontalStackLayout>
+            <VerticalStackLayout x:Name="UserList">
+
+            </VerticalStackLayout>
+            <VerticalStackLayout x:Name="results">
+                <Label x:Name="testresult"/>
+            </VerticalStackLayout>
         </VerticalStackLayout>
     </VerticalStackLayout>
 </ContentPage>

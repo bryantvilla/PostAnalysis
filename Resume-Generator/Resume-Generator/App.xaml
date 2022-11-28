@@ -11,6 +11,26 @@
         <Color x:Key="HighlightColor">#C8D5B9</Color>
         <Color x:Key="DetailColor">#68B0AB</Color>
 
+        <Style TargetType="Label" x:Key="TableLabel">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Margin" Value="15,0,0,0"/>
+            <Setter Property="VerticalTextAlignment" Value="Center"/>
+            <Setter Property="TextColor" Value="{StaticResource FontColor}"/>
+        </Style>
+        <Style TargetType="HorizontalStackLayout" x:Key="Hrz1">
+            <Setter Property="BackgroundColor" Value="{StaticResource MainColor}"/>
+        </Style>
+        <Style TargetType="HorizontalStackLayout" x:Key="Hrz2">
+            <Setter Property="BackgroundColor" Value="{StaticResource SecondColor}"/>
+        </Style>
+
+        <Style TargetType="Button" x:Key="LoadBtn">
+            <Setter Property="HeightRequest" Value="10"/>
+            <Setter Property="Margin" Value="2"/>
+            <Setter Property="VerticalOptions" Value="Center"/>
+            <Setter Property="WidthRequest" Value="10"/>
+            <Setter Property="BackgroundColor" Value="{StaticResource SecondColor}"/>
+        </Style>
         <Style TargetType="Label" x:Key="ProfileHeader">
             <Setter Property="FontAttributes" Value="Bold"/>
             <Setter Property="FontSize" Value="Large"/>

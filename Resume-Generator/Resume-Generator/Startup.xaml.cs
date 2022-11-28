@@ -46,11 +46,14 @@ public partial class Startup : ContentPage
         lbl3.Text = user.LastName;
         lbl3.Margin += 5;
         lbl3.Margin += 5;
+        btn.Style = App.Current.Resources["LoadBtn"] as Style;
+
 
         row.Children.Add(chckbx);
         row.Children.Add(lbl1);
         row.Children.Add(lbl2);
         row.Children.Add(lbl3);
+        row.Children.Add(btn);
         UserList.Children.Add(row);
         addToDictionaries(user, chckbx, row, btn);
 
@@ -67,7 +70,7 @@ public partial class Startup : ContentPage
     private async void ConfirmBtn_Clicked(object sender, EventArgs e)
     {
         string action = "Retry";
-        string filepath;
+        string filepath = "";
         string result;
         foreach(var btn in buttons)
         {
@@ -81,7 +84,7 @@ public partial class Startup : ContentPage
             if (result == "password")
             {
                 await DisplayAlert("Success!", "file successfully decrypted", "OK");
-                Navigation.PushAsync(new MainPage(db));
+                Navigation.PushAsync(new MainPage(db.createNewResume(filepath)));
                 action = "Success";
             }
             else if (result == null)
@@ -116,7 +119,7 @@ public partial class Startup : ContentPage
         {
             foreach (var file in filePaths)
             {
-                File.Delete(file);
+                db.deleteUser(file);
                 UserList.Children.Remove(rows[file]);
                 rows.Remove(file);
                 checkbox.Remove(file);
