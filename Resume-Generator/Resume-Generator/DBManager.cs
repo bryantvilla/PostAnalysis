@@ -234,6 +234,28 @@ namespace Resume_Generator
 
             return true;
         }
+        public bool UpdateDB(String Dictname) {
+            List<Dictionary<string, string>> DictToUpdate = new List<Dictionary<string,string>>();
+            if (Dictname == "Education")
+            {
+                DictToUpdate = Education;
+            }
+            else if (Dictname == "Experience")
+            {
+                DictToUpdate = Experience;
+            }
+            else if (Dictname == "Certifications") 
+            {
+                DictToUpdate = Certifications;
+            }
+            else if (Dictname == "Skills")
+            {
+                DictToUpdate = Skills;
+            }
+            User[Dictname] = DictToUpdate;
+            updateJson(this.User, filename);
+            return true;
+        }
         public void AddToEducation(Dictionary<string, string> item) {
             Education.Add(item);
             User["Education"] = this.Education;
@@ -241,7 +263,7 @@ namespace Resume_Generator
         }
         public void AddToExperience(Dictionary<string, string> item)
         {
-            Education.Add(item);
+            Experience.Add(item);
             User["Experience"] = this.Experience;
             updateJson(User, filename);
         }
@@ -264,6 +286,7 @@ namespace Resume_Generator
             foreach (var entry in this.Experience) {
                 if (entry["ItemGUID"] == itemGUID) {
                     Experience.Remove(entry);
+                    break;
                 }
             }
             User["Experience"] = this.Experience;
@@ -291,6 +314,7 @@ namespace Resume_Generator
                 if (entry["ItemGUID"] == itemGUID)
                 {
                     Certifications.Remove(entry);
+                    break;
                 }
             }
             User["Certifications"] = this.Certifications;
@@ -304,6 +328,7 @@ namespace Resume_Generator
                 if (entry["ItemGUID"] == itemGUID)
                 {
                     Skills.Remove(entry);
+                    break;
                 }
             }
             User["Skills"] = this.Skills;

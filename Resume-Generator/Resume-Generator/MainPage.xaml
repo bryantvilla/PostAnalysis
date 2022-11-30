@@ -273,14 +273,15 @@
                             </VerticalStackLayout>
                             <HorizontalStackLayout Grid.Row="5">
                                 <Button
+                                x:Name="EXPUpdateBtn"
+                                Clicked="EXPupdateBtn_Clicked"
                                 Text="Add / Update3"
                                 Style="{StaticResource UpdateBtn}"/>
                             </HorizontalStackLayout>
                         </Grid>
                     </Grid><!--WORK EXPERIENCE ENTRIES END-->
-                    <Grid>
-                        <Label Text="EXPERIENCE TABLE HERE"/>
-                    </Grid>
+                    <VerticalStackLayout x:Name="EXP">
+                    </VerticalStackLayout>
                     <Label Text="Skills Information" Style="{StaticResource ProfileHeader}"/>
                     <Grid><!--SKILLS START-->
                         <Grid.ColumnDefinitions>
@@ -318,14 +319,15 @@
                             </HorizontalStackLayout>
                             <HorizontalStackLayout Grid.Row="2">
                                 <Button
+                                x:Name="SKILLSUpdateBtn"
+                                Clicked="SKILLSupdateBtn_Clicked"
                                 Text="Add / Update3"
                                 Style="{StaticResource UpdateBtn}"/>
                             </HorizontalStackLayout>
                         </Grid>
                     </Grid><!--SKILLS END-->
-                    <Grid>
-                        <Label Text="SKILLS TABLE"/>
-                    </Grid>
+                    <VerticalStackLayout x:Name="SKILLS">
+                    </VerticalStackLayout>
                     <Label Text="Certification / Awards" Style="{StaticResource ProfileHeader}"/>
                     <Grid><!--CERT START-->
                         <Grid.ColumnDefinitions>
@@ -334,6 +336,7 @@
                         </Grid.ColumnDefinitions>
                         <Grid Grid.Column="1">
                             <Grid.RowDefinitions>
+                                <RowDefinition Height="50"/>
                                 <RowDefinition Height="50"/>
                                 <RowDefinition Height="50"/>
                                 <RowDefinition Height="50"/>
@@ -376,14 +379,20 @@
                                        WidthRequest="100"
                                        Margin="10,0"
                                        Style="{StaticResource addressEntrybox}"/>
-                                <CheckBox x:Name="CertlNotApplicable"/>
+                                <CheckBox x:Name="CertNotApplicable"/>
                                 <Label Text="N/A"/>
+                            </HorizontalStackLayout>
+                            <HorizontalStackLayout Grid.Row="4">
+                                <Button
+                                x:Name="CERTUpdateBtn"
+                                Clicked="CERTupdateBtn_Clicked"
+                                Text="Add / Update3"
+                                Style="{StaticResource UpdateBtn}"/>
                             </HorizontalStackLayout>
                         </Grid>
                     </Grid><!--CERT END-->
-                    <Grid>
-                        <Label Text="CERTIFICATION TABLES"/>
-                    </Grid>
+                    <VerticalStackLayout x:Name="CERT">
+                    </VerticalStackLayout>
                 </VerticalStackLayout>
             </ScrollView>
         </Grid>

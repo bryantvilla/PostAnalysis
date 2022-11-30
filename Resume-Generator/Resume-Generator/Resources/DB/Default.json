@@ -17,59 +17,57 @@
   ],
   "Education": [
     {
-      "ItemGUID": "",
-      "SchoolName": "",
+      "ItemGUID": "877a31b1-2425-4240-aa61-438b4659416e",
+      "SchoolName": "Hogwarts",
       "EducationalLevel": "Bachelors",
-      "FieldOfStudy": "",
-      "EduFromMM": "",
-      "EduFromYYYY": "",
-      "EduToMM": "",
-      "EduToYYYY": "",
-      "EduCurrent": "",
-      "DegreeCity": "",
-      "EduProvince": "",
-      "EduInclude": ""
-
-    }
+      "FieldOfStudy": "Defense Against The Dark Arts",
+      "EduFromMM": "08",
+      "EduFromYYYY": "1990",
+      "EduToMM": "05",
+      "EduToYYYY": "1998",
+      "EduCurrent": "False",
+      "DegreeCity": "London",
+      "EduProvince": "9 3/4",
+      "EduInclude": "False"
+    },
   ],
   "Experience": [
     {
-      "ItemGUID": "",
-      "Company": "",
-      "Position": "",
-      "ExpCountry": "",
-      "ExpCity": "",
-      "ExpProvince": "",
-      "ExpFromMM": "",
-      "ExpFromYYYY": "",
-      "ExpToMM": "",
-      "ExpToYYYY": "",
-      "ExpCurrent": "",
-      "ExpDescription": "",
-      "ExpInclude": ""
+      "ItemGUID": "6515d641-2a03-4727-8803-0cd7d52efc9c",
+      "Company": "Avengers",
+      "Position": "Assistant",
+      "ExpCountry": "USA",
+      "ExpCity": "NYC",
+      "ExpProvince": "Albaquerqi",
+      "ExpFromMM": "05",
+      "ExpFromYYYY": "1998",
+      "ExpToMM": "12",
+      "ExpToYYYY": "2010",
+      "ExpCurrent": "False",
+      "ExpDescription": "-put up with tony'd shit,-Debugged Jarvis, -made the hulk some tea, -found thors hammer, -sewed spiderman costume",
+      "ExpInclude": "False"
     }
   ],
   "Skills": [
     {
-      "ItemGUID": "",
-      "Category": "",
-      "Skill": "",
-      "Proficiency": "",
-      "SkillInclude": ""
+      "ItemGUID": "6515d641-2a03-4727-8803-0cd7d52efc9c",
+      "Category": "Programming",
+      "Skill": "C#",
+      "Proficiency": "Expert",
+      "SkillInclude": "False"
     }
   ],
-  "Certification": [
+  "Certifications": [
     {
-      "ItemGUID": "",
-      "Certification": "",
-      "Organization": "",
-      "CertFromMM": "",
-      "CertFromYYYY": "",
-      "CertToMM": "",
-      "CertToYYYY": "",
-      "CertNotApplicable": "",
-      "CertInclude": ""
+      "ItemGUID": "6515d641-2a03-4727-8803-0cd7d52efc9c",
+      "Certification": "Auror",
+      "Organization": "Ministry of Magic",
+      "CertFromMM": "05",
+      "CertFromYYYY": "1998",
+      "CertToMM": "05",
+      "CertToYYYY": "2000",
+      "CertNotApplicable": "False",
+      "CertInclude": "False"
     }
   ]
-
 }
