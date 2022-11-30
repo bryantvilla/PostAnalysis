@@ -40,9 +40,9 @@ namespace Resume_Generator
             string newfilePath = DBPath + "\\" + filename + ".json";
             System.IO.File.Copy(DBPath+"\\Default.json", newfilePath);
             Dictionary<string, List<Dictionary<string,string>>> UserDict = LoadJson(newfilePath);
-            UserDict["Profile"][0]["firstname"] = FrstName;
-            UserDict["Profile"][0]["lastname"] = LstName;
-            UserDict["Profile"][0]["middlename"] = mdlName;
+            UserDict["Profile"][0]["FirstName"] = FrstName;
+            UserDict["Profile"][0]["LastName"] = LstName;
+            UserDict["Profile"][0]["MiddleName"] = mdlName;
             updateJson(UserDict, newfilePath);
             return new BasicUser(newfilePath, DBPath);
 
@@ -158,7 +158,10 @@ namespace Resume_Generator
             }
             else {
                 if (frstindex >= 0 && lstindex >= 0) {
-                    filename.Substring(frstindex, lstindex);
+                    string lastname = filename.Substring(lstindex);
+                    string firstname = filename.Substring(0,frstindex+1);
+                    filename = filename.Replace(lastname, "");
+                    filename = filename.Replace(firstname, "");
                 }
             }
             return filename;
@@ -170,6 +173,7 @@ namespace Resume_Generator
         public String FirstName;
         public String MiddleName;
         public String LastName;
+        private String Password;
         Dictionary<string, List<Dictionary<string, string>>> User;
         String filename;
         String DBPath;

@@ -13,37 +13,57 @@
             TextColor="{StaticResource HighlightColor}"
             />
         <VerticalStackLayout
-            Margin="80,30,0,0">
+            Margin="80,40,0,0">
             <HorizontalStackLayout
+                Margin="0,0,0,15"
                 MinimumWidthRequest="900">
                 <Label
                 Text="Manage Users"
                 FontSize="18"
                 TextColor="{StaticResource FontColor}"
                 />
-                <ImageButton
-            x:Name="DeleteBtn"
-            Clicked="DeleteBtn_Clicked"
-            HeightRequest="20"
-            Margin="4"
-            Source="AppIcon/deleteIcon.png"
-            HorizontalOptions="End"
-            WidthRequest="20"/>
-                <ImageButton
-            x:Name="NewBtn"
-            Clicked="NewBtn_Clicked"
-            Source="AppIcon/addIcon.png"
-            HeightRequest="20"
-            Margin="4"
-            HorizontalOptions="End"
-            WidthRequest="20"/>
-            </HorizontalStackLayout>
+                <Grid>
+                    <ImageButton 
+                        Margin="10,0,0,0" 
+                        Padding="0,0,0,0" 
+                        CornerRadius="0"
+                        Source="C:\Users\maspo\source\repos\Resume-Generator\Resume-Generator\Resume-Generator\Resources\AppIcon\deleteIcon1.png"  
+                        HeightRequest="25" 
+                        WidthRequest="25"
+                        x:Name="DeleteBtn"
+                        BackgroundColor="Transparent"
+                        BorderColor="Transparent"
+                        HorizontalOptions="Center"
+                        Clicked="DeleteBtn_Clicked"
+                        />
+                </Grid>
+                <Grid>
+                    <ImageButton 
+                        Padding="0,0,0,0" 
+                        Margin="5,0,0,0" 
+                        CornerRadius="0"
+                        Source="C:\Users\maspo\source\repos\Resume-Generator\Resume-Generator\Resume-Generator\Resources\AppIcon\addIcon1.png"  
+                        HeightRequest="24" 
+                        WidthRequest="24"
+                        x:Name="NewBtn"
+                        BackgroundColor="Transparent"
+                        BorderColor="Transparent"
+                        HorizontalOptions="Center"
+                        Clicked="NewBtn_Clicked"
+                        />
+                </Grid>
+            </HorizontalStackLayout >
             <VerticalStackLayout x:Name="UserList">
 
             </VerticalStackLayout>
             <VerticalStackLayout x:Name="results">
                 <Label x:Name="testresult"/>
             </VerticalStackLayout>
+            <Label Text="for now the password will always be password
+                   
+                   
+                   
+                   "/>
         </VerticalStackLayout>
     </VerticalStackLayout>
 </ContentPage>

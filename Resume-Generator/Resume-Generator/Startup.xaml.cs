@@ -1,3 +1,4 @@
+using Microsoft.Maui.Controls.Shapes;
 using Newtonsoft.Json;
 using SkiaSharp;
 using System.Runtime.Versioning;
@@ -10,12 +11,13 @@ public partial class Startup : ContentPage
     string firstName = "";
     string middleName = "";
     string lastName = "";
+    string password = "";
     DBManager db;
     List<BasicUser> Users;
-    Dictionary<string, HorizontalStackLayout> rows = new Dictionary<string, HorizontalStackLayout>();
+    Dictionary<string, Grid> rows = new Dictionary<string, Grid>();
     Dictionary<string, bool> selected = new Dictionary<string, bool>();
     Dictionary<string, CheckBox> checkbox = new Dictionary<string, CheckBox>();
-    Dictionary<string, Button> buttons = new Dictionary<string, Button>();
+    Dictionary<string, ImageButton> buttons = new Dictionary<string, ImageButton>();
 
     public Startup()
     {
@@ -26,41 +28,51 @@ public partial class Startup : ContentPage
             createRow(user);
         }    
     }
-    private HorizontalStackLayout createRow(BasicUser user) {
-        HorizontalStackLayout row = new HorizontalStackLayout();
-        
+    private void createRow(BasicUser user) {
+
+        Grid gridRow = new Grid();
+        gridRow.AddColumnDefinition(new ColumnDefinition(25));
+        gridRow.AddColumnDefinition(new ColumnDefinition(50));
+        gridRow.AddColumnDefinition(new ColumnDefinition(400));
+
         Label lbl1 = new Label();
         Label lbl2 = new Label();
         Label lbl3 = new Label();
         CheckBox chckbx = new CheckBox();
-        Button btn = new Button();
+        ImageButton btn = new ImageButton();
         btn.Clicked += new EventHandler(ConfirmBtn_Clicked);
         chckbx.CheckedChanged += new EventHandler<CheckedChangedEventArgs>(CheckBox_Changed);
-        
+
+        gridRow.Children.Add(chckbx);
+        HorizontalStackLayout fullname = new HorizontalStackLayout();
+        fullname.Children.Add(lbl1);
+        fullname.Children.Add(lbl2);
+        fullname.Children.Add(lbl3);
+        gridRow.Children.Add(fullname);
+        gridRow.Children.Add(btn);
+        chckbx.SetValue(Grid.ColumnProperty, 1);
+        fullname.SetValue(Grid.ColumnProperty, 2);
+        btn.SetValue(Grid.ColumnProperty, 0);
+
+        btn.Source = "C:\\Users\\maspo\\source\\repos\\Resume-Generator\\Resume-Generator\\Resume-Generator\\Resources\\AppIcon\\loadIcon1.png";
+
         lbl1.Text = user.FirstName;
-        lbl1.Margin += 5;
-        lbl1.Margin += 5;
+        lbl1.Margin += 2;
+        lbl1.Margin += 2;
         lbl2.Text = user.MiddleName;
-        lbl2.Margin += 5;
-        lbl2.Margin += 5;
+        lbl2.Margin += 2;
+        lbl2.Margin += 2;
         lbl3.Text = user.LastName;
-        lbl3.Margin += 5;
-        lbl3.Margin += 5;
-        btn.Style = App.Current.Resources["LoadBtn"] as Style;
+        lbl3.Margin += 2;
+        lbl3.Margin += 2;
+        btn.Style = App.Current.Resources["StartUpLoadBtn"] as Style;
 
+        UserList.Children.Add(gridRow);
+        addToDictionaries(user, chckbx, gridRow, btn);
 
-        row.Children.Add(chckbx);
-        row.Children.Add(lbl1);
-        row.Children.Add(lbl2);
-        row.Children.Add(lbl3);
-        row.Children.Add(btn);
-        UserList.Children.Add(row);
-        addToDictionaries(user, chckbx, row, btn);
-
-        return row;
     }
 
-    private void addToDictionaries(BasicUser user, CheckBox chck, HorizontalStackLayout row, Button btn) {
+    private void addToDictionaries(BasicUser user, CheckBox chck, Grid row, ImageButton btn) {
         selected[user.FileName] = false;
         checkbox[user.FileName] = chck;
         rows[user.FileName] = row;
@@ -112,9 +124,17 @@ public partial class Startup : ContentPage
                 text = text + currUser.FirstName + " " + currUser.MiddleName + " "+ currUser.LastName+ " " + System.Environment.NewLine;
             }
         }
-        string Header = "WARNING: Are you sure? ";
-        string paragraph = "The following users are set to be deleted."+System.Environment.NewLine+" This deletion is permenant and cannot be undone.";
-        bool action = await DisplayAlert(Header, paragraph + text, "Yes", "No");
+        bool action = false;
+        if (filePaths.Count != 0) {
+            string Header = "WARNING: Are you sure? ";
+            string paragraph = "The following users are set to be deleted." + System.Environment.NewLine + " This deletion is permenant and cannot be undone.";
+            action = await DisplayAlert(Header, paragraph + text, "Yes", "No");
+        }
+        else
+        {
+            await DisplayAlert("STATUS", "No Users Selected","OK");
+        }
+
         if (action)
         {
             foreach (var file in filePaths)
@@ -151,10 +171,6 @@ public partial class Startup : ContentPage
     private async void NewBtn_Clicked(object sender, EventArgs e)
     {
         await requestFirstName(sender, e);
-        BasicUser newUser = db.createNewUser(firstName, middleName, lastName);
-        Users.Add(newUser);
-        createRow(newUser);
-
     }
 
     private async Task requestFirstName(object sender, EventArgs e) {
@@ -224,6 +240,33 @@ public partial class Startup : ContentPage
             }
             else
             {
+                await requestPassword(sender, e);
+                action = "completed";
+            }
+
+        } while (action == "Retry");
+    }
+
+    private async Task requestPassword(object sender, EventArgs e)
+    {
+        string action = "Retry";
+        do
+        {
+            password = await DisplayPromptAsync("User Creation", "Password:");
+            if (password == "")
+            {
+                await DisplayAlert("User Creation", "Password Required", "OK");
+                action = "Retry";
+            }
+            else if (lastName == null)
+            {
+                action = "canceled";
+            }
+            else
+            {
+                BasicUser newUser = db.createNewUser(firstName, middleName, lastName);
+                Users.Add(newUser);
+                createRow(newUser);
                 action = "completed";
             }
 

@@ -9,20 +9,25 @@ public partial class Canvas : ContentPage
 {
     ResumeManager user;
     List<Rectangle> MainColorList;
+    Color BackGroundColor = new Color(255, 255, 255);
     Color MainColor = new Color(200,50,0);
     Color SecondaryColor = new Color(0,0,0);
     Color TertiaryColor = new Color(0,0,250);
     Color FontColor = new Color(0,250,0);
+    Color FontColorSecondary = new Color(0, 0, 0);
     public Canvas(ResumeManager db)
     {
 		InitializeComponent();
         user = db;
         MainColorList = new List<Rectangle>();
         //FirstName.Text = db.FirstName;
+        BackgroundColorBtn.BackgroundColor = BackGroundColor;
         MainColorBtn.BackgroundColor = MainColor;
         SecondaryColorBtn.BackgroundColor = SecondaryColor;
         TertiaryColorBtn.BackgroundColor = TertiaryColor;
         FontColorBtn.BackgroundColor = FontColor;
+        FontColorSecondaryBtn.BackgroundColor = FontColorSecondary;
+        CanvasBoundary.BackgroundColor = BackGroundColor;
 
     }
 	private void createNewCarosel(string imagename) {
@@ -76,7 +81,9 @@ public partial class Canvas : ContentPage
     async private void MainColorBtn_Clicked(object sender, EventArgs e)
     {
         string result = await DisplayPromptAsync("Question 2", "give me an R value", initialValue: "250", maxLength: 3, keyboard: Keyboard.Numeric);
-        MainColor = new Color(Int32.Parse(result), 0, 0);
+        if (result != null) {
+            MainColor = new Color(Int32.Parse(result), 0, 0);
+        }
         MainColorBtn.BackgroundColor = MainColor;
         foreach (var item in MainColorList)
         {
@@ -88,22 +95,52 @@ public partial class Canvas : ContentPage
     async private void SecondaryColorBtn_Clicked(object sender, EventArgs e)
     {
         string result = await DisplayPromptAsync("Question 2", "give me an R value", initialValue: "250", maxLength: 3, keyboard: Keyboard.Numeric);
-        SecondaryColor = new Color(Int32.Parse(result), 0, 0);
+        if (result != null)
+        {
+            SecondaryColor = new Color(Int32.Parse(result), 0, 0);
+        }
         SecondaryColorBtn.BackgroundColor = SecondaryColor;
     }
 
     async private void TertiaryColorBtn_Clicked(object sender, EventArgs e)
     {
         string result = await DisplayPromptAsync("Question 2", "give me an B value", initialValue: "250", maxLength: 3, keyboard: Keyboard.Numeric);
-        TertiaryColor = new Color(0, 0, Int32.Parse(result));
+        if (result != null)
+        {
+            TertiaryColor = new Color(Int32.Parse(result), 0, 0);
+        }
         TertiaryColorBtn.BackgroundColor = TertiaryColor;
     }
 
     async private void FontColorBtn_Clicked(object sender, EventArgs e)
     {
         string result = await DisplayPromptAsync("Question 2", "give me an G value", initialValue: "250", maxLength: 3, keyboard: Keyboard.Numeric);
-        FontColor = new Color(0, Int32.Parse(result), 0);
+        if (result != null)
+        {
+            FontColor = new Color(Int32.Parse(result), 0, 0);
+        }
         FontColorBtn.BackgroundColor = FontColor;
+    }
+
+    async private void FontColorSecondaryBtn_Clicked(object sender, EventArgs e)
+    {
+        string result = await DisplayPromptAsync("Question 2", "give me an G value", initialValue: "250", maxLength: 3, keyboard: Keyboard.Numeric);
+        if (result != null)
+        {
+            FontColorSecondary = new Color(Int32.Parse(result), 0, 0);
+        }
+        FontColorSecondaryBtn.BackgroundColor = FontColorSecondary;
+    }
+
+    async private void BackgroundColorBtn_Clicked(object sender, EventArgs e)
+    {
+        string result = await DisplayPromptAsync("Question 2", "give me an G value", initialValue: "250", maxLength: 3, keyboard: Keyboard.Numeric);
+        if (result != null)
+        {
+            BackGroundColor = new Color(Int32.Parse(result), 0, 0);
+        }
+        BackgroundColorBtn.BackgroundColor = BackGroundColor;
+        CanvasBoundary.BackgroundColor = BackGroundColor;
     }
 
     private void Icon1_Clicked(object sender, EventArgs e)

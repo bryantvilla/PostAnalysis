@@ -28,16 +28,18 @@
                     <ColumnDefinition Width="200"/>
                 </Grid.ColumnDefinitions>
                 <HorizontalStackLayout Grid.Column="0">
+                    <Button x:Name="BackgroundColorBtn" Style="{StaticResource ColorBtn}" Clicked="BackgroundColorBtn_Clicked"/>
                     <Button x:Name="MainColorBtn" Style="{StaticResource ColorBtn}" Clicked="MainColorBtn_Clicked"/>
                     <Button x:Name="SecondaryColorBtn" Style="{StaticResource ColorBtn}" Clicked="SecondaryColorBtn_Clicked"/>
                     <Button x:Name="TertiaryColorBtn" Style="{StaticResource ColorBtn}" Clicked="TertiaryColorBtn_Clicked"/>
                     <Button x:Name="FontColorBtn" Style="{StaticResource ColorBtn}" Clicked="FontColorBtn_Clicked"/>
+                    <Button x:Name="FontColorSecondaryBtn" Style="{StaticResource ColorBtn}" Clicked="FontColorSecondaryBtn_Clicked"/>
 
                 </HorizontalStackLayout>
                 <Button Grid.Column="1" Text="Generate" Style="{StaticResource Generate}" />
 
             </Grid>
-            <Grid x:Name="CanvasBoundary" Grid.Row="1" Background="White" HeightRequest="964" VerticalOptions="Start">
+            <Grid x:Name="CanvasBoundary" Grid.Row="1" HeightRequest="964" VerticalOptions="Start">
 
             </Grid>
         </Grid>
