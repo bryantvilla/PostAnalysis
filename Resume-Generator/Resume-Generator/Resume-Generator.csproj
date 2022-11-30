@@ -80,6 +80,8 @@
 
 	<ItemGroup>
 	  <Folder Include="Resources\Images\ResumeIcons\" />
+	  <Folder Include="Resources\ResumeImages\" />
+	  <Folder Include="Resources\Templates\" />
 	</ItemGroup>
 
 	<ItemGroup>

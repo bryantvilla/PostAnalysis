@@ -32,47 +32,13 @@
                     <Button x:Name="SecondaryColorBtn" Style="{StaticResource ColorBtn}" Clicked="SecondaryColorBtn_Clicked"/>
                     <Button x:Name="TertiaryColorBtn" Style="{StaticResource ColorBtn}" Clicked="TertiaryColorBtn_Clicked"/>
                     <Button x:Name="FontColorBtn" Style="{StaticResource ColorBtn}" Clicked="FontColorBtn_Clicked"/>
+
                 </HorizontalStackLayout>
                 <Button Grid.Column="1" Text="Generate" Style="{StaticResource Generate}" />
 
             </Grid>
             <Grid x:Name="CanvasBoundary" Grid.Row="1" Background="White" HeightRequest="964" VerticalOptions="Start">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="275" />
-                        <ColumnDefinition />
-                    </Grid.ColumnDefinitions>
-                    <Grid Grid.Column="0">
-                        <Polygon x:Name ="MainColorTester" Points="40,10 70,80 10,50" StrokeThickness="5"/>
-                        <Rectangle x:Name ="SecondaryColorTester" HeightRequest="25" WidthRequest="25" StrokeThickness="5"/>
-                        <Label x:Name ="TestingLabel" Text="test text" FontAttributes="Bold"/>
-                        <Rectangle Background="Orange" WidthRequest="300" HeightRequest="300" VerticalOptions="Start"/>
-                        <Rectangle Background="#2E2F34" WidthRequest="300" HeightRequest="650" VerticalOptions="End" Margin="0,0,0,30"/>
-                        <Frame VerticalOptions="Start" WidthRequest="150" HeightRequest="150" CornerRadius="150" Padding="0,0,0,0" Margin="0,65,0,0" BorderColor="Orange">
-                            <Image Source="person_image.jpg" WidthRequest="150" HeightRequest="150"/>
-                        </Frame>
-                        <Label
-                            x:Name="FirstName"
-                            BindingContext="{}"
-                            Text="{}"
-                            TextColor="White" 
-                            FontAttributes="Bold" 
-                            FontSize="Large" 
-                            HorizontalTextAlignment="Center" 
-                            Margin="0,410,0,0"/>
-                        <Label 
-                            x:Name="Title" 
-                            Text="Lorem Ipsum" 
-                            TextColor="White" 
-                            FontAttributes="None" 
-                            FontSize="Small" 
-                            HorizontalTextAlignment="Center" 
-                            Margin="0,460,0,0"/>
-                        <Image Source="home_icon.svg" VerticalOptions="Start"/>
-                    </Grid>
-                    <Grid Grid.Column="1">
-                    </Grid>
-                </Grid>
+
             </Grid>
         </Grid>
         <ScrollView 
@@ -81,7 +47,7 @@
             <VerticalStackLayout><!--I WILL COME BACK L8R AND MAKE THIS DYNAMIC-->
                 <Grid>
                     <Image Source="resume1.jpg" Style="{StaticResource Icon}"/>
-                    <ImageButton x:Name="Icon1" Source="resume1.jpg" Style="{StaticResource IconBtn}"/>
+                    <ImageButton x:Name="Icon1" Source="resume1.jpg" Style="{StaticResource IconBtn}" Clicked="Icon1_Clicked"/>
                 </Grid>
                 <Grid>
                     <Image Source="resume2.jpg" Style="{StaticResource Icon}"/>
