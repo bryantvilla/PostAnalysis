@@ -22,7 +22,6 @@ namespace Resume_Generator
 
         public ResumeManager createNewResume(string filename)
         {
-
             ResumeManager resume = new ResumeManager(LoadJson(filename), filename, DBPath);
             return resume;
         }
