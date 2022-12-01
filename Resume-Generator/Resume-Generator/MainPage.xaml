@@ -1,0 +1,390 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Resume_Generator.MainPage"
+             BackgroundColor="{StaticResource MainColor}">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <VerticalStackLayout
+            Grid.Column="0">
+            <Button x:Name="ProfileBtn" Text="Profile" Style="{StaticResource SelectedBtn}"/>
+            <Button x:Name="PostAnalysisBtn" Text="Post Analysis" Style="{StaticResource UnSelectedBtn}" Clicked="PostAnalysisBtn_Clicked"/>
+            <Button x:Name="CanvasBtn" Text="Canvas" Style="{StaticResource UnSelectedBtn}" Clicked="CanvasBtn_Clicked"/>
+            <Button x:Name="LogoutBtn" Text="Sign Out" Style="{StaticResource UnSelectedBtn}" Clicked="LogoutBtn_Clicked"/>
+        </VerticalStackLayout>
+        <Grid Grid.Column="1">
+            <ScrollView VerticalScrollBarVisibility="Always" Margin="0,5,5,0">
+                <VerticalStackLayout>
+                    <Label Text="Personal Information" Style="{StaticResource ProfileHeader}"/>
+                    <Label Text="ID: RANDOMLY GENERATED GUID" Style="{StaticResource subtitle}"/>
+                    <Grid><!--PROFILE ENTRIES START-->
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="40"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="70"/>
+                                <RowDefinition Height="200"/>
+                                <RowDefinition Height="70"/>
+                            </Grid.RowDefinitions>
+                            <HorizontalStackLayout Grid.Row="0">
+                                <Entry x:Name="FirstName"
+                                   Placeholder="John"
+                                   Style="{StaticResource leftEntrybox}"/>
+                                <Entry x:Name="MiddleName"
+                                   Placeholder="James"
+                                   Style="{StaticResource Entrybox}"/>
+                                <Entry x:Name="LastName"
+                                   Placeholder="Doe"
+                                   Style="{StaticResource Entrybox}"/>
+                            </HorizontalStackLayout>
+                            <Grid Grid.Row="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="240"/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <VerticalStackLayout Grid.Column="0">
+                                    <Label Text="Contact" Style="{StaticResource ProfileSubHeader}"/>
+                                    <Entry x:Name="Email"
+                                       Placeholder="Email"
+                                       Margin="0, 15, 5,5"
+                                       Style="{StaticResource contactEntrybox}"/>
+                                    <Entry x:Name="URL"
+                                       Placeholder="URL"
+                                       Style="{StaticResource contactEntrybox}"/>
+                                    <Entry x:Name="PhoneNo"
+                                       Placeholder="PhoneNo"
+                                       Style="{StaticResource contactEntrybox}"/>
+                                </VerticalStackLayout>
+                                <VerticalStackLayout Grid.Column="1">
+                                    <Label Text="Address" Style="{StaticResource ProfileSubHeader}"/>
+                                    <Entry x:Name="StreetAddress1"
+                                       Placeholder="StreetAddress1"
+                                       WidthRequest="400"
+                                       Margin="0, 15, 5,5"
+                                       Style="{StaticResource addressEntrybox}"/>
+                                    <Entry x:Name="StreetAddress2"
+                                       Placeholder="StreetAddress2"
+                                       WidthRequest="400"
+                                       Style="{StaticResource addressEntrybox}"/>
+                                    <HorizontalStackLayout>
+                                        <Entry x:Name="City"
+                                       Placeholder="City"
+                                       WidthRequest="220"
+                                       Style="{StaticResource addressEntrybox}"/>
+                                        <Entry x:Name="Province"
+                                       Placeholder="Province"
+                                       Margin="25,0,5,5"
+                                       WidthRequest="150"
+                                       Style="{StaticResource addressEntrybox}"/>
+                                    </HorizontalStackLayout>
+                                    <HorizontalStackLayout>
+                                        <Entry x:Name="Country"
+                                       Placeholder="Country"
+                                       WidthRequest="220"
+                                       Style="{StaticResource addressEntrybox}"/>
+                                        <Entry x:Name="PostalCode"
+                                       Placeholder="PostalCode"
+                                       Margin="25,0,5,5"
+                                       WidthRequest="150"
+                                       Style="{StaticResource addressEntrybox}"/>
+                                    </HorizontalStackLayout>
+                                </VerticalStackLayout>
+                            </Grid>
+                            <HorizontalStackLayout Grid.Row="2">
+                                <Button
+                                        Grid.Row="2"
+                                        Text="Add / Update1"
+                                        Style="{StaticResource UpdateBtn}"/>
+                            </HorizontalStackLayout>
+                        </Grid>
+                    </Grid><!--PROFILE ENTRIES END-->
+                    <Label Text="Education" Style="{StaticResource ProfileHeader}"/>
+                    <Grid HeightRequest="300"><!--EDU ENTRIES START-->
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="40"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="80"/>
+                                <RowDefinition Height="40"/>
+                                <RowDefinition Height="40"/>
+                                <RowDefinition Height="70"/>
+                            </Grid.RowDefinitions>
+                            <Entry x:Name="SchoolName"
+                                       Placeholder="School Name"
+                                       WidthRequest="600"
+                                       Margin="0, 15, 5,5"
+                                       Grid.Row="0"
+                                       Style="{StaticResource addressEntrybox}"/>
+                            <Grid Grid.Row="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="300"/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <VerticalStackLayout Grid.Column="0">
+                                    <Entry x:Name="EducationalLevel"
+                                       Placeholder="Degree"
+                                       WidthRequest="290"
+                                       Style="{StaticResource addressEntrybox}"/>
+                                    <Entry x:Name="degreeCity"
+                                       Placeholder="City"
+                                       WidthRequest="290"
+                                       Style="{StaticResource addressEntrybox}"/>
+                                </VerticalStackLayout>
+                                <VerticalStackLayout Grid.Column="1">
+                                    <Entry x:Name="fieldOfStudy"
+                                       Placeholder="Field of Study"
+                                       WidthRequest="300"
+                                       Style="{StaticResource addressEntrybox}"/>
+                                    <Entry x:Name="eduProvince"
+                                       Placeholder="Province"
+                                       WidthRequest="200"
+                                       Style="{StaticResource addressEntrybox}"/>
+                                </VerticalStackLayout>
+                            </Grid>
+                            <HorizontalStackLayout Grid.Row="2">
+                                <Label Text="FROM" WidthRequest="50" VerticalTextAlignment="Center"/>
+                                <Entry x:Name="eduFromMM"
+                                       Placeholder="MM"
+                                       WidthRequest="50"
+                                       Margin="10,0"
+                                       Style="{StaticResource addressEntrybox}"/>
+                                <Label Text=" / " VerticalTextAlignment="Center"/>
+                                <Entry x:Name="EduFromYYYY"
+                                       Placeholder="YYYY"
+                                       WidthRequest="100"
+                                       Margin="10,0"
+                                       Style="{StaticResource addressEntrybox}"/>
+                            </HorizontalStackLayout>
+                            <HorizontalStackLayout Grid.Row="3">
+                                <Label Text="TO" WidthRequest="50" VerticalTextAlignment="Center"/>
+                                <Entry x:Name="eduToMM"
+                                       Placeholder="MM"
+                                       WidthRequest="50"
+                                       Margin="10,0"
+                                       Style="{StaticResource addressEntrybox}"/>
+                                <Label Text=" / " VerticalTextAlignment="Center"/>
+                                <Entry x:Name="eduToYYYY"
+                                       Placeholder="YYYY"
+                                       WidthRequest="100"
+                                       Margin="10,0"
+                                       Style="{StaticResource addressEntrybox}"/>
+                                <CheckBox x:Name="educurrentCheck"/>
+                                <Label Text="Current" VerticalTextAlignment="Center"/>
+                            </HorizontalStackLayout>
+                            <HorizontalStackLayout Grid.Row="4">
+                                <Button
+                                Text="Add / Update2"
+                                Style="{StaticResource UpdateBtn}"/>
+                            </HorizontalStackLayout>
+                        </Grid>
+                    </Grid><!--EDU ENTRIES END-->
+                    <Grid>
+                        <Label Text="EDUCATION TABLE HERE"/>
+                    </Grid>
+                    <Label Text="Work Experience" Style="{StaticResource ProfileHeader}"/>
+                    <Grid><!--WORK EXPERIENCE ENTRIES START-->
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="40"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="70"/>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="450"/>
+                                <RowDefinition Height="70"/>
+                            </Grid.RowDefinitions>
+                            <VerticalStackLayout Grid.Row="0">
+                                <Entry x:Name="company"
+                                       Placeholder="Company"
+                                       WidthRequest="300"
+                                       Style="{StaticResource addressEntrybox}"/>
+                                <Entry x:Name="Position"
+                                       Placeholder="Position"
+                                       WidthRequest="300"
+                                       Style="{StaticResource addressEntrybox}"/>
+                            </VerticalStackLayout>
+                            <HorizontalStackLayout Grid.Row="1">
+                                <Entry x:Name="expCountry"
+                                       Placeholder="country"
+                                       WidthRequest="100"
+                                       Style="{StaticResource addressEntrybox}"/>
+                                <Entry x:Name="expCity"
+                                       Placeholder="City"
+                                       WidthRequest="100"
+                                       Margin="5,0"
+                                       Style="{StaticResource addressEntrybox}"/>
+                                <Entry x:Name="expProvince"
+                                       Placeholder="Province"
+                                       WidthRequest="100"
+                                       Margin="5,0"
+                                       Style="{StaticResource addressEntrybox}"/>
+                            </HorizontalStackLayout>
+                            <HorizontalStackLayout Grid.Row="2">
+                                <Label Text="FROM" WidthRequest="50" VerticalTextAlignment="Center"/>
+                                <Entry x:Name="expFromMM"
+                                       Placeholder="MM"
+                                       WidthRequest="50"
+                                       Margin="10,0"
+                                       Style="{StaticResource addressEntrybox}"/>
+                                <Label Text=" / " VerticalTextAlignment="Center"/>
+                                <Entry x:Name="expFromYYYY"
+                                       Placeholder="YYYY"
+                                       WidthRequest="100"
+                                       Margin="10,0"
+                                       Style="{StaticResource addressEntrybox}"/>
+                            </HorizontalStackLayout>
+                            <HorizontalStackLayout Grid.Row="3">
+                                <Label Text="TO" WidthRequest="50" VerticalTextAlignment="Center"/>
+                                <Entry x:Name="expToMM"
+                                       Placeholder="MM"
+                                       WidthRequest="50"
+                                       Margin="10,0"
+                                       Style="{StaticResource addressEntrybox}"/>
+                                <Label Text=" / " VerticalTextAlignment="Center"/>
+                                <Entry x:Name="expToYYYY"
+                                       Placeholder="YYYY"
+                                       WidthRequest="100"
+                                       Margin="10,0"
+                                       Style="{StaticResource addressEntrybox}"/>
+                                <CheckBox x:Name="expCurrentCheck"/>
+                                <Label Text="Current"/>
+                            </HorizontalStackLayout>
+                            <VerticalStackLayout Grid.Row="4">
+                                <Label Text="Description"/>
+                                <Entry x:Name="expdescription"
+                                       Placeholder="enter your job description here comma seperated"
+                                       WidthRequest="600"
+                                       Margin="0,20,0,0"
+                                       HeightRequest="400"
+                                       Style="{StaticResource addressEntrybox}"/>
+                            </VerticalStackLayout>
+                            <HorizontalStackLayout Grid.Row="5">
+                                <Button
+                                Text="Add / Update3"
+                                Style="{StaticResource UpdateBtn}"/>
+                            </HorizontalStackLayout>
+                        </Grid>
+                    </Grid><!--WORK EXPERIENCE ENTRIES END-->
+                    <Grid>
+                        <Label Text="EXPERIENCE TABLE HERE"/>
+                    </Grid>
+                    <Label Text="Skills Information" Style="{StaticResource ProfileHeader}"/>
+                    <Grid><!--SKILLS START-->
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="40"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="50"/>
+                            </Grid.RowDefinitions>
+                            <HorizontalStackLayout Grid.Row="0">
+                                <Entry x:Name="category"
+                                       Placeholder="category"
+                                       WidthRequest="100"
+                                       Style="{StaticResource addressEntrybox}"/>
+                                <Entry x:Name="skill"
+                                       Placeholder="skill"
+                                       WidthRequest="100"
+                                       Style="{StaticResource addressEntrybox}"/>
+                                <Entry x:Name="proficiency"
+                                       Placeholder="proficiency"
+                                       WidthRequest="100"
+                                       Style="{StaticResource addressEntrybox}"/>
+                            </HorizontalStackLayout>
+                            <HorizontalStackLayout Grid.Row="1">
+                                <Entry x:Name="customCategory"
+                                       Placeholder="custom"
+                                       WidthRequest="100"
+                                       Style="{StaticResource addressEntrybox}"/>
+                                <Button
+                                Text="Add Category"
+                                Style="{StaticResource UpdateBtn}"/>
+                            </HorizontalStackLayout>
+                            <HorizontalStackLayout Grid.Row="2">
+                                <Button
+                                Text="Add / Update3"
+                                Style="{StaticResource UpdateBtn}"/>
+                            </HorizontalStackLayout>
+                        </Grid>
+                    </Grid><!--SKILLS END-->
+                    <Grid>
+                        <Label Text="SKILLS TABLE"/>
+                    </Grid>
+                    <Label Text="Certification / Awards" Style="{StaticResource ProfileHeader}"/>
+                    <Grid><!--CERT START-->
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="40"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="50"/>
+                            </Grid.RowDefinitions>
+                            <Entry x:Name="certification"
+                                       Placeholder="certification/title/award"
+                                       WidthRequest="200"
+                                       Grid.Row="0"
+                                       Style="{StaticResource addressEntrybox}"/>
+                            <Entry x:Name="organization"
+                                       Placeholder="Organization"
+                                       WidthRequest="200"
+                                       Grid.Row="1"
+                                       Style="{StaticResource addressEntrybox}"/>
+                            <HorizontalStackLayout Grid.Row="2">
+                                <Label Text="GRANTED" WidthRequest="50" VerticalTextAlignment="Center"/>
+                                <Entry x:Name="skillFromMM"
+                                       Placeholder="MM"
+                                       WidthRequest="50"
+                                       Margin="10,0"
+                                       Style="{StaticResource addressEntrybox}"/>
+                                <Label Text=" / " VerticalTextAlignment="Center"/>
+                                <Entry x:Name="skillFromYYYY"
+                                       Placeholder="YYYY"
+                                       WidthRequest="100"
+                                       Margin="10,0"
+                                       Style="{StaticResource addressEntrybox}"/>
+                            </HorizontalStackLayout>
+                            <HorizontalStackLayout Grid.Row="3">
+                                <Label Text="EXP" WidthRequest="50" VerticalTextAlignment="Center"/>
+                                <Entry x:Name="skillToMM"
+                                       Placeholder="MM"
+                                       WidthRequest="50"
+                                       Margin="10,0"
+                                       Style="{StaticResource addressEntrybox}"/>
+                                <Label Text=" / " VerticalTextAlignment="Center"/>
+                                <Entry x:Name="skillToYYYY"
+                                       Placeholder="YYYY"
+                                       WidthRequest="100"
+                                       Margin="10,0"
+                                       Style="{StaticResource addressEntrybox}"/>
+                                <CheckBox x:Name="skillNotApplicable"/>
+                                <Label Text="N/A"/>
+                            </HorizontalStackLayout>
+                        </Grid>
+                    </Grid><!--CERT END-->
+                    <Grid>
+                        <Label Text="CERTIFICATION TABLES"/>
+                    </Grid>
+                </VerticalStackLayout>
+            </ScrollView>
+        </Grid>
+    </Grid>
+
+</ContentPage>

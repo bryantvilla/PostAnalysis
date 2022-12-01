@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Resume_Generator.Startup"
+             BackgroundColor="{StaticResource MainColor}">
+    <VerticalStackLayout>
+        <Label 
+            Text="Thi is the startup page where you pick the user file"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" />
+        <Button
+            x:Name="ConfirmBtn"
+            Text="Confirm"
+            Clicked="ConfirmBtn_Clicked"
+            Style="{StaticResource UnSelectedBtn}"
+            WidthRequest="200"/>
+    </VerticalStackLayout>
+</ContentPage>
