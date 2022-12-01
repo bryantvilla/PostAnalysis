@@ -9,6 +9,7 @@ public partial class Canvas : ContentPage
 {
     ResumeManager user;
     List<Rectangle> MainColorList;
+    List<Rectangle> SecondaryColorList;
     Color BackGroundColor = new Color(255, 255, 255);
     Color MainColor = new Color(200,50,0);
     Color SecondaryColor = new Color(0,0,0);
@@ -20,6 +21,7 @@ public partial class Canvas : ContentPage
 		InitializeComponent();
         user = db;
         MainColorList = new List<Rectangle>();
+        SecondaryColorList = new List<Rectangle>();
         //FirstName.Text = db.FirstName;
         BackgroundColorBtn.BackgroundColor = BackGroundColor;
         MainColorBtn.BackgroundColor = MainColor;
@@ -100,6 +102,10 @@ public partial class Canvas : ContentPage
             SecondaryColor = new Color(Int32.Parse(result), 0, 0);
         }
         SecondaryColorBtn.BackgroundColor = SecondaryColor;
+        foreach (var item in SecondaryColorList)
+        {
+            item.Background = SecondaryColor;
+        }
     }
 
     async private void TertiaryColorBtn_Clicked(object sender, EventArgs e)
@@ -143,36 +149,122 @@ public partial class Canvas : ContentPage
         CanvasBoundary.BackgroundColor = BackGroundColor;
     }
 
+    // Resume Template One Function
     private void Icon1_Clicked(object sender, EventArgs e)
     {
+        // Clear the current template displayed, if any
+        if (CanvasBoundary.Children.Count > 0)
+        {
+            CanvasBoundary.Children.Clear();
+        };
+
+        // Main grid housing all content
+        Grid Main = new Grid();
+        Main.ColumnDefinitions.Add(new ColumnDefinition(270));
+        Main.ColumnDefinitions.Add(new ColumnDefinition(400));
+
+        // First Column Start
         Grid One = new Grid();
-        One.ColumnDefinitions.Add(new ColumnDefinition(275));
-        One.ColumnDefinitions.Add(new ColumnDefinition());
-        Grid Two = new Grid();
-        One.Children.Add(Two);
-        Two.SetValue(Grid.ColumnProperty, "0");
-        Rectangle rect1 = new Rectangle();
-        rect1.Background = MainColor;
-        rect1.WidthRequest = 300;
-        rect1.HeightRequest = 300;
-        rect1.VerticalOptions = LayoutOptions.Start;
+        Main.Children.Add(One);
+        Main.SetColumn(One, 0);
+
+        Rectangle rect1 = new Rectangle() 
+        {
+            Background = MainColor,
+            WidthRequest = 270,
+            HeightRequest = 250,
+            VerticalOptions = LayoutOptions.Start
+        };
         MainColorList.Add(rect1);
-        Two.Children.Add(rect1);
+        One.Children.Add(rect1);
+
+        Rectangle rect2 = new Rectangle()
+        {
+            Background = SecondaryColor,
+            WidthRequest = 270,
+            HeightRequest = 670,
+            VerticalOptions = LayoutOptions.End,
+            Margin = new Thickness(0,0,0,60)
+        };
+        SecondaryColorList.Add(rect2);
+        One.Children.Add(rect2);
+
+        // Icon
+        Frame mainicon = new Frame()
+        {
+            VerticalOptions = LayoutOptions.Start,
+            HeightRequest = 270,
+            WidthRequest = 270,
+            CornerRadius = 135,
+            Padding = new Thickness(0, 0, 0, 0),
+            Margin = new Thickness(0, 100, 0, 0),
+            BorderColor = MainColor,
+            Content = new Image()
+            {
+                WidthRequest = 270,
+                HeightRequest = 270,
+                Source = "person_image.jpg"
+            }
+        };
+        One.Children.Add(mainicon);
+        
+
+        // First Name
+        Label name = new Label()
+        {
+            Text = user.FirstName + ' ' + user.MiddleName + ' ' + user.LastName,
+            TextColor = FontColor,
+            FontAttributes = FontAttributes.Bold,
+            FontSize = 28,
+            //FontAutoScalingEnabled = true,
+            HorizontalTextAlignment = TextAlignment.Center,
+            Margin = new Thickness(0, 410, 0, 0)
+        };
+        One.Children.Add(name);
+        // First Column End
+
+        // Second Column Start
+        Grid Two = new Grid();
+        Main.SetColumn(Two, 1);
+        Main.Children.Add(Two);
+
+        // Vertical Stack Layout to keep all content vertical here
         VerticalStackLayout vertstack = new VerticalStackLayout();
         Two.Children.Add(vertstack);
+
+        // Begin Education with title
+        Label edtitle = new Label()
+        {
+            Text = "Education",
+            FontSize = 24,
+            FontAttributes = FontAttributes.Bold,
+            TextColor = MainColor,
+            HorizontalTextAlignment = TextAlignment.Center
+        };
+        vertstack.Children.Add(edtitle);
+
+        // Education Details
         foreach (var item in user.Education)
         {
+            List<Editor> accessor = new List<Editor>();
             foreach (var kvp in item)
             {
                 Editor school_editor = new Editor();
-                school_editor.HeightRequest = 25;
-                school_editor.Text = kvp.Value;
+                school_editor.HeightRequest = 10;
+                school_editor.Text = kvp.Value + "\nSome text";
                 school_editor.TextColor = FontColor;
-                vertstack.Add(school_editor);
+                school_editor.FontSize = 8;
+                accessor.Add(school_editor);
             }
+            HorizontalStackLayout line = new HorizontalStackLayout();
+            line.Children.Add(accessor[1]);
+            line.Children.Add(accessor[2]);
+            line.Children.Add(accessor[3]);
+            vertstack.Add(line);
         }
+        // Second Column End
 
-        CanvasBoundary.Children.Add(One); // VERY IMPORTANT!!!!
+        CanvasBoundary.Children.Add(Main); // VERY IMPORTANT!!!! Add the main grid to the CanvasBoundary Grid in the Xaml
 
 
 
