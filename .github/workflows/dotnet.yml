@@ -22,7 +22,7 @@ jobs:
         dotnet-version: 6.0.x
         
     - name: install MAUI workload
-      run: dotnetworkload install maui
+      run: dotnet workload install maui
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
