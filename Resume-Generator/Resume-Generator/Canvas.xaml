@@ -53,11 +53,11 @@
                 </Grid>
                 <Grid>
                     <Image Source="resume2.jpg" Style="{StaticResource Icon}"/>
-                    <ImageButton x:Name="Icon2" Source="resume2.jpg" Style="{StaticResource IconBtn}"/>
+                    <ImageButton x:Name="Icon2" Source="resume2.jpg" Style="{StaticResource IconBtn}" Clicked="Icon2_Clicked"/>
                 </Grid>
                 <Grid>
                     <Image Source="resume4.jpg" Style="{StaticResource Icon}"/>
-                    <ImageButton x:Name="Icon4" Source="resume4.jpg" Style="{StaticResource IconBtn}"/>
+                    <ImageButton x:Name="Icon4" Source="resume4.jpg" Style="{StaticResource IconBtn}" Clicked="Icon4_Clicked"/>
                 </Grid>
                 <Grid>
                     <Image Source="resume5.png" Style="{StaticResource Icon}"/>

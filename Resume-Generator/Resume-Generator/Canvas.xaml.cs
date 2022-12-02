@@ -246,8 +246,7 @@ public partial class Canvas : ContentPage
         // Education Details
         foreach (var item in user.Education)
         {
-            List<Editor> accessor = new List<Editor>();
-            foreach (var kvp in item)
+            /* foreach (var kvp in item)
             {
                 Editor school_editor = new Editor();
                 school_editor.HeightRequest = 10;
@@ -255,12 +254,22 @@ public partial class Canvas : ContentPage
                 school_editor.TextColor = FontColor;
                 school_editor.FontSize = 8;
                 accessor.Add(school_editor);
-            }
-            HorizontalStackLayout line = new HorizontalStackLayout();
-            line.Children.Add(accessor[1]);
-            line.Children.Add(accessor[2]);
-            line.Children.Add(accessor[3]);
-            vertstack.Add(line);
+            }*/
+            Editor left_side = new Editor()
+            {
+                Text = item["SchoolName"] + "\n" + item["EducationalLevel"],
+                TextColor = FontColor
+            };
+            Editor right_side = new Editor()
+            {
+                Text = item["EduToYYYY"],
+                HorizontalTextAlignment = TextAlignment.End
+            };
+            
+            HorizontalStackLayout education_horiz = new HorizontalStackLayout();
+            education_horiz.Add(left_side);
+            education_horiz.Add(right_side);
+            vertstack.Add(education_horiz);
         }
         // Second Column End
 
@@ -268,6 +277,21 @@ public partial class Canvas : ContentPage
 
 
 
+
+    }
+
+    private void Icon2_Clicked(object sender, EventArgs e)
+    {
+        CanvasBoundary.Children.Clear();
+        Grid Main = new Grid();
+        
+
+
+        CanvasBoundary.Children.Add(Main);
+    }
+
+    private void Icon4_Clicked(object sender, EventArgs e)
+    {
 
     }
 }
