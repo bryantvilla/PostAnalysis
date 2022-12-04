@@ -1,7 +1,4 @@
-using Microsoft.Maui.Controls;
 using Microsoft.Maui.Controls.Shapes;
-using Microsoft.Maui.Layouts;
-using System.Security.Cryptography.X509Certificates;
 
 namespace Resume_Generator;
 
@@ -16,6 +13,8 @@ public partial class Canvas : ContentPage
     Color TertiaryColor = new Color(0,0,250);
     Color FontColor = new Color(0,250,0);
     Color FontColorSecondary = new Color(0, 0, 0);
+    private Task<ImageSource> picturegrab;
+
     public Canvas(ResumeManager db)
     {
 		InitializeComponent();
@@ -173,7 +172,7 @@ public partial class Canvas : ContentPage
         {
             Background = MainColor,
             WidthRequest = 270,
-            HeightRequest = 250,
+            HeightRequest = 200,
             VerticalOptions = LayoutOptions.Start
         };
         MainColorList.Add(rect1);
@@ -183,9 +182,9 @@ public partial class Canvas : ContentPage
         {
             Background = SecondaryColor,
             WidthRequest = 270,
-            HeightRequest = 670,
+            HeightRequest = 750,
             VerticalOptions = LayoutOptions.End,
-            Margin = new Thickness(0,0,0,60)
+            Margin = new Thickness(0,0,0,30)
         };
         SecondaryColorList.Add(rect2);
         One.Children.Add(rect2);
@@ -198,7 +197,7 @@ public partial class Canvas : ContentPage
             WidthRequest = 270,
             CornerRadius = 135,
             Padding = new Thickness(0, 0, 0, 0),
-            Margin = new Thickness(0, 100, 0, 0),
+            Margin = new Thickness(0, 50, 0, 0),
             BorderColor = MainColor,
             Content = new Image()
             {
@@ -216,9 +215,10 @@ public partial class Canvas : ContentPage
         {
             TextColor = FontColor,
             FontAttributes = FontAttributes.Bold,
-            FontSize = 28,
+            FontSize = 26,
             HorizontalTextAlignment = TextAlignment.Center,
-            Margin = new Thickness(0, 385, 0, 0)
+            Padding = new Thickness(10, 0, 10, 0),
+            Margin = new Thickness(0, 0, 0, 20)
         };
         if (user.MiddleName == "")
         {
@@ -231,33 +231,85 @@ public partial class Canvas : ContentPage
                 
         }
         
-        One.Children.Add(name);
 
         //Contact Info
         VerticalStackLayout info = new VerticalStackLayout()
         {
-            Margin = new Thickness(0, 435, 0, 0)
+            Margin = new Thickness(0, 340, 0, 0)
         };
         One.Children.Add(info);
+        info.Add(name);
 
-        Thickness contact = new Thickness(0, 0, 0, 0);
+        Thickness contact = new Thickness(0, 5, 0, 15);
 
         if (user.Profile["StreetAddress1"] != "")
         {
-            info.Add(new Editor() { Text = user.Profile["StreetAddress1"], FontSize = 14, TextColor = FontColor, Margin = contact });
+            HorizontalStackLayout address = new HorizontalStackLayout() { Margin = new Thickness(20,0,0,0) };
+            Ellipse iconbkgd = new Ellipse() { Fill = MainColor, HeightRequest = 30, WidthRequest = 30, Margin = new Thickness(0, 0, -25, 10) };
+            Image houseicon = new Image() { Source = "C:\\Users\\Steven\\Documents\\git\\Resume-Generator\\Resume-Generator\\Resume-Generator\\Resources\\AppIcon\\house_icon.png", WidthRequest = 20, HeightRequest = 20, Margin = new Thickness(0, -12, 15, 0) };
+            Label straddress = new Label() { Text = user.Profile["StreetAddress1"], FontSize = 14, TextColor = FontColor, Margin = contact };
+            address.Add(iconbkgd);
+            address.Add(houseicon);
+            address.Add(straddress);
+            info.Add(address);
         }
         if (user.Profile["Email"] != "")
         {
-            info.Add(new Editor() { Text = user.Profile["Email"], FontSize = 14, TextColor = FontColor, Margin = contact });
+            HorizontalStackLayout email = new HorizontalStackLayout() { Margin = new Thickness(20, 0, 0, 0) };
+            Ellipse iconbkgd = new Ellipse() { Fill = MainColor, HeightRequest = 30, WidthRequest = 30, Margin = new Thickness(0, 0, -25, 10) };
+            Image mailicon = new Image() { Source = "C:\\Users\\Steven\\Documents\\git\\Resume-Generator\\Resume-Generator\\Resume-Generator\\Resources\\AppIcon\\mail_icon2.png", WidthRequest = 20, HeightRequest = 20, Margin = new Thickness(0, -10, 15, 0) };
+            Label emailaddr = new Label() { Text = user.Profile["Email"], FontSize = 14, TextColor = FontColor, Margin = contact };
+            email.Add(iconbkgd);
+            email.Add(mailicon);
+            email.Add(emailaddr);   
+            info.Add(email);
         }
         if (user.Profile["PhoneNo"] != "")
         {
-            info.Add(new Editor() { Text = user.Profile["PhoneNo"], FontSize = 14, TextColor = FontColor, Margin = contact });
+            HorizontalStackLayout phone = new HorizontalStackLayout() { Margin = new Thickness(20, 0, 0, 0) };
+            Ellipse iconbkgd = new Ellipse() { Fill = MainColor, HeightRequest = 30, WidthRequest = 30, Margin = new Thickness(0, 0, -25, 10) };
+            Image phoneicon = new Image() { Source = "C:\\Users\\Steven\\Documents\\git\\Resume-Generator\\Resume-Generator\\Resume-Generator\\Resources\\AppIcon\\phone_icon.png", WidthRequest = 20, HeightRequest = 20, Margin = new Thickness(0, -10, 15, 0) };
+            Label phonenum = new Label() { Text = user.Profile["PhoneNo"], FontSize = 14, TextColor = FontColor, Margin = contact };
+            phone.Add(iconbkgd);
+            phone.Add(phoneicon);
+            phone.Add(phonenum);
+            info.Add(phone);
         }
         if (user.Profile["URL"] != "")
         {
-            info.Add(new Editor() { Text = user.Profile["URL"], FontSize = 14, TextColor = FontColor, Margin = contact });
+            HorizontalStackLayout urlline = new HorizontalStackLayout() { Margin = new Thickness(20, 0, 0, 0) };
+            Ellipse iconbkgd = new Ellipse() { Fill = MainColor, HeightRequest = 30, WidthRequest = 30, Margin = new Thickness(0, 0, -25, 10) };
+            Image webicon = new Image() { Source = "C:\\Users\\Steven\\Documents\\git\\Resume-Generator\\Resume-Generator\\Resume-Generator\\Resources\\AppIcon\\web_icon.png", WidthRequest = 20, HeightRequest = 20, Margin = new Thickness(0, -10, 15, 0) };
+            Label website = new Label() { Text = user.Profile["URL"], FontSize = 14, TextColor = FontColor, Margin = contact };
+            urlline.Add(iconbkgd);
+            urlline.Add(webicon);
+            urlline.Add(website);
+            info.Add(urlline);
         }
+
+
+        // Skills Section
+
+        Label skillstitle = new Label()
+        {
+            Text = "Skills",
+            FontSize = 24,
+            FontAttributes = FontAttributes.Bold,
+            TextColor = MainColor,
+            HorizontalTextAlignment = TextAlignment.Center,
+            Margin = new Thickness(0,10,0,10)
+        };
+        info.Add(skillstitle);
+
+        foreach (var item in user.Skills)
+        {
+            if (item["SkillInclude"] == "True")
+            {
+                info.Add(new Label() { Text = "• " + item["Skill"] + ": " + item["Proficiency"], FontSize = 14, TextColor = FontColor, Margin = new Thickness(20, 0, 0, 10) });
+            }
+        }
+
+
 
 
 
@@ -500,6 +552,18 @@ public partial class Canvas : ContentPage
     private void Icon4_Clicked(object sender, EventArgs e)
     {
 
+    }
+
+    private async void Generate_Clicked(object sender, EventArgs e)
+    {
+        var result = await CanvasBoundary.CaptureAsync();
+        var stream = await result.OpenReadAsync();
+
+        using MemoryStream memoryStream = new();
+        await stream.CopyToAsync(memoryStream);
+
+        
+        File.WriteAllBytes("C:\\Users\\Steven\\Desktop\\newResume.png", memoryStream.ToArray());
     }
 }
 

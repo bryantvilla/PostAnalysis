@@ -36,7 +36,7 @@
                     <Button x:Name="FontColorSecondaryBtn" Style="{StaticResource ColorBtn}" Clicked="FontColorSecondaryBtn_Clicked"/>
 
                 </HorizontalStackLayout>
-                <Button Grid.Column="1" Text="Generate" Style="{StaticResource Generate}" />
+                <Button Grid.Column="1" Text="Generate" Style="{StaticResource Generate}" Clicked="Generate_Clicked"/>
 
             </Grid>
             <Grid x:Name="CanvasBoundary" Grid.Row="1" HeightRequest="964" VerticalOptions="Start">
