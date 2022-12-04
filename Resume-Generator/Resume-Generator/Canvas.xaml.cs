@@ -22,7 +22,6 @@ public partial class Canvas : ContentPage
         user = db;
         MainColorList = new List<Rectangle>();
         SecondaryColorList = new List<Rectangle>();
-        //FirstName.Text = db.FirstName;
         BackgroundColorBtn.BackgroundColor = BackGroundColor;
         MainColorBtn.BackgroundColor = MainColor;
         SecondaryColorBtn.BackgroundColor = SecondaryColor;
@@ -64,6 +63,8 @@ public partial class Canvas : ContentPage
         });
 
     }
+
+
 
 	private void ProfileBtn_Clicked(object sender, EventArgs e)
 	{
@@ -207,20 +208,60 @@ public partial class Canvas : ContentPage
             }
         };
         One.Children.Add(mainicon);
-        
 
+        
+        
         // First Name
         Label name = new Label()
         {
-            Text = user.FirstName + ' ' + user.MiddleName + ' ' + user.LastName,
             TextColor = FontColor,
             FontAttributes = FontAttributes.Bold,
             FontSize = 28,
-            //FontAutoScalingEnabled = true,
             HorizontalTextAlignment = TextAlignment.Center,
-            Margin = new Thickness(0, 410, 0, 0)
+            Margin = new Thickness(0, 385, 0, 0)
         };
+        if (user.MiddleName == "")
+        {
+
+            name.Text = user.FirstName + ' ' + user.LastName;
+        } 
+        else 
+        {
+            name.Text = user.FirstName + ' ' + user.MiddleName + ' ' + user.LastName;
+                
+        }
+        
         One.Children.Add(name);
+
+        //Contact Info
+        VerticalStackLayout info = new VerticalStackLayout()
+        {
+            Margin = new Thickness(0, 435, 0, 0)
+        };
+        One.Children.Add(info);
+
+        Thickness contact = new Thickness(0, 0, 0, 0);
+
+        if (user.Profile["StreetAddress1"] != "")
+        {
+            info.Add(new Editor() { Text = user.Profile["StreetAddress1"], FontSize = 14, TextColor = FontColor, Margin = contact });
+        }
+        if (user.Profile["Email"] != "")
+        {
+            info.Add(new Editor() { Text = user.Profile["Email"], FontSize = 14, TextColor = FontColor, Margin = contact });
+        }
+        if (user.Profile["PhoneNo"] != "")
+        {
+            info.Add(new Editor() { Text = user.Profile["PhoneNo"], FontSize = 14, TextColor = FontColor, Margin = contact });
+        }
+        if (user.Profile["URL"] != "")
+        {
+            info.Add(new Editor() { Text = user.Profile["URL"], FontSize = 14, TextColor = FontColor, Margin = contact });
+        }
+
+
+
+
         // First Column End
 
         // Second Column Start
@@ -232,8 +273,10 @@ public partial class Canvas : ContentPage
         VerticalStackLayout vertstack = new VerticalStackLayout();
         Two.Children.Add(vertstack);
 
+
         // Begin Education with title
-        Label edtitle = new Label()
+        
+        Editor edtitle = new Editor()
         {
             Text = "Education",
             FontSize = 24,
@@ -246,32 +289,196 @@ public partial class Canvas : ContentPage
         // Education Details
         foreach (var item in user.Education)
         {
-            /* foreach (var kvp in item)
+            if (item["EduInclude"] == "True")
             {
-                Editor school_editor = new Editor();
-                school_editor.HeightRequest = 10;
-                school_editor.Text = kvp.Value + "\nSome text";
-                school_editor.TextColor = FontColor;
-                school_editor.FontSize = 8;
-                accessor.Add(school_editor);
-            }*/
-            Editor left_side = new Editor()
-            {
-                Text = item["SchoolName"] + "\n" + item["EducationalLevel"],
-                TextColor = FontColor
-            };
-            Editor right_side = new Editor()
-            {
-                Text = item["EduToYYYY"],
-                HorizontalTextAlignment = TextAlignment.End
-            };
-            
-            HorizontalStackLayout education_horiz = new HorizontalStackLayout();
-            education_horiz.Add(left_side);
-            education_horiz.Add(right_side);
-            vertstack.Add(education_horiz);
+                HorizontalStackLayout top_line_ed = new HorizontalStackLayout()
+                {
+                    Margin = new Thickness(0,-5,0,0)
+                };
+                Editor school_name = new Editor()
+                {
+                    Text = item["SchoolName"],
+                    FontSize = 18,
+                    FontAttributes = FontAttributes.Bold,
+                    TextColor = MainColor,
+                    HorizontalTextAlignment = TextAlignment.Start,
+                    Margin = new Thickness(0, 0, 0, 0),
+                    WidthRequest = 320
+                };
+                Editor school_endyear = new Editor()
+                {
+                    Text = item["EduToYYYY"],
+                    TextColor = FontColor,
+                    FontSize = 12,
+                    VerticalTextAlignment = TextAlignment.Center,
+                    HorizontalOptions = LayoutOptions.EndAndExpand,
+                    HorizontalTextAlignment = TextAlignment.End,
+                    AutoSize = EditorAutoSizeOption.Disabled,
+                    WidthRequest = 80
+                };
+                top_line_ed.Add(school_name);
+                top_line_ed.Add(school_endyear);
+                Editor school_location = new Editor()
+                {
+                    Text = item["DegreeCity"] + ", " + item["EduProvince"],
+                    TextColor = FontColor,
+                    FontSize = 14,
+                    HorizontalOptions = LayoutOptions.StartAndExpand,
+                    Margin = new Thickness(0, -12, 0, 10),
+                    WidthRequest = 400
+                };
+                Editor school_degree = new Editor()
+                {
+                    Text = item["EducationalLevel"] + " in " + item["FieldOfStudy"],
+                    TextColor = FontColor,
+                    FontSize = 14,
+                    HorizontalOptions = LayoutOptions.StartAndExpand,
+                    Margin = new Thickness(0, -22, 0, 10),
+                    WidthRequest = 400
+                };
+                vertstack.Add(top_line_ed);
+                vertstack.Add(school_location);
+                vertstack.Add(school_degree);
+            }
         }
-        // Second Column End
+        // End Education
+
+
+
+        // Begin Work Experience Details
+        Editor worktitle = new Editor()
+        {
+            Text = "Work Experience",
+            FontSize = 24,
+            FontAttributes = FontAttributes.Bold,
+            TextColor = MainColor,
+            HorizontalTextAlignment = TextAlignment.Center
+        };
+        vertstack.Children.Add(worktitle);
+        foreach (var item in user.Experience)
+        {
+            if (item["ExpInclude"] == "True")
+            {
+                HorizontalStackLayout top_line_exp = new HorizontalStackLayout()
+                {
+                    Margin = new Thickness(0, -5, 0, 0)
+                };
+                Editor work_name = new Editor()
+                {
+                    Text = item["Company"],
+                    FontSize = 18,
+                    FontAttributes = FontAttributes.Bold,
+                    TextColor = MainColor,
+                    HorizontalTextAlignment = TextAlignment.Start,
+                    Margin = new Thickness(0, 0, 0, 0),
+                    WidthRequest = 275
+                };
+                Editor work_years = new Editor()
+                {
+                    Text = item["ExpFromMM"] + "/" + item["ExpFromYYYY"] + " - " + item["ExpToMM"] + "/" + item["ExpToYYYY"],
+                    TextColor = FontColor,
+                    FontSize = 12,
+                    VerticalTextAlignment = TextAlignment.Center,
+                    HorizontalOptions = LayoutOptions.EndAndExpand,
+                    HorizontalTextAlignment = TextAlignment.End,
+                    AutoSize = EditorAutoSizeOption.Disabled,
+                    WidthRequest = 125
+                };
+                top_line_exp.Add(work_name);
+                top_line_exp.Add(work_years);
+                vertstack.Add(top_line_exp);
+                Editor work_pos = new Editor()
+                {
+                    Text = item["Position"],
+                    FontSize = 14,
+                    TextColor = MainColor,
+                    HorizontalTextAlignment = TextAlignment.Start,
+                    Margin = new Thickness(0, -12, 0, 0),
+                    WidthRequest = 400
+                };
+                vertstack.Add(work_pos);
+                Editor work_location = new Editor()
+                {
+                    Text = item["ExpCity"] + ", " + item["ExpProvince"] + ", " + item["ExpCountry"],
+                    TextColor = FontColor,
+                    FontSize = 12,
+                    HorizontalOptions = LayoutOptions.StartAndExpand,
+                    Margin = new Thickness(0, -12, 0, 10),
+                    WidthRequest = 400
+                };
+                vertstack.Add(work_location);
+                Editor work_desc = new Editor()
+                {
+                    Text = item["ExpDescription"],
+                    TextColor = FontColor,
+                    FontSize = 12,
+                    HorizontalOptions = LayoutOptions.StartAndExpand,
+                    Margin = new Thickness(0, -22, 0, 10),
+                    WidthRequest = 400
+                };
+                vertstack.Add(work_desc);
+            }
+        }
+        // End Work Experience
+
+        // Begin Certifications Details
+        Editor certstitle = new Editor()
+        {
+            Text = "Certifications & Awards",
+            FontSize = 24,
+            FontAttributes = FontAttributes.Bold,
+            TextColor = MainColor,
+            HorizontalTextAlignment = TextAlignment.Center
+        };
+        vertstack.Children.Add(certstitle);
+        foreach (var item in user.Certifications)
+        {
+            if (item["CertInclude"] == "True")
+            {
+                HorizontalStackLayout top_line_certs = new HorizontalStackLayout()
+                {
+                    Margin = new Thickness(0, -5, 0, 0)
+                };
+                Editor cert_name = new Editor()
+                {
+                    Text = item["Certification"],
+                    FontSize = 18,
+                    FontAttributes = FontAttributes.Bold,
+                    TextColor = MainColor,
+                    HorizontalTextAlignment = TextAlignment.Start,
+                    Margin = new Thickness(0, 0, 0, 0),
+                    WidthRequest = 275
+                };
+                Editor cert_date = new Editor()
+                {
+                    Text = "Achieved " + item["CertFromMM"] + "/" + item["CertFromYYYY"],
+                    TextColor = FontColor,
+                    FontSize = 12,
+                    VerticalTextAlignment = TextAlignment.Center,
+                    HorizontalOptions = LayoutOptions.EndAndExpand,
+                    HorizontalTextAlignment = TextAlignment.End,
+                    AutoSize = EditorAutoSizeOption.Disabled,
+                    WidthRequest = 125
+                };
+                top_line_certs.Add(cert_name);
+                top_line_certs.Add(cert_date);
+                vertstack.Add(top_line_certs);
+                Editor cert_org = new Editor()
+                {
+                    Text = item["Organization"],
+                    FontSize = 16,
+                    TextColor = MainColor,
+                    HorizontalTextAlignment = TextAlignment.Start,
+                    Margin = new Thickness(0, -12, 0, 0),
+                    WidthRequest = 400
+                };
+                vertstack.Add(cert_org);
+            }
+        }
+        // End Certifications
+
+
+        // End Second Column
 
         CanvasBoundary.Children.Add(Main); // VERY IMPORTANT!!!! Add the main grid to the CanvasBoundary Grid in the Xaml
 

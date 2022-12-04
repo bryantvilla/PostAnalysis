@@ -11,6 +11,7 @@ namespace Resume_Generator.Model
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
         public string LastName { get; set; }
+        public string Email { get; set; }
         public Dictionary<string,string> Contact { get; set; }
         public Dictionary<string,string> Address { get; set; }
         public List<Dictionary<string,string>> Education { get; set; }
