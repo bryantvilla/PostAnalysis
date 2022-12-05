@@ -668,8 +668,270 @@ public partial class Canvas : ContentPage
         Bottom.Children.Add(left);
         Bottom.Children.Add(right);
 
-        left.Add(new Label { Text = "Left Column", TextColor = black, HorizontalTextAlignment = TextAlignment.Start });
-        right.Add(new Label { Text = "Right Column", TextColor = black, HorizontalTextAlignment = TextAlignment.Start });
+        //left.Add(new Label { Text = "Left Column", TextColor = black, HorizontalTextAlignment = TextAlignment.Start });
+        //right.Add(new Label { Text = "Right Column", TextColor = black, HorizontalTextAlignment = TextAlignment.Start });
+
+        // Left Column: Education
+        Editor edtitle = new Editor()
+        {
+            Text = "Education",
+            FontSize = 20,
+            FontAttributes = FontAttributes.Bold,
+            TextColor = black,
+            HorizontalTextAlignment = TextAlignment.Start
+        };
+        left.Add(edtitle);
+
+        // Education Details
+        foreach (var item in user.Education)
+        {
+            if (item["EduInclude"] == "True")
+            {
+                HorizontalStackLayout top_line_ed = new HorizontalStackLayout()
+                {
+                    Margin = new Thickness(0, -5, 0, 0)
+                };
+                Editor school_name = new Editor()
+                {
+                    Text = item["SchoolName"],
+                    FontSize = 14,
+                    FontAttributes = FontAttributes.Bold,
+                    TextColor = MainColor,
+                    HorizontalTextAlignment = TextAlignment.Start,
+                    Margin = new Thickness(0, 0, 0, 0),
+                    WidthRequest = 150
+                };
+                Editor school_endyear = new Editor()
+                {
+                    Text = item["EduToYYYY"],
+                    TextColor = FontColor,
+                    FontSize = 10,
+                    Margin = new Thickness(80, 0, 0, 0),
+                    VerticalTextAlignment = TextAlignment.Center,
+                    HorizontalOptions = LayoutOptions.EndAndExpand,
+                    HorizontalTextAlignment = TextAlignment.End,
+                    AutoSize = EditorAutoSizeOption.Disabled,
+                    WidthRequest = 80
+                };
+                top_line_ed.Add(school_name);
+                top_line_ed.Add(school_endyear);
+                Editor school_location = new Editor()
+                {
+                    Text = item["DegreeCity"] + ", " + item["EduProvince"],
+                    TextColor = FontColor,
+                    FontSize = 10,
+                    HorizontalOptions = LayoutOptions.StartAndExpand,
+                    Margin = new Thickness(0, -5, 0, 10),
+                    WidthRequest = 200
+                };
+                Editor school_degree = new Editor()
+                {
+                    Text = item["EducationalLevel"] + " in " + item["FieldOfStudy"],
+                    TextColor = FontColor,
+                    FontSize = 10,
+                    HorizontalOptions = LayoutOptions.StartAndExpand,
+                    Margin = new Thickness(0, -5, 0, 10),
+                    WidthRequest = 200
+                };
+                left.Add(top_line_ed);
+                left.Add(school_location);
+                left.Add(school_degree);
+            }
+        }
+        // End Education
+
+        // Left Column: Work Experience
+        Editor worktitle = new Editor()
+        {
+            Text = "Work Experience",
+            FontSize = 20,
+            FontAttributes = FontAttributes.Bold,
+            TextColor = black,
+            HorizontalTextAlignment = TextAlignment.Start
+        };
+        left.Children.Add(worktitle);
+        foreach (var item in user.Experience)
+        {
+            if (item["ExpInclude"] == "True")
+            {
+                HorizontalStackLayout top_line_exp = new HorizontalStackLayout()
+                {
+                    Margin = new Thickness(0, -5, 0, 0)
+                };
+                Editor work_name = new Editor()
+                {
+                    Text = item["Company"],
+                    FontSize = 14,
+                    FontAttributes = FontAttributes.Bold,
+                    TextColor = MainColor,
+                    Margin = new Thickness(0, 0, 10, 0),
+                    HorizontalTextAlignment = TextAlignment.Start,
+                    WidthRequest = 200
+                };
+                Editor work_years = new Editor()
+                {
+                    Text = item["ExpFromMM"] + "/" + item["ExpFromYYYY"] + " - " + item["ExpToMM"] + "/" + item["ExpToYYYY"],
+                    TextColor = FontColor,
+                    FontSize = 10,
+                    VerticalTextAlignment = TextAlignment.Center,
+                    HorizontalOptions = LayoutOptions.End,
+                    HorizontalTextAlignment = TextAlignment.End,
+                    AutoSize = EditorAutoSizeOption.Disabled,
+                    WidthRequest = 100
+                };
+                top_line_exp.Add(work_name);
+                top_line_exp.Add(work_years);
+                left.Add(top_line_exp);
+                Editor work_pos = new Editor()
+                {
+                    Text = item["Position"],
+                    FontSize = 10,
+                    TextColor = MainColor,
+                    HorizontalOptions = LayoutOptions.Start,
+                    HorizontalTextAlignment = TextAlignment.Start,
+                    Margin = new Thickness(0, -5, 0, 0),
+                    WidthRequest = 200
+                };
+                left.Add(work_pos);
+                Editor work_location = new Editor()
+                {
+                    Text = item["ExpCity"] + ", " + item["ExpProvince"] + ", " + item["ExpCountry"],
+                    TextColor = FontColor,
+                    FontSize = 10,
+                    HorizontalOptions = LayoutOptions.Start,
+                    Margin = new Thickness(0, -5, 0, 0),
+                    WidthRequest = 200
+                };
+                left.Add(work_location);
+                Editor work_desc = new Editor()
+                {
+                    Text = item["ExpDescription"],
+                    TextColor = FontColor,
+                    FontSize = 10,
+                    HorizontalOptions = LayoutOptions.Start,
+                    Margin = new Thickness(0, -5, 0, 0),
+                    WidthRequest = 200,
+                    AutoSize = EditorAutoSizeOption.TextChanges,
+                };
+                left.Add(work_desc);
+            }
+        }
+        // End Work Experience
+
+        // Right Column: Certifications
+        Editor certificationsTitle = new Editor()
+        {
+            Text = "Certifications & Awards",
+            FontSize = 20,
+            FontAttributes = FontAttributes.Bold,
+            TextColor = black,
+            HorizontalTextAlignment = TextAlignment.Start
+        };
+        right.Add(certificationsTitle);
+
+        foreach (var item in user.Certifications)
+        {
+            if (item["CertInclude"] == "True")
+            {
+                HorizontalStackLayout hsl_certs = new HorizontalStackLayout()
+                {
+                    Margin = new Thickness(0, -5, 0, 0)
+                };
+                Editor cert_name = new Editor()
+                {
+                    Text = item["Certification"],
+                    FontSize = 14,
+                    FontAttributes = FontAttributes.Bold,
+                    TextColor = MainColor,
+                    HorizontalTextAlignment = TextAlignment.Start,
+                    Margin = new Thickness(0, 0, 0, 0),
+                    WidthRequest = 200
+                };
+                Editor cert_date = new Editor()
+                {
+                    Text = "Achieved " + item["CertFromMM"] + "/" + item["CertFromYYYY"],
+                    TextColor = FontColor,
+                    FontSize = 10,
+                    VerticalTextAlignment = TextAlignment.End,
+                    Margin = new Thickness(35, 0, 0, 0),
+                    HorizontalTextAlignment = TextAlignment.End,
+                    AutoSize = EditorAutoSizeOption.Disabled,
+                    WidthRequest = 75
+                };
+                hsl_certs.Add(cert_name);
+                hsl_certs.Add(cert_date);
+                right.Add(hsl_certs);
+                Editor cert_org = new Editor()
+                {
+                    Text = item["Organization"],
+                    FontSize = 10,
+                    TextColor = MainColor,
+                    HorizontalOptions = LayoutOptions.Start,
+                    HorizontalTextAlignment = TextAlignment.Start,
+                    Margin = new Thickness(0, 0, 0, 0),
+                    WidthRequest = 200
+                };
+                right.Add(cert_org);
+            }
+        }
+        // End Certifications
+
+        // Right Column: Skills
+        Editor skillsTitle = new Editor()
+        {
+            Text = "Skills",
+            FontSize = 20,
+            FontAttributes = FontAttributes.Bold,
+            TextColor = black,
+            HorizontalTextAlignment = TextAlignment.Start,
+            Margin = new Thickness(0, 10, 0, 0)
+        };
+        right.Add(skillsTitle);
+
+        foreach (var item in user.Skills)
+        {
+            if (item["SkillInclude"] == "True")
+            {
+                HorizontalStackLayout hsl_skills = new HorizontalStackLayout()
+                {
+                    Margin = new Thickness(0, 10, 0, 0)
+                };
+                Editor skill_name = new Editor()
+                {
+                    Text = item["Skill"],
+                    FontSize = 14,
+                    FontAttributes = FontAttributes.Bold,
+                    TextColor = MainColor,
+                    HorizontalTextAlignment = TextAlignment.Start,
+                    Margin = new Thickness(0, 0, 0, 0),
+                    WidthRequest = 200
+                };
+                Editor skill_proficiency = new Editor()
+                {
+                    Text = item["Proficiency"],
+                    TextColor = FontColor,
+                    FontSize = 10,
+                    VerticalTextAlignment = TextAlignment.End,
+                    Margin = new Thickness(35, 0, 0, 0),
+                    HorizontalTextAlignment = TextAlignment.End,
+                    AutoSize = EditorAutoSizeOption.Disabled,
+                    WidthRequest = 75
+                };
+                // COME BACK AND conditionally add proficiency
+                /* if (item["Category"] != null)
+                {
+                    //skill_proficiency.Text += " (" + item["Category"] + ")";
+                    Console.Write(item["Category"].ToString());
+                    Console.Write("Hello World!");
+                } */
+                hsl_skills.Add(skill_name);
+                hsl_skills.Add(skill_proficiency);
+                right.Add(hsl_skills);
+            }
+        }
+        // End Skills
+
+        // End Right Column
 
         CanvasBoundary.Children.Add(vsl);
     }
