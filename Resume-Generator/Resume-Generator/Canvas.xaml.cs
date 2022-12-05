@@ -1,4 +1,9 @@
 using Microsoft.Maui.Controls.Shapes;
+using iText.IO.Image;
+using iText.Kernel.Pdf;
+using iText.Layout;
+using iText.Layout.Element;
+using Image = Microsoft.Maui.Controls.Image;
 using Path = System.IO.Path;
 
 namespace Resume_Generator;
@@ -568,11 +573,20 @@ public partial class Canvas : ContentPage
 
     public async void Generate_Clicked(object sender, EventArgs e)
     {
+        string filename = await DisplayPromptAsync("Saving File", "What would you like to name your Resume file? A .pdf and .png file will be created.");
+        if (filename == null)
+        {
+            await DisplayAlert("Cancelled", "Process Cancelled", "Ok");
+            return;
+        }
+
         string path = null;
 
         path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
 
-        string filepath = Path.Combine(path, "newResume.png");
+        string filepath = Path.Combine(path, filename + ".png");
+        string pdffilepath = Path.Combine(path, filename + ".pdf");
+
 
         var result = await CanvasBoundary.CaptureAsync();
         var stream = await result.OpenReadAsync();
@@ -580,8 +594,25 @@ public partial class Canvas : ContentPage
         using MemoryStream memoryStream = new();
         await stream.CopyToAsync(memoryStream);
 
-        
+
         File.WriteAllBytes(filepath, memoryStream.ToArray());
+
+        ImageData imageData = ImageDataFactory.Create(filepath);
+        PdfDocument pdfDocument = new PdfDocument(new PdfWriter(pdffilepath));
+        Document document = new Document(pdfDocument);
+
+        iText.Layout.Element.Image image = new iText.Layout.Element.Image(imageData);
+        image.SetWidth(pdfDocument.GetDefaultPageSize().GetWidth());
+        image.SetAutoScaleHeight(true);
+
+        document.SetMargins(0, 0, 0, 0);
+        document.Add(image);
+        pdfDocument.Close();
+        document.Close();
+
+        await DisplayAlert("Success","File created successfully in your 'Documents' folder.","Ok");
+
+
     }
 }
 
