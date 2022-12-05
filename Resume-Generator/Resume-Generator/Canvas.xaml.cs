@@ -152,6 +152,9 @@ public partial class Canvas : ContentPage
     // Resume Template One Function
     private void Icon1_Clicked(object sender, EventArgs e)
     {
+        var myAssembly = typeof(Canvas).GetType().Assembly;
+        string[] names = myAssembly.GetManifestResourceNames();
+
         // Clear the current template displayed, if any
         if (CanvasBoundary.Children.Count > 0)
         {
@@ -189,6 +192,13 @@ public partial class Canvas : ContentPage
         SecondaryColorList.Add(rect2);
         One.Children.Add(rect2);
 
+        Image mainiconimage = new Image()
+        {
+            WidthRequest = 270,
+            HeightRequest = 270,
+            Source = "person_image.jpg"
+        };
+        
         // Icon
         Frame mainicon = new Frame()
         {
@@ -199,12 +209,7 @@ public partial class Canvas : ContentPage
             Padding = new Thickness(0, 0, 0, 0),
             Margin = new Thickness(0, 50, 0, 0),
             BorderColor = MainColor,
-            Content = new Image()
-            {
-                WidthRequest = 270,
-                HeightRequest = 270,
-                Source = "person_image.jpg"
-            }
+            Content = mainiconimage
         };
         One.Children.Add(mainicon);
 
@@ -246,7 +251,7 @@ public partial class Canvas : ContentPage
         {
             HorizontalStackLayout address = new HorizontalStackLayout() { Margin = new Thickness(20,0,0,0) };
             Ellipse iconbkgd = new Ellipse() { Fill = MainColor, HeightRequest = 30, WidthRequest = 30, Margin = new Thickness(0, 0, -25, 10) };
-            Image houseicon = new Image() { Source = "C:\\Users\\Steven\\Documents\\git\\Resume-Generator\\Resume-Generator\\Resume-Generator\\Resources\\AppIcon\\house_icon.png", WidthRequest = 20, HeightRequest = 20, Margin = new Thickness(0, -12, 15, 0) };
+            Image houseicon = new Image() { Source = ImageSource.FromFile("house_icon.png"), WidthRequest = 20, HeightRequest = 20, Margin = new Thickness(0, -12, 15, 0) };
             Label straddress = new Label() { Text = user.Profile["StreetAddress1"], FontSize = 14, TextColor = FontColor, Margin = contact };
             address.Add(iconbkgd);
             address.Add(houseicon);
@@ -257,7 +262,7 @@ public partial class Canvas : ContentPage
         {
             HorizontalStackLayout email = new HorizontalStackLayout() { Margin = new Thickness(20, 0, 0, 0) };
             Ellipse iconbkgd = new Ellipse() { Fill = MainColor, HeightRequest = 30, WidthRequest = 30, Margin = new Thickness(0, 0, -25, 10) };
-            Image mailicon = new Image() { Source = "C:\\Users\\Steven\\Documents\\git\\Resume-Generator\\Resume-Generator\\Resume-Generator\\Resources\\AppIcon\\mail_icon2.png", WidthRequest = 20, HeightRequest = 20, Margin = new Thickness(0, -10, 15, 0) };
+            Image mailicon = new Image { Source = ImageSource.FromFile("mail_icon2.png"), WidthRequest = 20, HeightRequest = 20, Margin = new Thickness(0, -10, 15, 0) };
             Label emailaddr = new Label() { Text = user.Profile["Email"], FontSize = 14, TextColor = FontColor, Margin = contact };
             email.Add(iconbkgd);
             email.Add(mailicon);
@@ -268,7 +273,7 @@ public partial class Canvas : ContentPage
         {
             HorizontalStackLayout phone = new HorizontalStackLayout() { Margin = new Thickness(20, 0, 0, 0) };
             Ellipse iconbkgd = new Ellipse() { Fill = MainColor, HeightRequest = 30, WidthRequest = 30, Margin = new Thickness(0, 0, -25, 10) };
-            Image phoneicon = new Image() { Source = "C:\\Users\\Steven\\Documents\\git\\Resume-Generator\\Resume-Generator\\Resume-Generator\\Resources\\AppIcon\\phone_icon.png", WidthRequest = 20, HeightRequest = 20, Margin = new Thickness(0, -10, 15, 0) };
+            Image phoneicon = new Image() { Source = ImageSource.FromFile("phone_icon.png"), WidthRequest = 20, HeightRequest = 20, Margin = new Thickness(0, -10, 15, 0) };
             Label phonenum = new Label() { Text = user.Profile["PhoneNo"], FontSize = 14, TextColor = FontColor, Margin = contact };
             phone.Add(iconbkgd);
             phone.Add(phoneicon);
@@ -279,7 +284,7 @@ public partial class Canvas : ContentPage
         {
             HorizontalStackLayout urlline = new HorizontalStackLayout() { Margin = new Thickness(20, 0, 0, 0) };
             Ellipse iconbkgd = new Ellipse() { Fill = MainColor, HeightRequest = 30, WidthRequest = 30, Margin = new Thickness(0, 0, -25, 10) };
-            Image webicon = new Image() { Source = "C:\\Users\\Steven\\Documents\\git\\Resume-Generator\\Resume-Generator\\Resume-Generator\\Resources\\AppIcon\\web_icon.png", WidthRequest = 20, HeightRequest = 20, Margin = new Thickness(0, -10, 15, 0) };
+            Image webicon = new Image() { Source = ImageSource.FromFile("web_icon.png"), WidthRequest = 20, HeightRequest = 20, Margin = new Thickness(0, -10, 15, 0) };
             Label website = new Label() { Text = user.Profile["URL"], FontSize = 14, TextColor = FontColor, Margin = contact };
             urlline.Add(iconbkgd);
             urlline.Add(webicon);
