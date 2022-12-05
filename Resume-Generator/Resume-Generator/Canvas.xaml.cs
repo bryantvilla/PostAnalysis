@@ -541,12 +541,137 @@ public partial class Canvas : ContentPage
 
     private void Icon2_Clicked(object sender, EventArgs e)
     {
+        // Clear the current template displayed, if any
+        if (CanvasBoundary.Children.Count > 0)
+        {
+            CanvasBoundary.Children.Clear();
+        };
+
+        // Main grid housing all content
         CanvasBoundary.Children.Clear();
-        Grid Main = new Grid();
+
+        Color white = new Color(255, 255, 255); // White color
+        Color black = new Color(0, 0, 0); // black color
+        Color red = new Color(255, 0, 0); // red color
+
+        VerticalStackLayout vsl = new VerticalStackLayout();
+
+
+        /* Rectangle topRect = new Rectangle()
+        {
+            Background = white,
+            Stroke = red, // adds outline
+            StrokeThickness = 5, // adds outline
+            WidthRequest = 500,
+            HeightRequest = 300,
+            VerticalOptions = LayoutOptions.Start
+        };
+        MainColorList.Add(topRect);
+        vsl.Add(topRect); */
+
+        // Rectangle to house the Name
+        /* Rectangle rect1 = new Rectangle()
+        {
+            Background = white,
+            Stroke = black, // adds outline
+            StrokeThickness = 3, // adds outline
+            WidthRequest = 370,
+            HeightRequest = 70,
+            VerticalOptions = LayoutOptions.Start,
+            Margin = new Thickness(0, 10, 0, 0)
+        };
+        vsl.Add(rect1); */
+
+        // Place Name in a Label
+        Label name = new Label()
+        {
+            Text = user.FirstName + ' ' + user.MiddleName + ' ' + user.LastName,
+            TextColor = black,
+            FontAttributes = FontAttributes.Bold,
+            FontSize = 28,
+            //FontAutoScalingEnabled = true,
+            HorizontalTextAlignment = TextAlignment.Center,
+            Margin = new Thickness(10, 30, 10, 10) // space the name away from the name border
+        };
+        vsl.Add(name);
+
+        // Place Name in Rectangle 1
+        // COME BACK AND DO THIS
+
+        // Contact Info Displayed Horizontally
+        Editor contactInfo = new Editor()
+        {
+            Margin = new Thickness(10, 10, 10, 10),
+            HorizontalTextAlignment = TextAlignment.Center
+        };
+
+        String contactString = "";
         
+        if (user.Profile["StreetAddress1"] != "")
+        {
+            contactString += user.Profile["StreetAddress1"];
+        }
+
+        if (user.Profile["Email"] != "")
+        {
+            contactString += " | " + user.Profile["Email"];
+        }
+
+        if (user.Profile["PhoneNo"] != "")
+        {
+            contactString += " | " + user.Profile["PhoneNo"];
+        }
+
+        if (user.Profile["URL"] != "")
+        {
+            contactString += " | " + user.Profile["URL"];
+        }
+
+        contactInfo.Text = contactString;
+
+        vsl.Add(contactInfo);
 
 
-        CanvasBoundary.Children.Add(Main);
+        // Icon
+        Frame mainicon = new Frame()
+        {
+            VerticalOptions = LayoutOptions.Start,
+            HeightRequest = 100,
+            WidthRequest = 100,
+            CornerRadius = 50,
+            Padding = new Thickness(0, 0, 0, 0),
+            Margin = new Thickness(0, 25, 0, 0),
+            BorderColor = black,
+            Content = new Image()
+            {
+                WidthRequest = 100,
+                HeightRequest = 100,
+                Source = "C:\\Users\\Paul\\Documents\\GitHub\\Resume-Generator\\Resume-Generator\\Resume-Generator\\Resources\\AppIcon\\house_icon.png"
+            }
+        };
+        vsl.Add(mainicon);
+
+        // Make Grid for bottom 2 columns
+        Grid Bottom = new Grid();
+        Bottom.Margin = new Thickness(0, 20, 0, 0);
+        vsl.Add(Bottom);
+
+        Bottom.ColumnDefinitions.Add(new ColumnDefinition(335));
+        Bottom.ColumnDefinitions.Add(new ColumnDefinition(335));
+
+        VerticalStackLayout left = new VerticalStackLayout();
+        left.Margin = new Thickness(25, 0, 0, 0);
+        VerticalStackLayout right = new VerticalStackLayout();
+        right.Margin = new Thickness(0, 0, 25, 0);
+        Bottom.SetColumn(left, 0);
+        Bottom.SetColumn(right, 1);
+        Bottom.Children.Add(left);
+        Bottom.Children.Add(right);
+
+        left.Add(new Label { Text = "Left Column", TextColor = black, HorizontalTextAlignment = TextAlignment.Start });
+        right.Add(new Label { Text = "Right Column", TextColor = black, HorizontalTextAlignment = TextAlignment.Start });
+
+        CanvasBoundary.Children.Add(vsl);
     }
 
     private void Icon4_Clicked(object sender, EventArgs e)
