@@ -1,4 +1,5 @@
 using Microsoft.Maui.Controls.Shapes;
+using Path = System.IO.Path;
 
 namespace Resume_Generator;
 
@@ -13,7 +14,6 @@ public partial class Canvas : ContentPage
     Color TertiaryColor = new Color(0,0,250);
     Color FontColor = new Color(0,250,0);
     Color FontColorSecondary = new Color(0, 0, 0);
-    private Task<ImageSource> picturegrab;
 
     public Canvas(ResumeManager db)
     {
@@ -528,8 +528,15 @@ public partial class Canvas : ContentPage
             }
         }
         // End Certifications
+        /*string path = null;
 
+        path = Environment.GetFolderPath(Environment.SpecialFolder.LocalizedResources);
 
+        string homeiconpath = Path.Combine(path, "AppIcon\\house_icon.png");
+
+        vertstack.Add(new Label() { Text = path, TextColor = FontColor });
+        vertstack.Add(new Image() { Source = homeiconpath, WidthRequest = 50 });*/
+        
         // End Second Column
 
         CanvasBoundary.Children.Add(Main); // VERY IMPORTANT!!!! Add the main grid to the CanvasBoundary Grid in the Xaml
@@ -554,8 +561,14 @@ public partial class Canvas : ContentPage
 
     }
 
-    private async void Generate_Clicked(object sender, EventArgs e)
+    public async void Generate_Clicked(object sender, EventArgs e)
     {
+        string path = null;
+
+        path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+
+        string filepath = Path.Combine(path, "newResume.png");
+
         var result = await CanvasBoundary.CaptureAsync();
         var stream = await result.OpenReadAsync();
 
@@ -563,7 +576,7 @@ public partial class Canvas : ContentPage
         await stream.CopyToAsync(memoryStream);
 
         
-        File.WriteAllBytes("C:\\Users\\Steven\\Desktop\\newResume.png", memoryStream.ToArray());
+        File.WriteAllBytes(filepath, memoryStream.ToArray());
     }
 }
 
