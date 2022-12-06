@@ -24,6 +24,6 @@ jobs:
     - name: install MAUI workload
       run: dotnet workload install maui
     - name: Test
-      run: dotnet test  --no-build --verbosity normal
+      run: dotnet test Resume-Generator/Resume-Generator.sln --no-build --verbosity normal
     - name: Build
-      run: dotnet build Resume-Generator/Resume-Generator.cspoj -c Release -f:net6.0-windows10.0.19041.0
+      run: dotnet build Resume-Generator/Resume-Generator/Resume-Generator.csproj -c Release -f:net6.0-windows10.0.19041.0
