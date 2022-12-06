@@ -11,7 +11,6 @@ public partial class MainPage : ContentPage
     Skills SkillsRecords = new Skills();
     Education EducationRecords = new Education();
 
-
 	public MainPage(ResumeManager db){
         InitializeComponent();
         this.db = db;
@@ -89,6 +88,7 @@ public partial class MainPage : ContentPage
 		}
 
 	}
+
 	private void createEDURow(Dictionary<string, string> EducationItem) {
 
         HorizontalStackLayout row = new HorizontalStackLayout();
@@ -202,6 +202,7 @@ public partial class MainPage : ContentPage
         EducationRecords.AddToRecords(
             EducationItem["ItemGUID"],
             gridRow, 
+
             btn,
             btnDel,
             SchoolName,
@@ -492,7 +493,6 @@ public partial class MainPage : ContentPage
         Category.Style = App.Current.Resources["TableLabel"] as Style;
         Skill.Style = App.Current.Resources["TableLabel"] as Style;
         Proficiency.Style = App.Current.Resources["TableLabel"] as Style;
-
         btn.Style = App.Current.Resources["TableButton"] as Style;
         btnDel.Style = App.Current.Resources["TableButton"] as Style;
         btnDel.BackgroundColor = new Color(250, 0, 0);
