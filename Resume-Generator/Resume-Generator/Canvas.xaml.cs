@@ -1,4 +1,13 @@
 using Microsoft.Maui.Controls.Shapes;
+using iText.IO.Image;
+using iText.Kernel.Pdf;
+using iText.Layout;
+using iText.Layout.Element;
+using Image = Microsoft.Maui.Controls.Image;
+using Path = System.IO.Path;
+using Microsoft.Maui.Graphics;
+using System.Reflection.Metadata.Ecma335;
+using Microsoft.Maui.Controls;
 
 namespace Resume_Generator;
 
@@ -7,13 +16,23 @@ public partial class Canvas : ContentPage
     ResumeManager user;
     List<Rectangle> MainColorList;
     List<Rectangle> SecondaryColorList;
-    Color BackGroundColor = new Color(255, 255, 255);
-    Color MainColor = new Color(200,50,0);
-    Color SecondaryColor = new Color(0,0,0);
-    Color TertiaryColor = new Color(0,0,250);
-    Color FontColor = new Color(0,250,0);
-    Color FontColorSecondary = new Color(0, 0, 0);
-    private Task<ImageSource> picturegrab;
+    List<Frame> MainColorListFrame;
+    List<Label> MainColorListLabels;
+    List<Editor> MainColorListEditors;
+    List<Label> SecondaryColorListLabels;
+    List<Editor> SecondaryColorListEditors;
+    List<Label> TertiaryColorListLabels;
+    List<Editor> TertiaryColorListEditors;
+    List<Label> PrimaryFontColorListLabels;
+    List<Editor> PrimaryFontColorListEditors;
+    List<Label> SecondaryFontColorListLabels;
+    List<Editor> SecondaryFontColorListEditors;
+    Color BackGroundColor = Color.FromArgb("#ffffff");
+    Color MainColor = Color.FromArgb("#B6862C");
+    Color SecondaryColor = Color.FromArgb("#081E3F");
+    Color TertiaryColor = Color.FromArgb("#CC0066");
+    Color FontColor = Color.FromArgb("#000000");
+    Color FontColorSecondary = Color.FromArgb("#ffffff");
 
     public Canvas(ResumeManager db)
     {
@@ -21,6 +40,17 @@ public partial class Canvas : ContentPage
         user = db;
         MainColorList = new List<Rectangle>();
         SecondaryColorList = new List<Rectangle>();
+        MainColorListFrame = new List<Frame>();
+        MainColorListLabels = new List<Label>();
+        MainColorListEditors = new List<Editor>();
+        SecondaryColorListLabels = new List<Label>();
+        SecondaryColorListEditors = new List<Editor>();
+        TertiaryColorListLabels = new List<Label>();
+        TertiaryColorListEditors = new List<Editor>();
+        PrimaryFontColorListLabels = new List<Label>();
+        PrimaryFontColorListEditors = new List<Editor>();
+        SecondaryFontColorListLabels = new List<Label>();
+        SecondaryFontColorListEditors = new List<Editor>();
         BackgroundColorBtn.BackgroundColor = BackGroundColor;
         MainColorBtn.BackgroundColor = MainColor;
         SecondaryColorBtn.BackgroundColor = SecondaryColor;
@@ -82,68 +112,200 @@ public partial class Canvas : ContentPage
 
     async private void MainColorBtn_Clicked(object sender, EventArgs e)
     {
-        string result = await DisplayPromptAsync("Question 2", "give me an R value", initialValue: "250", maxLength: 3, keyboard: Keyboard.Numeric);
-        if (result != null) {
-            MainColor = new Color(Int32.Parse(result), 0, 0);
+        string result = null;
+
+        result = await DisplayPromptAsync("Layout Main Color", "Enter the hexadecimal value for the color you would like to use.", initialValue: MainColor.ToHex(), maxLength: 7, keyboard: Keyboard.Default);
+
+        if (result == null || result.Length < 6)
+        {
+            result = MainColor.ToHex();
         }
+
+        try
+        {
+            MainColor = Color.FromArgb(result);
+        }
+        catch (System.FormatException)
+        {
+            await DisplayAlert("Cancelled", "Process Cancelled; No valid color given.", "Ok");
+            return;
+        }
+
         MainColorBtn.BackgroundColor = MainColor;
         foreach (var item in MainColorList)
         {
             item.Background = MainColor;
+        }
+        foreach (var item in MainColorListFrame)
+        {
+            item.BorderColor = MainColor;
+        }
+        foreach (var item in MainColorListLabels)
+        {
+            item.TextColor = MainColor;
+        }
+        foreach (var item in MainColorListEditors)
+        {
+            item.TextColor = MainColor;
         }
 
     }
 
     async private void SecondaryColorBtn_Clicked(object sender, EventArgs e)
     {
-        string result = await DisplayPromptAsync("Question 2", "give me an R value", initialValue: "250", maxLength: 3, keyboard: Keyboard.Numeric);
-        if (result != null)
+        string result = null;
+
+        result = await DisplayPromptAsync("Layout Second Color", "Enter the hexadecimal value for the color you would like to use.", initialValue: SecondaryColor.ToHex(), maxLength: 7, keyboard: Keyboard.Default);
+
+        if (result == null)
         {
-            SecondaryColor = new Color(Int32.Parse(result), 0, 0);
+            result = SecondaryColor.ToHex();
         }
+
+        try
+        {
+            SecondaryColor = Color.FromArgb(result);
+        }
+        catch (System.FormatException)
+        {
+            await DisplayAlert("Cancelled", "Process Cancelled; No valid color given.", "Ok");
+            return;
+        }
+
         SecondaryColorBtn.BackgroundColor = SecondaryColor;
+
         foreach (var item in SecondaryColorList)
         {
             item.Background = SecondaryColor;
+        }
+        foreach (var item in SecondaryColorListLabels)
+        {
+            item.TextColor = SecondaryColor;
+        }
+        foreach (var item in SecondaryColorListEditors)
+        {
+            item.TextColor = SecondaryColor;
         }
     }
 
     async private void TertiaryColorBtn_Clicked(object sender, EventArgs e)
     {
-        string result = await DisplayPromptAsync("Question 2", "give me an B value", initialValue: "250", maxLength: 3, keyboard: Keyboard.Numeric);
-        if (result != null)
+        string result = null;
+
+        result = await DisplayPromptAsync("Layout Tertiary Color", "Enter the hexadecimal value for the color you would like to use.", initialValue: TertiaryColor.ToHex(), maxLength: 7, keyboard: Keyboard.Default);
+
+        if (result == null)
         {
-            TertiaryColor = new Color(Int32.Parse(result), 0, 0);
+            result = TertiaryColor.ToHex();
         }
+
+        try
+        {
+            TertiaryColor = Color.FromArgb(result);
+        }
+        catch (System.FormatException)
+        {
+            await DisplayAlert("Cancelled", "Process Cancelled; No valid color given.", "Ok");
+            return;
+        }
+
         TertiaryColorBtn.BackgroundColor = TertiaryColor;
+
+        foreach (var item in TertiaryColorListLabels)
+        {
+            item.TextColor = TertiaryColor;
+        }
+        foreach (var item in TertiaryColorListEditors)
+        {
+            item.TextColor = TertiaryColor;
+        }
     }
 
     async private void FontColorBtn_Clicked(object sender, EventArgs e)
     {
-        string result = await DisplayPromptAsync("Question 2", "give me an G value", initialValue: "250", maxLength: 3, keyboard: Keyboard.Numeric);
-        if (result != null)
+        string result = null;
+
+        result = await DisplayPromptAsync("Primary Font Color", "Enter the hexadecimal value for the color you would like to use.", initialValue: FontColor.ToHex(), maxLength: 7, keyboard: Keyboard.Default);
+
+        if (result == null)
         {
-            FontColor = new Color(Int32.Parse(result), 0, 0);
+            result = FontColor.ToHex();
         }
+
+        try
+        {
+            FontColor = Color.FromArgb(result);
+        }
+        catch (System.FormatException)
+        {
+            await DisplayAlert("Cancelled", "Process Cancelled; No valid color given.", "Ok");
+            return;
+        }
+
         FontColorBtn.BackgroundColor = FontColor;
+
+        foreach (var item in PrimaryFontColorListLabels)
+        {
+            item.TextColor = FontColor;
+        }
+        foreach (var item in PrimaryFontColorListEditors)
+        {
+            item.TextColor = FontColor;
+        }
     }
 
     async private void FontColorSecondaryBtn_Clicked(object sender, EventArgs e)
     {
-        string result = await DisplayPromptAsync("Question 2", "give me an G value", initialValue: "250", maxLength: 3, keyboard: Keyboard.Numeric);
-        if (result != null)
+        string result = null;
+
+        result = await DisplayPromptAsync("Secondary Font Color", "Enter the hexadecimal value for the color you would like to use.", initialValue: FontColorSecondary.ToHex(), maxLength: 7, keyboard: Keyboard.Default);
+
+        if (result == null)
         {
-            FontColorSecondary = new Color(Int32.Parse(result), 0, 0);
+            result = FontColorSecondary.ToHex();
         }
+
+        try
+        {
+            FontColorSecondary = Color.FromArgb(result);
+        }
+        catch (System.FormatException)
+        {
+            await DisplayAlert("Cancelled", "Process Cancelled; No valid color given.", "Ok");
+            return;
+        }
+
         FontColorSecondaryBtn.BackgroundColor = FontColorSecondary;
+
+        foreach (var item in SecondaryFontColorListLabels)
+        {
+            item.TextColor = FontColorSecondary;
+        }
+        foreach (var item in SecondaryFontColorListEditors)
+        {
+            item.TextColor = FontColorSecondary;
+        }
     }
 
     async private void BackgroundColorBtn_Clicked(object sender, EventArgs e)
     {
-        string result = await DisplayPromptAsync("Question 2", "give me an G value", initialValue: "250", maxLength: 3, keyboard: Keyboard.Numeric);
-        if (result != null)
+        string result = null;
+
+        result = await DisplayPromptAsync("Background Color", "Enter the hexadecimal value for the color you would like to use.", initialValue: BackGroundColor.ToHex(), maxLength: 7, keyboard: Keyboard.Default);
+        
+        if (result == null)
         {
-            BackGroundColor = new Color(Int32.Parse(result), 0, 0);
+            result = BackGroundColor.ToHex();
+        }
+
+        try
+        {
+            BackGroundColor = Color.FromArgb(result);
+        }
+        catch (System.FormatException)
+        {
+            await DisplayAlert("Cancelled", "Process Cancelled; No valid color given.", "Ok");
+            return;
         }
         BackgroundColorBtn.BackgroundColor = BackGroundColor;
         CanvasBoundary.BackgroundColor = BackGroundColor;
@@ -152,6 +314,9 @@ public partial class Canvas : ContentPage
     // Resume Template One Function
     private void Icon1_Clicked(object sender, EventArgs e)
     {
+        var myAssembly = typeof(Canvas).GetType().Assembly;
+        string[] names = myAssembly.GetManifestResourceNames();
+
         // Clear the current template displayed, if any
         if (CanvasBoundary.Children.Count > 0)
         {
@@ -189,6 +354,13 @@ public partial class Canvas : ContentPage
         SecondaryColorList.Add(rect2);
         One.Children.Add(rect2);
 
+        Image mainiconimage = new Image()
+        {
+            WidthRequest = 270,
+            HeightRequest = 270,
+            Source = "person_image.jpg"
+        };
+        
         // Icon
         Frame mainicon = new Frame()
         {
@@ -199,21 +371,17 @@ public partial class Canvas : ContentPage
             Padding = new Thickness(0, 0, 0, 0),
             Margin = new Thickness(0, 50, 0, 0),
             BorderColor = MainColor,
-            Content = new Image()
-            {
-                WidthRequest = 270,
-                HeightRequest = 270,
-                Source = "person_image.jpg"
-            }
+            Content = mainiconimage
         };
         One.Children.Add(mainicon);
+        MainColorListFrame.Add(mainicon);
 
         
         
         // First Name
         Label name = new Label()
         {
-            TextColor = FontColor,
+            TextColor = TertiaryColor,
             FontAttributes = FontAttributes.Bold,
             FontSize = 26,
             HorizontalTextAlignment = TextAlignment.Center,
@@ -230,6 +398,7 @@ public partial class Canvas : ContentPage
             name.Text = user.FirstName + ' ' + user.MiddleName + ' ' + user.LastName;
                 
         }
+        TertiaryColorListLabels.Add(name);
         
 
         //Contact Info
@@ -246,8 +415,9 @@ public partial class Canvas : ContentPage
         {
             HorizontalStackLayout address = new HorizontalStackLayout() { Margin = new Thickness(20,0,0,0) };
             Ellipse iconbkgd = new Ellipse() { Fill = MainColor, HeightRequest = 30, WidthRequest = 30, Margin = new Thickness(0, 0, -25, 10) };
-            Image houseicon = new Image() { Source = "C:\\Users\\Steven\\Documents\\git\\Resume-Generator\\Resume-Generator\\Resume-Generator\\Resources\\AppIcon\\house_icon.png", WidthRequest = 20, HeightRequest = 20, Margin = new Thickness(0, -12, 15, 0) };
-            Label straddress = new Label() { Text = user.Profile["StreetAddress1"], FontSize = 14, TextColor = FontColor, Margin = contact };
+            Image houseicon = new Image() { Source = ImageSource.FromFile("house_icon.png"), WidthRequest = 20, HeightRequest = 20, Margin = new Thickness(0, -12, 15, 0) };
+            Label straddress = new Label() { Text = user.Profile["StreetAddress1"], FontSize = 14, TextColor = FontColorSecondary, Margin = contact };
+            SecondaryFontColorListLabels.Add(straddress);
             address.Add(iconbkgd);
             address.Add(houseicon);
             address.Add(straddress);
@@ -257,8 +427,9 @@ public partial class Canvas : ContentPage
         {
             HorizontalStackLayout email = new HorizontalStackLayout() { Margin = new Thickness(20, 0, 0, 0) };
             Ellipse iconbkgd = new Ellipse() { Fill = MainColor, HeightRequest = 30, WidthRequest = 30, Margin = new Thickness(0, 0, -25, 10) };
-            Image mailicon = new Image() { Source = "C:\\Users\\Steven\\Documents\\git\\Resume-Generator\\Resume-Generator\\Resume-Generator\\Resources\\AppIcon\\mail_icon2.png", WidthRequest = 20, HeightRequest = 20, Margin = new Thickness(0, -10, 15, 0) };
-            Label emailaddr = new Label() { Text = user.Profile["Email"], FontSize = 14, TextColor = FontColor, Margin = contact };
+            Image mailicon = new Image { Source = ImageSource.FromFile("mail_icon2.png"), WidthRequest = 20, HeightRequest = 20, Margin = new Thickness(0, -10, 15, 0) };
+            Label emailaddr = new Label() { Text = user.Profile["Email"], FontSize = 14, TextColor = FontColorSecondary, Margin = contact };
+            SecondaryFontColorListLabels.Add(emailaddr);
             email.Add(iconbkgd);
             email.Add(mailicon);
             email.Add(emailaddr);   
@@ -268,8 +439,9 @@ public partial class Canvas : ContentPage
         {
             HorizontalStackLayout phone = new HorizontalStackLayout() { Margin = new Thickness(20, 0, 0, 0) };
             Ellipse iconbkgd = new Ellipse() { Fill = MainColor, HeightRequest = 30, WidthRequest = 30, Margin = new Thickness(0, 0, -25, 10) };
-            Image phoneicon = new Image() { Source = "C:\\Users\\Steven\\Documents\\git\\Resume-Generator\\Resume-Generator\\Resume-Generator\\Resources\\AppIcon\\phone_icon.png", WidthRequest = 20, HeightRequest = 20, Margin = new Thickness(0, -10, 15, 0) };
-            Label phonenum = new Label() { Text = user.Profile["PhoneNo"], FontSize = 14, TextColor = FontColor, Margin = contact };
+            Image phoneicon = new Image() { Source = ImageSource.FromFile("phone_icon.png"), WidthRequest = 20, HeightRequest = 20, Margin = new Thickness(0, -10, 15, 0) };
+            Label phonenum = new Label() { Text = user.Profile["PhoneNo"], FontSize = 14, TextColor = FontColorSecondary, Margin = contact };
+            SecondaryFontColorListLabels.Add(phonenum);
             phone.Add(iconbkgd);
             phone.Add(phoneicon);
             phone.Add(phonenum);
@@ -279,8 +451,9 @@ public partial class Canvas : ContentPage
         {
             HorizontalStackLayout urlline = new HorizontalStackLayout() { Margin = new Thickness(20, 0, 0, 0) };
             Ellipse iconbkgd = new Ellipse() { Fill = MainColor, HeightRequest = 30, WidthRequest = 30, Margin = new Thickness(0, 0, -25, 10) };
-            Image webicon = new Image() { Source = "C:\\Users\\Steven\\Documents\\git\\Resume-Generator\\Resume-Generator\\Resume-Generator\\Resources\\AppIcon\\web_icon.png", WidthRequest = 20, HeightRequest = 20, Margin = new Thickness(0, -10, 15, 0) };
-            Label website = new Label() { Text = user.Profile["URL"], FontSize = 14, TextColor = FontColor, Margin = contact };
+            Image webicon = new Image() { Source = ImageSource.FromFile("web_icon.png"), WidthRequest = 20, HeightRequest = 20, Margin = new Thickness(0, -10, 15, 0) };
+            Label website = new Label() { Text = user.Profile["URL"], FontSize = 14, TextColor = FontColorSecondary, Margin = contact };
+            SecondaryFontColorListLabels.Add(website);
             urlline.Add(iconbkgd);
             urlline.Add(webicon);
             urlline.Add(website);
@@ -295,23 +468,24 @@ public partial class Canvas : ContentPage
             Text = "Skills",
             FontSize = 24,
             FontAttributes = FontAttributes.Bold,
-            TextColor = MainColor,
+            TextColor = TertiaryColor,
             HorizontalTextAlignment = TextAlignment.Center,
             Margin = new Thickness(0,10,0,10)
         };
         info.Add(skillstitle);
+        TertiaryColorListLabels.Add(skillstitle);
+
 
         foreach (var item in user.Skills)
         {
             if (item["SkillInclude"] == "True")
             {
-                info.Add(new Label() { Text = "• " + item["Skill"] + ": " + item["Proficiency"], FontSize = 14, TextColor = FontColor, Margin = new Thickness(20, 0, 0, 10) });
+                Label skill_line = new Label() { Text = "• " + item["Skill"] + ": " + item["Proficiency"], FontSize = 14, TextColor = FontColorSecondary, Margin = new Thickness(20, 0, 0, 10) };
+                info.Add(skill_line);
+                SecondaryFontColorListLabels.Add(skill_line);
+
             }
         }
-
-
-
-
 
 
         // First Column End
@@ -337,6 +511,7 @@ public partial class Canvas : ContentPage
             HorizontalTextAlignment = TextAlignment.Center
         };
         vertstack.Children.Add(edtitle);
+        MainColorListEditors.Add(edtitle);
 
         // Education Details
         foreach (var item in user.Education)
@@ -388,6 +563,10 @@ public partial class Canvas : ContentPage
                     Margin = new Thickness(0, -22, 0, 10),
                     WidthRequest = 400
                 };
+                MainColorListEditors.Add(school_name);
+                PrimaryFontColorListEditors.Add(school_endyear);
+                PrimaryFontColorListEditors.Add(school_location);
+                PrimaryFontColorListEditors.Add(school_degree);
                 vertstack.Add(top_line_ed);
                 vertstack.Add(school_location);
                 vertstack.Add(school_degree);
@@ -407,6 +586,8 @@ public partial class Canvas : ContentPage
             HorizontalTextAlignment = TextAlignment.Center
         };
         vertstack.Children.Add(worktitle);
+        MainColorListEditors.Add(worktitle);
+
         foreach (var item in user.Experience)
         {
             if (item["ExpInclude"] == "True")
@@ -469,6 +650,11 @@ public partial class Canvas : ContentPage
                     WidthRequest = 400
                 };
                 vertstack.Add(work_desc);
+                MainColorListEditors.Add(work_name);
+                PrimaryFontColorListEditors.Add(work_years);
+                MainColorListEditors.Add(work_pos);
+                PrimaryFontColorListEditors.Add(work_location);
+                PrimaryFontColorListEditors.Add(work_desc);
             }
         }
         // End Work Experience
@@ -483,6 +669,8 @@ public partial class Canvas : ContentPage
             HorizontalTextAlignment = TextAlignment.Center
         };
         vertstack.Children.Add(certstitle);
+        MainColorListEditors.Add(certstitle);
+
         foreach (var item in user.Certifications)
         {
             if (item["CertInclude"] == "True")
@@ -518,18 +706,28 @@ public partial class Canvas : ContentPage
                 Editor cert_org = new Editor()
                 {
                     Text = item["Organization"],
-                    FontSize = 16,
-                    TextColor = MainColor,
+                    FontSize = 14,
+                    TextColor = FontColor,
                     HorizontalTextAlignment = TextAlignment.Start,
-                    Margin = new Thickness(0, -12, 0, 0),
+                    Margin = new Thickness(0, -15, 0, 0),
                     WidthRequest = 400
                 };
                 vertstack.Add(cert_org);
+                MainColorListEditors.Add(cert_name);
+                PrimaryFontColorListEditors.Add(cert_date);
+                PrimaryFontColorListEditors.Add(cert_org);
             }
         }
         // End Certifications
+        /*string path = null;
 
+        path = Environment.GetFolderPath(Environment.SpecialFolder.LocalizedResources);
 
+        string homeiconpath = Path.Combine(path, "AppIcon\\house_icon.png");
+
+        vertstack.Add(new Label() { Text = path, TextColor = FontColor });
+        vertstack.Add(new Image() { Source = homeiconpath, WidthRequest = 50 });*/
+        
         // End Second Column
 
         CanvasBoundary.Children.Add(Main); // VERY IMPORTANT!!!! Add the main grid to the CanvasBoundary Grid in the Xaml
@@ -1356,16 +1554,48 @@ public partial class Canvas : ContentPage
         CanvasBoundary.Children.Add(Main);
     }
 
-    private async void Generate_Clicked(object sender, EventArgs e)
+    public async void Generate_Clicked(object sender, EventArgs e)
     {
+        string filename = await DisplayPromptAsync("Saving File", "What would you like to name your Resume file? A .pdf and .png file will be created.");
+        if (filename == null)
+        {
+            await DisplayAlert("Cancelled", "Process Cancelled", "Ok");
+            return;
+        }
+
+        string path = null;
+
+        path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+
+        string filepath = Path.Combine(path, filename + ".png");
+        string pdffilepath = Path.Combine(path, filename + ".pdf");
+
+
         var result = await CanvasBoundary.CaptureAsync();
         var stream = await result.OpenReadAsync();
 
         using MemoryStream memoryStream = new();
         await stream.CopyToAsync(memoryStream);
 
-        
-        File.WriteAllBytes("C:\\Users\\Steven\\Desktop\\newResume.png", memoryStream.ToArray());
+
+        File.WriteAllBytes(filepath, memoryStream.ToArray());
+
+        ImageData imageData = ImageDataFactory.Create(filepath);
+        PdfDocument pdfDocument = new PdfDocument(new PdfWriter(pdffilepath));
+        Document document = new Document(pdfDocument);
+
+        iText.Layout.Element.Image image = new iText.Layout.Element.Image(imageData);
+        image.SetWidth(pdfDocument.GetDefaultPageSize().GetWidth());
+        image.SetAutoScaleHeight(true);
+
+        document.SetMargins(0, 0, 0, 0);
+        document.Add(image);
+        pdfDocument.Close();
+        document.Close();
+
+        await DisplayAlert("Success","File created successfully in your 'Documents' folder.","Ok");
+
+
     }
 }
 
