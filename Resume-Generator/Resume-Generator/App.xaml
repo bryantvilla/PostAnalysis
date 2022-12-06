@@ -12,12 +12,30 @@
         <Color x:Key="FontColorSecondary">#4A7C59</Color>
         <Color x:Key="HighlightColor">#C8D5B9</Color>
         <Color x:Key="DetailColor">#68B0AB</Color>
-
+        <Style TargetType="Label" x:Key="TableHeader">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontAttributes" Value="Bold"/>
+            <Setter Property="VerticalTextAlignment" Value="Start"/>
+            <Setter Property="Margin" Value="0,0,0,10"/>
+            <Setter Property="TextColor" Value="{StaticResource FontColor}"/>
+        </Style>
         <Style TargetType="Label" x:Key="TableLabel">
             <Setter Property="FontSize" Value="14"/>
-            <Setter Property="Margin" Value="15,0,0,0"/>
-            <Setter Property="VerticalTextAlignment" Value="Center"/>
+            <Setter Property="VerticalTextAlignment" Value="Start"/>
+            <Setter Property="Margin" Value="0,0,0,10"/>
             <Setter Property="TextColor" Value="{StaticResource FontColor}"/>
+        </Style>
+        <Style TargetType="CheckBox" x:Key="TableCheck">
+            <Setter Property="VerticalOptions" Value="Start"/>
+            <Setter Property="HeightRequest" Value="25"/>
+            <Setter Property="WidthRequest" Value="25"/>
+        </Style>
+        <Style TargetType="Button" x:Key="TableButton">
+            <Setter Property="VerticalOptions" Value="Start"/>
+            <Setter Property="Margin" Value="2,2,10,10"/>
+            <Setter Property="HeightRequest" Value="25"/>
+            <Setter Property="WidthRequest" Value="25"/>
+            <Setter Property="BackgroundColor" Value="{StaticResource SecondColor}"/>
         </Style>
         <Style TargetType="HorizontalStackLayout" x:Key="Hrz1">
             <Setter Property="BackgroundColor" Value="{StaticResource MainColor}"/>
