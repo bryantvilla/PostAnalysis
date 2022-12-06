@@ -7,8 +7,10 @@ namespace Resume_Generator;
 
 public partial class PostAnalysis : ContentPage
 {
-    public PostAnalysis()
+    ResumeManager db;
+    public PostAnalysis(ResumeManager db)
 	{
+		this.db = db;
 		InitializeComponent();
 		results.Text = "display results here";
 
@@ -16,12 +18,12 @@ public partial class PostAnalysis : ContentPage
 
 	private void ProfileBtn_Clicked(object sender, EventArgs e)
 	{
-		Navigation.PushAsync(new MainPage());
+		Navigation.PushAsync(new MainPage(db));
 	}
 
 	private void CanvasBtn_Clicked(object sender, EventArgs e)
 	{
-		Navigation.PushAsync(new Canvas());
+		Navigation.PushAsync(new Canvas(db));
 	}
 
 	private void LogoutBtn_Clicked(object sender, EventArgs e)

@@ -36,6 +36,9 @@
 	<ItemGroup>
 		<!-- App Icon -->
 		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
+		<MauiImage Include="Resources\AppIcon\mail_icon2.png" />
+		<MauiImage Include="Resources\AppIcon\phone_icon.png" />
+		<MauiImage Include="Resources\AppIcon\web_icon.png" />
 
 		<!-- Splash Screen -->
 		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" />
@@ -46,6 +49,26 @@
 
 		<!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
 		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <AndroidResource Remove="Model\NewFolder\**" />
+	  <Compile Remove="Model\NewFolder\**" />
+	  <EmbeddedResource Remove="Model\NewFolder\**" />
+	  <MauiCss Remove="Model\NewFolder\**" />
+	  <MauiXaml Remove="Model\NewFolder\**" />
+	  <None Remove="Model\NewFolder\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Remove="Resources\AppIcon\house_icon.png" />
+	  <None Remove="Resources\AppIcon\mail_icon2.png" />
+	  <None Remove="Resources\AppIcon\phone_icon.png" />
+	  <None Remove="Resources\AppIcon\web_icon.png" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiImage Include="Resources\AppIcon\house_icon.png" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -71,10 +94,15 @@
 
 	<ItemGroup>
 	  <Folder Include="Resources\Images\ResumeIcons\" />
+	  <Folder Include="Resources\NewFolder\" />
+	  <Folder Include="Resources\ResumeImages\" />
+	  <Folder Include="Resources\Templates\" />
 	</ItemGroup>
 
 	<ItemGroup>
 	  <PackageReference Include="ColorPicker.Maui" Version="1.0.0" />
+	  <PackageReference Include="itext7" Version="7.2.4" />
+	  <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
 	  <PackageReference Include="HtmlAgilityPack" Version="1.11.46" />
 	  <PackageReference Include="nor0x.Maui.ColorPicker" Version="1.0.1" />
 	</ItemGroup>

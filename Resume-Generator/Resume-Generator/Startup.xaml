@@ -3,16 +3,67 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Resume_Generator.Startup"
              BackgroundColor="{StaticResource MainColor}">
-    <VerticalStackLayout>
+    <VerticalStackLayout
+        Margin="80,0,0,0">
         <Label 
-            Text="Thi is the startup page where you pick the user file"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-        <Button
-            x:Name="ConfirmBtn"
-            Text="Confirm"
-            Clicked="ConfirmBtn_Clicked"
-            Style="{StaticResource UnSelectedBtn}"
-            WidthRequest="200"/>
+            Text="Resume Generator"
+            VerticalOptions="Start" 
+            FontSize="25"
+            FontAttributes="Bold"
+            TextColor="{StaticResource HighlightColor}"
+            />
+        <VerticalStackLayout
+            Margin="80,40,0,0">
+            <HorizontalStackLayout
+                Margin="0,0,0,15"
+                MinimumWidthRequest="900">
+                <Label
+                Text="Manage Users"
+                FontSize="18"
+                TextColor="{StaticResource FontColor}"
+                />
+                <Grid>
+                    <ImageButton 
+                        Margin="10,0,0,0" 
+                        Padding="0,0,0,0" 
+                        CornerRadius="0"
+                        Source="C:\Users\maspo\source\repos\Resume-Generator\Resume-Generator\Resume-Generator\Resources\AppIcon\deleteIcon1.png"  
+                        HeightRequest="25" 
+                        WidthRequest="25"
+                        x:Name="DeleteBtn"
+                        BackgroundColor="Transparent"
+                        BorderColor="Transparent"
+                        HorizontalOptions="Center"
+                        Clicked="DeleteBtn_Clicked"
+                        />
+                </Grid>
+                <Grid>
+                    <ImageButton 
+                        Padding="0,0,0,0" 
+                        Margin="5,0,0,0" 
+                        CornerRadius="0"
+                        Source="C:\Users\maspo\source\repos\Resume-Generator\Resume-Generator\Resume-Generator\Resources\AppIcon\addIcon1.png"  
+                        HeightRequest="24" 
+                        WidthRequest="24"
+                        x:Name="NewBtn"
+                        BackgroundColor="Transparent"
+                        BorderColor="Transparent"
+                        HorizontalOptions="Center"
+                        Clicked="NewBtn_Clicked"
+                        />
+                </Grid>
+            </HorizontalStackLayout >
+            <VerticalStackLayout x:Name="UserList">
+
+            </VerticalStackLayout>
+            <VerticalStackLayout x:Name="results">
+                <Label x:Name="testresult"/>
+            </VerticalStackLayout>
+            <Label Text="for now the password will always be password
+                   
+                   
+                   
+                   "/>
+        </VerticalStackLayout>
     </VerticalStackLayout>
 </ContentPage>
