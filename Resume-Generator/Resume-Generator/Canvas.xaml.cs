@@ -480,7 +480,7 @@ public partial class Canvas : ContentPage
         {
             if (item["SkillInclude"] == "True")
             {
-                Label skill_line = new Label() { Text = "• " + item["Skill"] + ": " + item["Proficiency"], FontSize = 14, TextColor = FontColorSecondary, Margin = new Thickness(20, 0, 0, 10) };
+                Label skill_line = new Label() { Text = "Â• " + item["Skill"] + ": " + item["Proficiency"], FontSize = 14, TextColor = FontColorSecondary, Margin = new Thickness(20, 0, 0, 10) };
                 info.Add(skill_line);
                 SecondaryFontColorListLabels.Add(skill_line);
 
