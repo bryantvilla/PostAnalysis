@@ -33,6 +33,9 @@ public partial class Canvas : ContentPage
     Color TertiaryColor = Color.FromArgb("#CC0066");
     Color FontColor = Color.FromArgb("#000000");
     Color FontColorSecondary = Color.FromArgb("#ffffff");
+    List<String> iconList;
+    Image mainiconimage;
+
 
     public Canvas(ResumeManager db)
     {
@@ -58,6 +61,26 @@ public partial class Canvas : ContentPage
         FontColorBtn.BackgroundColor = FontColor;
         FontColorSecondaryBtn.BackgroundColor = FontColorSecondary;
         CanvasBoundary.BackgroundColor = BackGroundColor;
+        mainiconimage = new Image();
+
+        var iconList = new List<String>();
+        iconList.Add("Analysis_one");
+        iconList.Add("Analysis_two");
+        iconList.Add("Analysis_three");
+        iconList.Add("Dentist");
+        iconList.Add("Gavel");
+        iconList.Add("Hard_Hat_Worker");
+        iconList.Add("Instructor");
+        iconList.Add("IT");
+        iconList.Add("Law");
+        iconList.Add("Scientist_one");
+        iconList.Add("Scientist_two");
+        iconList.Add("Stethoscope");
+        iconList.Add("Syringe");
+        iconList.Add("Vet");
+
+        IconPicker.ItemsSource = iconList;
+
 
     }
 	private void createNewCarosel(string imagename) {
@@ -358,7 +381,6 @@ public partial class Canvas : ContentPage
         {
             WidthRequest = 270,
             HeightRequest = 270,
-            Source = "person_image.jpg"
         };
         
         // Icon
@@ -1596,6 +1618,21 @@ public partial class Canvas : ContentPage
         await DisplayAlert("Success","File created successfully in your 'Documents' folder.","Ok");
 
 
+    }
+
+    private async void IconPicker_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        mainiconimage = new Image();
+        var picker = (Picker)sender;
+        int selectedIndex = picker.SelectedIndex;
+        string selectedicon = (string)picker.ItemsSource[selectedIndex];
+        selectedicon = selectedicon.ToLower();
+        await DisplayAlert(selectedicon, selectedicon, "Ok");
+
+        if (selectedIndex != -1)
+        {
+            mainiconimage.Source = ImageSource.FromFile((string)picker.ItemsSource[selectedIndex] + ".png");
+        }
     }
 }
 

@@ -27,14 +27,14 @@
                     <ColumnDefinition/>
                     <ColumnDefinition Width="200"/>
                 </Grid.ColumnDefinitions>
-                <HorizontalStackLayout Grid.Column="0">
+                <HorizontalStackLayout Grid.Column="0" x:Name="TopButtons">
                     <Button x:Name="BackgroundColorBtn" Style="{StaticResource ColorBtn}" Clicked="BackgroundColorBtn_Clicked"/>
                     <Button x:Name="MainColorBtn" Style="{StaticResource ColorBtn}" Clicked="MainColorBtn_Clicked"/>
                     <Button x:Name="SecondaryColorBtn" Style="{StaticResource ColorBtn}" Clicked="SecondaryColorBtn_Clicked"/>
                     <Button x:Name="TertiaryColorBtn" Style="{StaticResource ColorBtn}" Clicked="TertiaryColorBtn_Clicked"/>
                     <Button x:Name="FontColorBtn" Style="{StaticResource ColorBtn}" Clicked="FontColorBtn_Clicked"/>
                     <Button x:Name="FontColorSecondaryBtn" Style="{StaticResource ColorBtn}" Clicked="FontColorSecondaryBtn_Clicked"/>
-
+                    <Picker x:Name="IconPicker" SelectedIndexChanged="IconPicker_SelectedIndexChanged"/>
                 </HorizontalStackLayout>
                 <Button Grid.Column="1" Text="Generate" Style="{StaticResource Generate}" Clicked="Generate_Clicked"/>
 
