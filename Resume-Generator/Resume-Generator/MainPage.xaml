@@ -292,7 +292,6 @@
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="50"/>
                                 <RowDefinition Height="50"/>
-                                <RowDefinition Height="50"/>
                             </Grid.RowDefinitions>
                             <HorizontalStackLayout Grid.Row="0">
                                 <Entry x:Name="Category"
@@ -307,15 +306,6 @@
                                        Placeholder="proficiency"
                                        WidthRequest="100"
                                        Style="{StaticResource addressEntrybox}"/>
-                            </HorizontalStackLayout>
-                            <HorizontalStackLayout Grid.Row="1">
-                                <Entry x:Name="CustomCategory"
-                                       Placeholder="custom"
-                                       WidthRequest="100"
-                                       Style="{StaticResource addressEntrybox}"/>
-                                <Button
-                                Text="Add Category"
-                                Style="{StaticResource UpdateBtn}"/>
                             </HorizontalStackLayout>
                             <HorizontalStackLayout Grid.Row="2">
                                 <Button
