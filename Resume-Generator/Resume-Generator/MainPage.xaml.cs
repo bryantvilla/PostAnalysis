@@ -107,7 +107,7 @@ public partial class MainPage : ContentPage
 
         CheckBox EduInclude = new CheckBox();
         Button btn = new Button();
-        Button btnDel = new Button();
+        ImageButton btnDel = new ImageButton();
         btnDel.Clicked += new EventHandler(EDUdelBtn_Clicked);
         EduInclude.CheckedChanged += new EventHandler<CheckedChangedEventArgs>(EduInclude_Changed);
         
@@ -150,7 +150,8 @@ public partial class MainPage : ContentPage
         EduProvince.Style = App.Current.Resources["TableLabel"] as Style;
         
         btn.Style = App.Current.Resources["TableButton"] as Style;
-        btnDel.Style = App.Current.Resources["TableButton"] as Style;
+        btnDel.Style = App.Current.Resources["ImageTableButton"] as Style;
+        btnDel.Source = ImageSource.FromFile("delete_icon.png");
         btnDel.BackgroundColor = new Color(250, 0, 0);
         gridRow.Children.Add(EduInclude);
         
@@ -182,7 +183,7 @@ public partial class MainPage : ContentPage
         gridRow.Children.Add(EduProvince);
 
         HorizontalStackLayout temp = new HorizontalStackLayout();
-        temp.Children.Add(btn);
+        //temp.Children.Add(btn);
         temp.Children.Add(btnDel);
         gridRow.Children.Add(temp);
 
@@ -202,7 +203,6 @@ public partial class MainPage : ContentPage
         EducationRecords.AddToRecords(
             EducationItem["ItemGUID"],
             gridRow, 
-
             btn,
             btnDel,
             SchoolName,
@@ -308,7 +308,7 @@ public partial class MainPage : ContentPage
 
         CheckBox ExpInclude = new CheckBox();
         Button btn = new Button();
-        Button btnDel = new Button();
+        ImageButton btnDel = new ImageButton();
         btnDel.Clicked += new EventHandler(EXPdelBtn_Clicked);
         ExpInclude.CheckedChanged += new EventHandler<CheckedChangedEventArgs>(ExpInclude_Changed);
 
@@ -354,7 +354,8 @@ public partial class MainPage : ContentPage
         ExpDescription.Style = App.Current.Resources["TableLabel"] as Style;
 
         btn.Style = App.Current.Resources["TableButton"] as Style;
-        btnDel.Style = App.Current.Resources["TableButton"] as Style;
+        btnDel.Style = App.Current.Resources["ImageTableButton"] as Style;
+        btnDel.Source = ImageSource.FromFile("delete_icon.png");
         btnDel.BackgroundColor = new Color(250, 0, 0);
         gridRow.Children.Add(ExpInclude);
 
@@ -385,7 +386,7 @@ public partial class MainPage : ContentPage
         //row.Children.Add(ExpDescription);
 
         HorizontalStackLayout temp = new HorizontalStackLayout();
-        temp.Children.Add(btn);
+        //temp.Children.Add(btn);
         temp.Children.Add(btnDel);
         gridRow.Children.Add(temp);
 
@@ -473,7 +474,7 @@ public partial class MainPage : ContentPage
 
         CheckBox SkillsInclude = new CheckBox();
         Button btn = new Button();
-        Button btnDel = new Button();
+        ImageButton btnDel = new ImageButton();
         btnDel.Clicked += new EventHandler(SKILLSdelBtn_Clicked);
         SkillsInclude.CheckedChanged += new EventHandler<CheckedChangedEventArgs>(SkillsInclude_Changed);
 
@@ -494,7 +495,8 @@ public partial class MainPage : ContentPage
         Skill.Style = App.Current.Resources["TableLabel"] as Style;
         Proficiency.Style = App.Current.Resources["TableLabel"] as Style;
         btn.Style = App.Current.Resources["TableButton"] as Style;
-        btnDel.Style = App.Current.Resources["TableButton"] as Style;
+        btnDel.Style = App.Current.Resources["ImageTableButton"] as Style;
+        btnDel.Source = ImageSource.FromFile("delete_icon.png");
         btnDel.BackgroundColor = new Color(250, 0, 0);
 
         gridRow.Children.Add(SkillsInclude);
@@ -504,7 +506,7 @@ public partial class MainPage : ContentPage
         gridRow.Children.Add(Proficiency);
 
         HorizontalStackLayout temp = new HorizontalStackLayout();
-        temp.Children.Add(btn);
+        //temp.Children.Add(btn);
         temp.Children.Add(btnDel);
         gridRow.Children.Add(temp);
 
@@ -594,7 +596,7 @@ public partial class MainPage : ContentPage
 
         CheckBox CertInclude = new CheckBox();
         Button btn = new Button();
-        Button btnDel = new Button();
+        ImageButton btnDel = new ImageButton();
         btnDel.Clicked += new EventHandler(CERTdelBtn_Clicked);
         CertInclude.CheckedChanged += new EventHandler<CheckedChangedEventArgs>(CertInclude_Changed);
 
@@ -628,7 +630,8 @@ public partial class MainPage : ContentPage
         CertNotApplicable.Style = App.Current.Resources["TableLabel"] as Style;
 
         btn.Style = App.Current.Resources["TableButton"] as Style;
-        btnDel.Style = App.Current.Resources["TableButton"] as Style;
+        btnDel.Style = App.Current.Resources["ImageTableButton"] as Style;
+        btnDel.Source = ImageSource.FromFile("delete_icon.png");
         btnDel.BackgroundColor = new Color(250, 0, 0);
         gridRow.Children.Add(CertInclude);
 
@@ -655,7 +658,7 @@ public partial class MainPage : ContentPage
         gridRow.Children.Add(CertNotApplicable);
 
         HorizontalStackLayout temp = new HorizontalStackLayout();
-        temp.Children.Add(btn);
+        //temp.Children.Add(btn);
         temp.Children.Add(btnDel);
         gridRow.Children.Add(temp);
 
@@ -1074,7 +1077,7 @@ public class Education
     public Dictionary<string, CheckBox> EduInclude;
     public Dictionary<string, Grid> Row;
     Dictionary<string, Button> Btn;
-    public Dictionary<string, Button> BtnDel;
+    public Dictionary<string, ImageButton> BtnDel;
 
     public Education() {
         SchoolName = new Dictionary<string, Label>();
@@ -1090,14 +1093,14 @@ public class Education
         EduInclude = new Dictionary<string, CheckBox>();
         Row = new Dictionary<string, Grid>();
         Btn = new Dictionary<string, Button>();
-        BtnDel = new Dictionary<string, Button>();
+        BtnDel = new Dictionary<string, ImageButton>();
 
     }
 
     public void AddToRecords(   string ItemGUID,
                                 Grid row,
                                 Button btn,
-                                Button btnDel,
+                                ImageButton btnDel,
                                 Label SchoolName,
                                 Label EducationalLevel,
                                 Label FieldOfStudy,
@@ -1158,7 +1161,7 @@ public class Experience
     public Dictionary<string, CheckBox> ExpInclude;
     public Dictionary<string, Grid> Row;
     Dictionary<string, Button> Btn;
-    public Dictionary<string, Button> BtnDel;
+    public Dictionary<string, ImageButton> BtnDel;
 
     public Experience()
     {
@@ -1177,13 +1180,13 @@ public class Experience
         ExpInclude = new Dictionary<string, CheckBox>();
         Row = new Dictionary<string, Grid>();
         Btn = new Dictionary<string, Button>();
-        BtnDel = new Dictionary<string, Button>();
+        BtnDel = new Dictionary<string, ImageButton>();
 
     }
     public void AddToRecords(string ItemGUID,
                             Grid row,
                             Button btn,
-                            Button btnDel,
+                            ImageButton btnDel,
                             Label Company,
                             Label Position,
                             Label ExpCountry,
@@ -1242,7 +1245,7 @@ public class Skills
     public Dictionary<string, CheckBox> SkillsInclude;
     public Dictionary<string, Grid> Row;
     Dictionary<string, Button> Btn;
-    public Dictionary<string, Button> BtnDel;
+    public Dictionary<string, ImageButton> BtnDel;
 
     public Skills()
     {
@@ -1252,14 +1255,14 @@ public class Skills
         SkillsInclude = new Dictionary<string, CheckBox>();
         Row = new Dictionary<string, Grid>();
         Btn = new Dictionary<string, Button>();
-        BtnDel = new Dictionary<string, Button>();
+        BtnDel = new Dictionary<string, ImageButton>();
 
     }
 
     public void AddToRecords(string ItemGUID,
                                 Grid row,
                                 Button btn,
-                                Button btnDel,
+                                ImageButton btnDel,
                                 Label Category,
                                 Label Proficiency,
                                 Label Skill,
@@ -1299,7 +1302,7 @@ public class Certifications
     public Dictionary<string, CheckBox> CertInclude;
     public Dictionary<string, Grid> Row;
     Dictionary<string, Button> Btn;
-    public Dictionary<string, Button> BtnDel;
+    public Dictionary<string, ImageButton> BtnDel;
 
     public Certifications()
     {
@@ -1313,14 +1316,14 @@ public class Certifications
         CertInclude = new Dictionary<string, CheckBox>();
         Row = new Dictionary<string, Grid>();
         Btn = new Dictionary<string, Button>();
-        BtnDel = new Dictionary<string, Button>();
+        BtnDel = new Dictionary<string, ImageButton>();
 
     }
 
     public void AddToRecords(string ItemGUID,
                                 Grid row,
                                 Button btn,
-                                Button btnDel,
+                                ImageButton btnDel,
                                 Label Certification,
                                 Label Organization,
                                 Label CertFromMM,
