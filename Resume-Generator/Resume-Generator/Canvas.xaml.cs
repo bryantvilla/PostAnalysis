@@ -35,6 +35,7 @@ public partial class Canvas : ContentPage
     Color FontColorSecondary = Color.FromArgb("#ffffff");
     List<String> iconList;
     Image mainiconimage;
+    FileImageSource iconimageselected;
 
 
     public Canvas(ResumeManager db)
@@ -61,7 +62,9 @@ public partial class Canvas : ContentPage
         FontColorBtn.BackgroundColor = FontColor;
         FontColorSecondaryBtn.BackgroundColor = FontColorSecondary;
         CanvasBoundary.BackgroundColor = BackGroundColor;
-        mainiconimage = new Image();
+        var temp = ImageSource.FromFile("analysis_one.png");
+        iconimageselected = (FileImageSource) temp;
+
 
         var iconList = new List<String>();
         iconList.Add("Analysis_one");
@@ -344,6 +347,19 @@ public partial class Canvas : ContentPage
         if (CanvasBoundary.Children.Count > 0)
         {
             CanvasBoundary.Children.Clear();
+            MainColorList.Clear();
+            SecondaryColorList.Clear();
+            MainColorListFrame.Clear();
+            MainColorListLabels.Clear();
+            MainColorListEditors.Clear();
+            SecondaryColorListLabels.Clear();
+            SecondaryColorListEditors.Clear();
+            TertiaryColorListLabels.Clear();
+            TertiaryColorListEditors.Clear();
+            PrimaryFontColorListLabels.Clear();
+            PrimaryFontColorListEditors.Clear();
+            SecondaryFontColorListLabels.Clear();
+            SecondaryFontColorListEditors.Clear();
         };
 
         // Main grid housing all content
@@ -377,10 +393,13 @@ public partial class Canvas : ContentPage
         SecondaryColorList.Add(rect2);
         One.Children.Add(rect2);
 
-        Image mainiconimage = new Image()
+        this.mainiconimage = new Image()
         {
             WidthRequest = 270,
             HeightRequest = 270,
+            HorizontalOptions = LayoutOptions.Center,
+            VerticalOptions = LayoutOptions.Center,
+            Source = iconimageselected
         };
         
         // Icon
@@ -393,6 +412,7 @@ public partial class Canvas : ContentPage
             Padding = new Thickness(0, 0, 0, 0),
             Margin = new Thickness(0, 50, 0, 0),
             BorderColor = MainColor,
+            BackgroundColor = MainColor,
             Content = mainiconimage
         };
         One.Children.Add(mainicon);
@@ -765,6 +785,19 @@ public partial class Canvas : ContentPage
         if (CanvasBoundary.Children.Count > 0)
         {
             CanvasBoundary.Children.Clear();
+            MainColorList.Clear();
+            SecondaryColorList.Clear();
+            MainColorListFrame.Clear();
+            MainColorListLabels.Clear();
+            MainColorListEditors.Clear();
+            SecondaryColorListLabels.Clear();
+            SecondaryColorListEditors.Clear();
+            TertiaryColorListLabels.Clear();
+            TertiaryColorListEditors.Clear();
+            PrimaryFontColorListLabels.Clear();
+            PrimaryFontColorListEditors.Clear();
+            SecondaryFontColorListLabels.Clear();
+            SecondaryFontColorListEditors.Clear();
         };
 
         // Main grid housing all content
@@ -852,6 +885,12 @@ public partial class Canvas : ContentPage
 
         vsl.Add(contactInfo);
 
+        this.mainiconimage = new Image()
+        {
+            WidthRequest = 100,
+            HeightRequest = 100,
+            Source = iconimageselected
+        };
 
         // Icon
         Frame mainicon = new Frame()
@@ -863,12 +902,8 @@ public partial class Canvas : ContentPage
             Padding = new Thickness(0, 0, 0, 0),
             Margin = new Thickness(0, 25, 0, 0),
             BorderColor = black,
-            Content = new Image()
-            {
-                WidthRequest = 100,
-                HeightRequest = 100,
-                Source = "C:\\Users\\Paul\\Documents\\GitHub\\Resume-Generator\\Resume-Generator\\Resume-Generator\\Resources\\AppIcon\\house_icon.png"
-            }
+            BackgroundColor = new Color(255, 255, 255),
+            Content = mainiconimage
         };
         vsl.Add(mainicon);
 
@@ -1161,6 +1196,19 @@ public partial class Canvas : ContentPage
         if (CanvasBoundary.Children.Count > 0)
         {
             CanvasBoundary.Children.Clear();
+            MainColorList.Clear();
+            SecondaryColorList.Clear();
+            MainColorListFrame.Clear();
+            MainColorListLabels.Clear();
+            MainColorListEditors.Clear();
+            SecondaryColorListLabels.Clear();
+            SecondaryColorListEditors.Clear();
+            TertiaryColorListLabels.Clear();
+            TertiaryColorListEditors.Clear();
+            PrimaryFontColorListLabels.Clear();
+            PrimaryFontColorListEditors.Clear();
+            SecondaryFontColorListLabels.Clear();
+            SecondaryFontColorListEditors.Clear();
         };
 
         Color black = new Color(0, 0, 0); // black color
@@ -1204,6 +1252,12 @@ public partial class Canvas : ContentPage
         VerticalStackLayout vsl_Left = new VerticalStackLayout();
         LeftColumn.Add(vsl_Left);
 
+        this.mainiconimage = new Image()
+        {
+            WidthRequest = 150,
+            HeightRequest = 150,
+            Source = iconimageselected
+        };
 
         // Icon
         Frame mainicon = new Frame()
@@ -1215,12 +1269,8 @@ public partial class Canvas : ContentPage
             Padding = new Thickness(0, 0, 0, 0),
             Margin = new Thickness(0, 20, 0, 0),
             BorderColor = MainColor,
-            Content = new Image()
-            {
-                WidthRequest = 150,
-                HeightRequest = 150,
-                Source = "C:\\Users\\Paul\\Documents\\GitHub\\Resume-Generator\\Resume-Generator\\Resume-Generator\\Resources\\AppIcon\\house_icon.png"
-            }
+            Background = new Color(255, 255, 255),
+            Content = mainiconimage
         };
         vsl_Left.Add(mainicon);
 
@@ -1622,16 +1672,15 @@ public partial class Canvas : ContentPage
 
     private async void IconPicker_SelectedIndexChanged(object sender, EventArgs e)
     {
-        mainiconimage = new Image();
         var picker = (Picker)sender;
         int selectedIndex = picker.SelectedIndex;
         string selectedicon = (string)picker.ItemsSource[selectedIndex];
         selectedicon = selectedicon.ToLower();
-        await DisplayAlert(selectedicon, selectedicon, "Ok");
+        iconimageselected = (FileImageSource) ImageSource.FromFile(selectedicon + ".png");
 
         if (selectedIndex != -1)
         {
-            mainiconimage.Source = ImageSource.FromFile((string)picker.ItemsSource[selectedIndex] + ".png");
+            mainiconimage.Source = iconimageselected;
         }
     }
 }

@@ -36,6 +36,11 @@
 	<ItemGroup>
 		<!-- App Icon -->
 		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
+		<MauiImage Include="Resources\AppIcon\addicon.png" />
+		<MauiImage Include="Resources\AppIcon\add_icon.png" />
+		<MauiImage Include="Resources\AppIcon\delete_icon.png" />
+		<MauiImage Include="Resources\AppIcon\deleteicon.png" />
+		<MauiImage Include="Resources\AppIcon\load_icon.png" />
 		<MauiImage Include="Resources\Main Icons\analysis_one.png" />
 		<MauiImage Include="Resources\AppIcon\mail_icon2.png" />
 		<MauiImage Include="Resources\AppIcon\phone_icon.png" />
@@ -75,7 +80,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="Resources\AppIcon\addIcon.png" />
+	  <None Remove="Resources\AppIcon\add_icon.png" />
+	  <None Remove="Resources\AppIcon\deleteIcon.png" />
+	  <None Remove="Resources\AppIcon\delete_icon.png" />
 	  <None Remove="Resources\AppIcon\house_icon.png" />
+	  <None Remove="Resources\AppIcon\load_icon.png" />
 	  <None Remove="Resources\AppIcon\mail_icon2.png" />
 	  <None Remove="Resources\AppIcon\phone_icon.png" />
 	  <None Remove="Resources\AppIcon\web_icon.png" />
