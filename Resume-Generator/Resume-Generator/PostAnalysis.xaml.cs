@@ -69,8 +69,6 @@ public partial class PostAnalysis : ContentPage
         String locName = HttpUtility.ParseQueryString(myUri.Query).Get("locName");
 
 
-        
-
 		foreach(var position in positionTitle)
 		{
 			listing[0] = position.InnerText;
