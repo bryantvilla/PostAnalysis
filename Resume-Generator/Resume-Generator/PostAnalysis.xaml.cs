@@ -129,9 +129,10 @@ public partial class PostAnalysis : ContentPage
 	private void setText(string[] jobInfo) {
         Position.Text = jobInfo[0];
         this.currentPosition = jobInfo[0];
-        Province.Text = jobInfo[1];
+        Province.Text = jobInfo[3];
+        City.Text = jobInfo[1];
         Country.Text = jobInfo[2];
-        City.Text = jobInfo[3];
+        
         jobInfo[4] = jobInfo[4].Replace(jobInfo[0], "" + System.Environment.NewLine);
         jobInfo[4] = jobInfo[4].Replace(jobInfo[1], "");
         jobInfo[4] = jobInfo[4].Replace(jobInfo[2], "");
