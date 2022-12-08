@@ -96,21 +96,27 @@ public partial class Startup : ContentPage
         do
         {
             result = await DisplayPromptAsync("Decryption", "Password:");
-            if (result == "password")
+            bool decrypted = false;
+            try
             {
-                await DisplayAlert("Success!", "file successfully decrypted", "OK");
-                Navigation.PushAsync(new MainPage(db.createNewResume(filepath)));
-                action = "Success";
+                ResumeManager resumeobj = db.createNewResume(filepath, result);
+                decrypted = true;
+                if (decrypted)
+                {
+                    await DisplayAlert("Success!", "file successfully decrypted", "OK");
+                    Navigation.PushAsync(new MainPage(resumeobj));
+                    action = "Success";
+                }
+                else if (result == null)
+                {
+                    action = "canceled";
+                }
             }
-            else if (result == null)
-            {
-                action = "canceled";
-            }
-            else
+            catch (Exception error)
             {
                 action = await DisplayActionSheet("Incorrect password", "Retry", "Give Up");
             }
-
+          
         } while (action == "Retry");
 
     }
@@ -267,7 +273,7 @@ public partial class Startup : ContentPage
             }
             else
             {
-                BasicUser newUser = db.createNewUser(firstName, middleName, lastName);
+                BasicUser newUser = db.createNewUser(firstName, middleName, lastName, password);
                 Users.Add(newUser);
                 createRow(newUser);
                 action = "completed";

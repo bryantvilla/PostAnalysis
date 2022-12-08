@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.Metrics;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,6 +11,7 @@ namespace Resume_Generator
 {
     public class DBManager {
         private string DBPath;
+        private string password;
 
         public DBManager()
         {
@@ -20,9 +22,9 @@ namespace Resume_Generator
             return Guid.NewGuid().ToString();
         }
 
-        public ResumeManager createNewResume(string filename)
+        public ResumeManager createNewResume(string filename, string password)
         {
-            ResumeManager resume = new ResumeManager(LoadJson(filename), filename, DBPath);
+            ResumeManager resume = new ResumeManager(LoadJson(filename), filename, DBPath, password);
             return resume;
         }
 
@@ -30,15 +32,18 @@ namespace Resume_Generator
             File.Delete(file);
         }
 
-        public BasicUser createNewUser(string FrstName, string mdlName, string LstName) {
+        public BasicUser createNewUser(string FrstName, string mdlName, string LstName, string password)
+        {
             string filename = FrstName + "+" + LstName + "=" + generateGUID();
-            if (mdlName != "") { 
-                filename = FrstName + "+" + mdlName + "+" + LstName + "=" + generateGUID(); 
+            if (mdlName != "")
+            {
+                filename = FrstName + "+" + mdlName + "+" + LstName + "=" + generateGUID();
             }
 
             string newfilePath = DBPath + "\\" + filename + ".json";
-            System.IO.File.Copy(DBPath+"\\Default.json", newfilePath);
-            Dictionary<string, List<Dictionary<string,string>>> UserDict = LoadJson(newfilePath);
+            this.password = password;
+            createJson(newfilePath);
+            Dictionary<string, List<Dictionary<string, string>>> UserDict = LoadJson(newfilePath);
             UserDict["Profile"][0]["FirstName"] = FrstName;
             UserDict["Profile"][0]["LastName"] = LstName;
             UserDict["Profile"][0]["MiddleName"] = mdlName;
@@ -46,23 +51,87 @@ namespace Resume_Generator
             return new BasicUser(newfilePath, DBPath);
 
         }
+        private void createJson(string filename)
+        {
+            //System.IO.File.Copy(DBPath + "\\Default.json", filename);
+            var text = File.ReadAllText(DBPath + "\\Default.json");
+            Dictionary<string, List<Dictionary<string, string>>>  myDictionary = JsonConvert.DeserializeObject<Dictionary<string, List<Dictionary<string, string>>>>(text);
+            var json = JsonConvert.SerializeObject(myDictionary);
+            using (AesManaged aes = new AesManaged())
+            {
+                aes.GenerateIV();
+                Rfc2898DeriveBytes key = new Rfc2898DeriveBytes(this.password, aes.IV);
+                aes.Key = key.GetBytes(aes.KeySize / 8);
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    using (CryptoStream cs = new CryptoStream(ms, aes.CreateEncryptor(), CryptoStreamMode.Write))
+                    {
+                        ms.Write(aes.IV, 0, aes.IV.Length);
+                        byte[] jsonBytes = Encoding.UTF8.GetBytes(json);
+                        cs.Write(jsonBytes, 0, jsonBytes.Length);
+                    }
+                    byte[] encryptedData = ms.ToArray();
+                    File.WriteAllBytes(filename, encryptedData);
+                }
 
-        private void updateJson(Dictionary<string, List<Dictionary<string, string>>> myDictionary, string filename) {
-            var updatedDict = JsonConvert.SerializeObject(myDictionary);
-            File.WriteAllText(filename, updatedDict);
+            }
+        }
+
+        private void updateJson(Dictionary<string, List<Dictionary<string, string>>> myDictionary, string filename)
+        {
+            var json = JsonConvert.SerializeObject(myDictionary);
+            using (AesManaged aes = new AesManaged())
+            {
+                aes.GenerateIV();
+                Rfc2898DeriveBytes key = new Rfc2898DeriveBytes(this.password, aes.IV);
+                aes.Key = key.GetBytes(aes.KeySize / 8);
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    using (CryptoStream cs = new CryptoStream(ms, aes.CreateEncryptor(), CryptoStreamMode.Write))
+                    {
+                        ms.Write(aes.IV, 0, aes.IV.Length);
+                        byte[] jsonBytes = Encoding.UTF8.GetBytes(json);
+                        cs.Write(jsonBytes, 0, jsonBytes.Length);
+                    }
+                    byte[] encryptedData = ms.ToArray();
+                    File.WriteAllBytes(filename, encryptedData);
+                }
+
+            }
         }
 
         public Dictionary<string, List<Dictionary<string, string>>> LoadJson(string myFileName)
         {
-            Dictionary<string, List<Dictionary<string, string>>> mydictionary = new Dictionary<string, List<Dictionary<string, string>>>();
-            var text = File.ReadAllText(myFileName);
-            mydictionary = JsonConvert.DeserializeObject<Dictionary<string, List<Dictionary<string, string>>>>(text);
-            return mydictionary;
+            //Dictionary<string, List<Dictionary<string, string>>> mydictionary = new Dictionary<string, List<Dictionary<string, string>>>();
+            //var text = File.ReadAllText(myFileName);
+            //mydictionary = JsonConvert.DeserializeObject<Dictionary<string, List<Dictionary<string, string>>>>(text);
+            using (AesManaged aes = new AesManaged())
+            {
+                aes.Padding = PaddingMode.Zeros;
+                byte[] encryptedData = File.ReadAllBytes(myFileName);
+                int ivSize = aes.IV.Length;
+                byte[] iv = new byte[ivSize];
+                Array.Copy(encryptedData, 0, iv, 0, ivSize);
+                Rfc2898DeriveBytes key = new Rfc2898DeriveBytes(this.password, aes.IV);
+                aes.Key = key.GetBytes(aes.KeySize / 8);
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    using (CryptoStream cs = new CryptoStream(ms, aes.CreateDecryptor(), CryptoStreamMode.Write))
+                    {
+                        int encryptedDataSize = encryptedData.Length - ivSize;
+                        cs.Write(encryptedData, ivSize, encryptedDataSize);
+                        byte[] decryptedData = ms.ToArray();
+                        string json = Encoding.UTF8.GetString(decryptedData);
+                        Dictionary<string, List<Dictionary<string, string>>> mydictionary = JsonConvert.DeserializeObject<Dictionary<string, List<Dictionary<string, string>>>>(json);
+                        return mydictionary;
+                    }
+                }
+            }
         }
+
 
         public List<BasicUser> getAllUsers()
         {
-            BasicUser[] Users;
             List<BasicUser> myCollection = new List<BasicUser>();
             var files = Directory.GetFiles(DBPath, "*.*", SearchOption.AllDirectories).Where(name => !name.Contains("Default")); ;
             foreach (string file in files)
@@ -182,11 +251,12 @@ namespace Resume_Generator
         public List<Dictionary<string, string>> Skills;
         public List<Dictionary<string, string>> Certifications;
 
-        public ResumeManager(Dictionary<string, List<Dictionary<string, string>>> User, string filename, string DBPath)
+        public ResumeManager(Dictionary<string, List<Dictionary<string, string>>> User, string filename, string DBPath, string Password)
         {
             this.DBPath = DBPath;
             this.filename = filename;
             this.User = User;
+            this.Password = Password;
             Profile = User["Profile"][0];
             Education = User["Education"];
             Experience = User["Experience"];
