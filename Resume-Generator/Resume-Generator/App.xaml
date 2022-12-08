@@ -103,6 +103,7 @@
         </Style>
         <Style TargetType="Label" x:Key="postanalysislabel">
             <Setter Property="Margin" Value="0,15,0,0"/>
+            <Setter Property="VerticalOptions" Value="Center"/>
         </Style>
 
         <Style TargetType="Entry" x:Key="postEntrybox">

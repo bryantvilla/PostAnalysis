@@ -769,7 +769,7 @@ public partial class Canvas : ContentPage
 
         vertstack.Add(new Label() { Text = path, TextColor = FontColor });
         vertstack.Add(new Image() { Source = homeiconpath, WidthRequest = 50 });*/
-        
+
         // End Second Column
 
         CanvasBoundary.Children.Add(Main); // VERY IMPORTANT!!!! Add the main grid to the CanvasBoundary Grid in the Xaml
@@ -807,7 +807,9 @@ public partial class Canvas : ContentPage
         Color black = new Color(0, 0, 0); // black color
         Color red = new Color(255, 0, 0); // red color
 
+
         VerticalStackLayout vsl = new VerticalStackLayout();
+        
 
 
         /* Rectangle topRect = new Rectangle()
@@ -1186,7 +1188,7 @@ public partial class Canvas : ContentPage
         // End Skills
 
         // End Right Column
-
+        vsl.Padding = 1;
         CanvasBoundary.Children.Add(vsl);
     }
 
@@ -1622,7 +1624,6 @@ public partial class Canvas : ContentPage
             }
         }
         // End Certifications
-
         CanvasBoundary.Children.Add(Main);
     }
 
