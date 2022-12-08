@@ -1,14 +1,18 @@
 using System;
 using System.Linq;
+using System.Web;
 using HtmlAgilityPack;
 using Microsoft.Maui.Controls;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Resume_Generator;
 
 public partial class PostAnalysis : ContentPage
 {
-    public PostAnalysis()
+    ResumeManager db;
+    public PostAnalysis(ResumeManager db)
 	{
+		this.db = db;
 		InitializeComponent();
 		results.Text = "display results here";
 
@@ -16,12 +20,12 @@ public partial class PostAnalysis : ContentPage
 
 	private void ProfileBtn_Clicked(object sender, EventArgs e)
 	{
-		Navigation.PushAsync(new MainPage());
+		Navigation.PushAsync(new MainPage(db));
 	}
 
 	private void CanvasBtn_Clicked(object sender, EventArgs e)
 	{
-		Navigation.PushAsync(new Canvas());
+		Navigation.PushAsync(new Canvas(db));
 	}
 
 	private void LogoutBtn_Clicked(object sender, EventArgs e)
@@ -46,34 +50,47 @@ public partial class PostAnalysis : ContentPage
 	{
 		/*	
 			[0] = Title
-			[1] = Country
-			[2] = State
+			[1] = State
+			[2] = Country
 			[3] = City
 			[4] = Description
 
 		*/
+
 		string[] listing = new string[5];
 		var web = new HtmlWeb();
 		var doc = web.Load(url);
 		var positionTitle = doc.DocumentNode.SelectNodes("//*[@id=\"MainCol\"]/div[1]/ul/li[1]/div[2]/a");
 		var location = doc.DocumentNode.SelectNodes("//*[@id=\"MainCol\"]/div[1]/ul/li[1]/div[2]/div[2]/span");
 		var desc = doc.DocumentNode.SelectNodes("//*[@id=\"MainCol\"]/div[1]/ul/li[1]");
-		
+
+		listing[2] = "US";
+        Uri myUri = new Uri(url);
+        String locName = HttpUtility.ParseQueryString(myUri.Query).Get("locName");
 
 
 		foreach(var position in positionTitle)
 		{
 			listing[0] = position.InnerText;
 		}
-
-        foreach (var locations in location)
+		if ( locName != null)
+		{
+			listing[2] = locName;
+		
+		}
+		else
+		{
+			foreach (var locations in location)
+			{
+				listing[1] = locations.InnerText;
+			}
+			String[] stateCity = listing[1].Split(",");
+			listing[1] = stateCity[0];
+			listing[3] = stateCity[1];
+		}
+        foreach (var descript in desc)
         {
-            listing[1] = locations.InnerText;
-        }
-        
-		foreach (var descript in desc)
-        {
-            listing[4] = descript.InnerText;
+            listing[4] += descript.InnerText;
         }
         
 		return listing;
@@ -85,12 +102,21 @@ public partial class PostAnalysis : ContentPage
     private void ProcessBtn_Clicked(object sender, EventArgs e)
     {
 		string placeholderstr = results.Text;
-		string tempstr = URL.Text + " " + Position.Text + " " + Country.Text + " " + Province.Text + " " + City.Text;
         string[] jobInfo = scrapeJobListing(URL.Text);
 
-        results.Text = jobInfo[4];
-		Country.Text = jobInfo[1];
+    /*	
+    [0] = Title
+    [1] = State
+    [2] = Country
+    [3] = City
+    [4] = Description
+	*/
+
 		Position.Text = jobInfo[0];
+		Province.Text = jobInfo[1];
+        Country.Text = jobInfo[2];
+        City.Text = jobInfo[3];
+        results.Text = jobInfo[4];
 
     }
 }

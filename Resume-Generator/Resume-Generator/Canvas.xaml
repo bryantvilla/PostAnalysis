@@ -2,11 +2,12 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Resume_Generator.Canvas"
+             xmlns:model="clr-namespace:Resume_Generator.Model"
              BackgroundColor="{StaticResource MainColor}">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200"/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="682"/>
             <ColumnDefinition Width="200"/>
         </Grid.ColumnDefinitions>
         <VerticalStackLayout
@@ -26,20 +27,21 @@
                     <ColumnDefinition/>
                     <ColumnDefinition Width="200"/>
                 </Grid.ColumnDefinitions>
-                <HorizontalStackLayout Grid.Column="0">
+                <HorizontalStackLayout Grid.Column="0" x:Name="TopButtons">
+                    <Button x:Name="BackgroundColorBtn" Style="{StaticResource ColorBtn}" Clicked="BackgroundColorBtn_Clicked"/>
                     <Button x:Name="MainColorBtn" Style="{StaticResource ColorBtn}" Clicked="MainColorBtn_Clicked"/>
                     <Button x:Name="SecondaryColorBtn" Style="{StaticResource ColorBtn}" Clicked="SecondaryColorBtn_Clicked"/>
                     <Button x:Name="TertiaryColorBtn" Style="{StaticResource ColorBtn}" Clicked="TertiaryColorBtn_Clicked"/>
                     <Button x:Name="FontColorBtn" Style="{StaticResource ColorBtn}" Clicked="FontColorBtn_Clicked"/>
+                    <Button x:Name="FontColorSecondaryBtn" Style="{StaticResource ColorBtn}" Clicked="FontColorSecondaryBtn_Clicked"/>
+                    <Picker x:Name="IconPicker" VerticalOptions="Center" Margin="5,0,0,0" SelectedIndex="0" SelectedIndexChanged="IconPicker_SelectedIndexChanged"/>
+                    <Label x:Name="tester" />
                 </HorizontalStackLayout>
-                <Button Grid.Column="1" Text="Generate" Style="{StaticResource Generate}" />
+                <Button Grid.Column="1" Text="Generate" Style="{StaticResource Generate}" Clicked="Generate_Clicked"/>
 
             </Grid>
-            <Grid Grid.Row="1">
-                <BoxView BackgroundColor="White"/>
-                <Polygon x:Name ="MainColorTester" Points="40,10 70,80 10,50" StrokeThickness="5"/>
-                <Rectangle x:Name ="SecondaryColorTester" HeightRequest="25" WidthRequest="25" StrokeThickness="5"/>
-                <Label x:Name ="TestingLabel" Text="test text" FontAttributes="Bold"/>
+            <Grid x:Name="CanvasBoundary" Grid.Row="1" HeightRequest="964" VerticalOptions="Start">
+
             </Grid>
         </Grid>
         <ScrollView 
@@ -47,20 +49,16 @@
             Grid.Column="2">
             <VerticalStackLayout><!--I WILL COME BACK L8R AND MAKE THIS DYNAMIC-->
                 <Grid>
-                    <Image Source="resume1.jpg" Style="{StaticResource Icon}"/>
-                    <ImageButton x:Name="Icon1" Source="resume1.jpg" Style="{StaticResource IconBtn}"/>
-                </Grid>
-                <Grid>
                     <Image Source="resume2.jpg" Style="{StaticResource Icon}"/>
-                    <ImageButton x:Name="Icon2" Source="resume2.jpg" Style="{StaticResource IconBtn}"/>
-                </Grid>
-                <Grid>
-                    <Image Source="resume4.jpg" Style="{StaticResource Icon}"/>
-                    <ImageButton x:Name="Icon4" Source="resume4.jpg" Style="{StaticResource IconBtn}"/>
+                    <ImageButton x:Name="Icon1" Source="resume2.jpg" Style="{StaticResource IconBtn}" Clicked="Icon1_Clicked"/>
                 </Grid>
                 <Grid>
                     <Image Source="resume5.png" Style="{StaticResource Icon}"/>
-                    <ImageButton x:Name="Icon5" Source="resume5.png" Style="{StaticResource IconBtn}"/>
+                    <ImageButton x:Name="Icon2" Source="resume5.png" Style="{StaticResource IconBtn}" Clicked="Icon2_Clicked"/>
+                </Grid>
+                <Grid>
+                    <Image Source="resume1.jpg" Style="{StaticResource Icon}"/>
+                    <ImageButton x:Name="Icon4" Source="resume1.jpg" Style="{StaticResource IconBtn}" Clicked="Icon4_Clicked"/>
                 </Grid>
             </VerticalStackLayout>
         </ScrollView>
