@@ -33,6 +33,7 @@ public partial class Canvas : ContentPage
     Color TertiaryColor = Color.FromArgb("#CC0066");
     Color FontColor = Color.FromArgb("#000000");
     Color FontColorSecondary = Color.FromArgb("#ffffff");
+    FileImageSource iconimageselected;
 
     public Canvas(ResumeManager db)
     {
@@ -58,6 +59,8 @@ public partial class Canvas : ContentPage
         FontColorBtn.BackgroundColor = FontColor;
         FontColorSecondaryBtn.BackgroundColor = FontColorSecondary;
         CanvasBoundary.BackgroundColor = BackGroundColor;
+        var temp = ImageSource.FromFile("analysis_one.png");
+        iconimageselected = (FileImageSource)temp;
 
     }
 	private void createNewCarosel(string imagename) {
@@ -221,6 +224,20 @@ public partial class Canvas : ContentPage
         }
     }
 
+    private async void IconPicker_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        var picker = (Picker)sender;
+        int selectedIndex = picker.SelectedIndex;
+        string selectedicon = (string)picker.ItemsSource[selectedIndex];
+        selectedicon = selectedicon.ToLower();
+        iconimageselected = (FileImageSource)ImageSource.FromFile(selectedicon + ".png");
+
+        if (selectedIndex != -1)
+        {
+            mainiconimage.Source = iconimageselected;
+        }
+    }
+
     async private void FontColorBtn_Clicked(object sender, EventArgs e)
     {
         string result = null;
@@ -358,7 +375,7 @@ public partial class Canvas : ContentPage
         {
             WidthRequest = 270,
             HeightRequest = 270,
-            Source = "person_image.jpg"
+            Source = iconimageselected
         };
         
         // Icon

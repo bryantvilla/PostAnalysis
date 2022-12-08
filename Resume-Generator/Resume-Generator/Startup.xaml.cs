@@ -19,6 +19,7 @@ public partial class Startup : ContentPage
     Dictionary<string, CheckBox> checkbox = new Dictionary<string, CheckBox>();
     Dictionary<string, ImageButton> buttons = new Dictionary<string, ImageButton>();
 
+
     public Startup()
     {
         InitializeComponent();
@@ -26,7 +27,9 @@ public partial class Startup : ContentPage
         Users = db.getAllUsers();
         foreach (var user in Users.ToArray()) {
             createRow(user);
-        }    
+        }
+        NewBtn.Source = ImageSource.FromFile("add_icon.png");
+        DeleteBtn.Source = ImageSource.FromFile("delete_icon.png");
     }
     private void createRow(BasicUser user) {
 
