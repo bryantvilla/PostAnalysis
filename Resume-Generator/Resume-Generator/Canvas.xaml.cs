@@ -809,31 +809,17 @@ public partial class Canvas : ContentPage
 
         VerticalStackLayout vsl = new VerticalStackLayout();
 
-
-        /* Rectangle topRect = new Rectangle()
-        {
-            Background = white,
-            Stroke = red, // adds outline
-            StrokeThickness = 5, // adds outline
-            WidthRequest = 500,
-            HeightRequest = 300,
-            VerticalOptions = LayoutOptions.Start
-        };
-        MainColorList.Add(topRect);
-        vsl.Add(topRect); */
-
         // Place Name in a Label
         Label name = new Label()
         {
             Text = user.FirstName + ' ' + user.MiddleName + ' ' + user.LastName,
-            TextColor = black,
+            TextColor = TertiaryColor,
             FontAttributes = FontAttributes.Bold,
             FontSize = 28,
-            //FontAutoScalingEnabled = true,
             HorizontalTextAlignment = TextAlignment.Center,
             Margin = new Thickness(10, 5, 5, 10) // space the name away from the name border
         };
-        //vsl.Add(name);
+        TertiaryColorListLabels.Add(name);
 
         // Frame to nest the name in
         Frame nameFrame = new Frame()
@@ -841,23 +827,20 @@ public partial class Canvas : ContentPage
             Background = white,
             BorderColor = black,
             Content = name,
-            //WidthRequest = 370,
-            //HeightRequest = 70,
             VerticalOptions = LayoutOptions.FillAndExpand,
             HorizontalOptions = LayoutOptions.CenterAndExpand,
             Margin = new Thickness(30, 20, 30, 20)
         };
         vsl.Add(nameFrame);
 
-        // Place Name in Rectangle 1
-        // COME BACK AND DO THIS
-
         // Contact Info Displayed Horizontally
         Editor contactInfo = new Editor()
         {
             Margin = new Thickness(10, 10, 10, 10),
-            HorizontalTextAlignment = TextAlignment.Center
+            HorizontalTextAlignment = TextAlignment.Center,
+            TextColor = TertiaryColor
         };
+        TertiaryColorListEditors.Add(contactInfo);
 
         String contactString = "";
         
@@ -924,19 +907,17 @@ public partial class Canvas : ContentPage
         Bottom.Children.Add(left);
         Bottom.Children.Add(right);
 
-        //left.Add(new Label { Text = "Left Column", TextColor = black, HorizontalTextAlignment = TextAlignment.Start });
-        //right.Add(new Label { Text = "Right Column", TextColor = black, HorizontalTextAlignment = TextAlignment.Start });
-
         // Left Column: Education
         Editor edtitle = new Editor()
         {
             Text = "Education",
             FontSize = 20,
             FontAttributes = FontAttributes.Bold,
-            TextColor = black,
+            TextColor = MainColor,
             HorizontalTextAlignment = TextAlignment.Start
         };
         left.Add(edtitle);
+        MainColorListEditors.Add(edtitle);
 
         // Education Details
         foreach (var item in user.Education)
@@ -957,6 +938,7 @@ public partial class Canvas : ContentPage
                     Margin = new Thickness(0, 0, 0, 0),
                     WidthRequest = 150
                 };
+                MainColorListEditors.Add(school_name);
                 Editor school_endyear = new Editor()
                 {
                     Text = item["EduToYYYY"],
@@ -971,6 +953,7 @@ public partial class Canvas : ContentPage
                 };
                 top_line_ed.Add(school_name);
                 top_line_ed.Add(school_endyear);
+                PrimaryFontColorListEditors.Add(school_endyear);
                 Editor school_location = new Editor()
                 {
                     Text = item["DegreeCity"] + ", " + item["EduProvince"],
@@ -980,6 +963,7 @@ public partial class Canvas : ContentPage
                     Margin = new Thickness(0, -5, 0, 10),
                     WidthRequest = 200
                 };
+                PrimaryFontColorListEditors.Add(school_location);
                 Editor school_degree = new Editor()
                 {
                     Text = item["EducationalLevel"] + " in " + item["FieldOfStudy"],
@@ -989,6 +973,7 @@ public partial class Canvas : ContentPage
                     Margin = new Thickness(0, -5, 0, 10),
                     WidthRequest = 200
                 };
+                PrimaryFontColorListEditors.Add(school_degree);
                 left.Add(top_line_ed);
                 left.Add(school_location);
                 left.Add(school_degree);
@@ -1002,10 +987,11 @@ public partial class Canvas : ContentPage
             Text = "Work Experience",
             FontSize = 20,
             FontAttributes = FontAttributes.Bold,
-            TextColor = black,
+            TextColor = MainColor,
             HorizontalTextAlignment = TextAlignment.Start
         };
         left.Children.Add(worktitle);
+        MainColorListEditors.Add(worktitle);
         foreach (var item in user.Experience)
         {
             if (item["ExpInclude"] == "True")
@@ -1024,6 +1010,7 @@ public partial class Canvas : ContentPage
                     HorizontalTextAlignment = TextAlignment.Start,
                     WidthRequest = 200
                 };
+                MainColorListEditors.Add(work_name);
                 Editor work_years = new Editor()
                 {
                     Text = item["ExpFromMM"] + "/" + item["ExpFromYYYY"] + " - " + item["ExpToMM"] + "/" + item["ExpToYYYY"],
@@ -1035,6 +1022,7 @@ public partial class Canvas : ContentPage
                     AutoSize = EditorAutoSizeOption.Disabled,
                     WidthRequest = 100
                 };
+                PrimaryFontColorListEditors.Add(work_years);
                 top_line_exp.Add(work_name);
                 top_line_exp.Add(work_years);
                 left.Add(top_line_exp);
@@ -1049,6 +1037,7 @@ public partial class Canvas : ContentPage
                     WidthRequest = 200
                 };
                 left.Add(work_pos);
+                MainColorListEditors.Add(work_pos);
                 Editor work_location = new Editor()
                 {
                     Text = item["ExpCity"] + ", " + item["ExpProvince"] + ", " + item["ExpCountry"],
@@ -1058,6 +1047,7 @@ public partial class Canvas : ContentPage
                     Margin = new Thickness(0, -5, 0, 0),
                     WidthRequest = 200
                 };
+                PrimaryFontColorListEditors.Add(work_location);
                 left.Add(work_location);
                 Editor work_desc = new Editor()
                 {
@@ -1069,6 +1059,7 @@ public partial class Canvas : ContentPage
                     WidthRequest = 200,
                     AutoSize = EditorAutoSizeOption.TextChanges,
                 };
+                PrimaryFontColorListEditors.Add(work_location);
                 left.Add(work_desc);
             }
         }
@@ -1080,10 +1071,11 @@ public partial class Canvas : ContentPage
             Text = "Certifications & Awards",
             FontSize = 20,
             FontAttributes = FontAttributes.Bold,
-            TextColor = black,
+            TextColor = MainColor,
             HorizontalTextAlignment = TextAlignment.Start
         };
         right.Add(certificationsTitle);
+        MainColorListEditors.Add(certificationsTitle);
 
         foreach (var item in user.Certifications)
         {
@@ -1103,6 +1095,7 @@ public partial class Canvas : ContentPage
                     Margin = new Thickness(0, 0, 0, 0),
                     WidthRequest = 200
                 };
+                MainColorListEditors.Add(cert_name);
                 Editor cert_date = new Editor()
                 {
                     Text = "Achieved " + item["CertFromMM"] + "/" + item["CertFromYYYY"],
@@ -1114,6 +1107,7 @@ public partial class Canvas : ContentPage
                     AutoSize = EditorAutoSizeOption.Disabled,
                     WidthRequest = 75
                 };
+                MainColorListEditors.Add(cert_date);
                 hsl_certs.Add(cert_name);
                 hsl_certs.Add(cert_date);
                 right.Add(hsl_certs);
@@ -1121,12 +1115,13 @@ public partial class Canvas : ContentPage
                 {
                     Text = item["Organization"],
                     FontSize = 10,
-                    TextColor = MainColor,
+                    TextColor = FontColor,
                     HorizontalOptions = LayoutOptions.Start,
                     HorizontalTextAlignment = TextAlignment.Start,
                     Margin = new Thickness(0, 0, 0, 0),
                     WidthRequest = 200
                 };
+                PrimaryFontColorListEditors.Add(cert_org);
                 right.Add(cert_org);
             }
         }
@@ -1138,11 +1133,12 @@ public partial class Canvas : ContentPage
             Text = "Skills",
             FontSize = 20,
             FontAttributes = FontAttributes.Bold,
-            TextColor = black,
+            TextColor = MainColor,
             HorizontalTextAlignment = TextAlignment.Start,
             Margin = new Thickness(0, 10, 0, 0)
         };
         right.Add(skillsTitle);
+        MainColorListEditors.Add(skillsTitle);
 
         foreach (var item in user.Skills)
         {
@@ -1157,11 +1153,12 @@ public partial class Canvas : ContentPage
                     Text = item["Skill"],
                     FontSize = 14,
                     FontAttributes = FontAttributes.Bold,
-                    TextColor = MainColor,
+                    TextColor = FontColor,
                     HorizontalTextAlignment = TextAlignment.Start,
                     Margin = new Thickness(0, 0, 0, 0),
                     WidthRequest = 200
                 };
+                PrimaryFontColorListEditors.Add(skill_name);
                 Editor skill_proficiency = new Editor()
                 {
                     Text = item["Proficiency"],
@@ -1173,7 +1170,7 @@ public partial class Canvas : ContentPage
                     AutoSize = EditorAutoSizeOption.Disabled,
                     WidthRequest = 75
                 };
-                // COME BACK AND conditionally add proficiency
+                PrimaryFontColorListEditors.Add(skill_proficiency);
                 if (item["Category"] != null)
                 {
                     skill_name.Text += " (" + item["Category"] + ")";
@@ -1229,17 +1226,16 @@ public partial class Canvas : ContentPage
         // Left Column Background
         Rectangle rect1 = new Rectangle()
         {
-            Background = MainColor,
+            Background = new Color(255, 255, 255), // always will be white
             WidthRequest = 270,
             HeightRequest = 85,
             VerticalOptions = LayoutOptions.Start
         };
-        MainColorList.Add(rect1);
         LeftColumn.Children.Add(rect1);
 
         Rectangle rect2 = new Rectangle()
         {
-            Background = SecondaryColor,
+            Background = MainColor,
             WidthRequest = 270,
             HeightRequest = 850,
             VerticalOptions = LayoutOptions.End,
@@ -1277,7 +1273,7 @@ public partial class Canvas : ContentPage
         // Name
         Label name = new Label()
         {
-            TextColor = FontColor,
+            TextColor = TertiaryColor,
             FontAttributes = FontAttributes.Bold,
             FontSize = 26,
             HorizontalTextAlignment = TextAlignment.Center,
@@ -1295,6 +1291,7 @@ public partial class Canvas : ContentPage
 
         }
         vsl_Left.Add(name);
+        TertiaryColorListLabels.Add(name);
 
         // Left Column: Contact Information
         // Contact Label
@@ -1303,7 +1300,7 @@ public partial class Canvas : ContentPage
         Label contactLabel = new Label()
         {
             Text = "Contact",
-            TextColor = FontColor,
+            TextColor = TertiaryColor,
             FontAttributes = FontAttributes.Bold,
             FontSize = 20,
             HorizontalTextAlignment = TextAlignment.Center,
@@ -1311,47 +1308,56 @@ public partial class Canvas : ContentPage
             Margin = new Thickness(0, 40, 0, 20)
         };
         vsl_Left.Add(contactLabel);
+        TertiaryColorListLabels.Add(contactLabel);
 
         // Contact Information
         if (user.Profile["StreetAddress1"] != "")
         {
             HorizontalStackLayout address = new HorizontalStackLayout() { HorizontalOptions = LayoutOptions.Center };
-            Label addressLabel = new Label() { Text = "Address:", FontSize = 14, TextColor = FontColor, HorizontalOptions = LayoutOptions.Center };
-            Label straddress = new Label() { Text = user.Profile["StreetAddress1"], FontSize = 14, TextColor = FontColor, 
+            Label addressLabel = new Label() { Text = "Address:", FontSize = 14, TextColor = FontColorSecondary, HorizontalOptions = LayoutOptions.Center };
+            Label straddress = new Label() { Text = user.Profile["StreetAddress1"], FontSize = 14, TextColor = FontColorSecondary,
                 HorizontalOptions = LayoutOptions.CenterAndExpand, Margin = contact };
             vsl_Left.Add(addressLabel);
             address.Add(straddress);
             vsl_Left.Add(address);
+            SecondaryFontColorListLabels.Add(addressLabel);
+            SecondaryFontColorListLabels.Add(straddress);
         }
         if (user.Profile["Email"] != "")
         {
             HorizontalStackLayout email = new HorizontalStackLayout() { HorizontalOptions = LayoutOptions.Center };
-            Label emailLabel = new Label() { Text = "Email:", FontSize = 14, TextColor = FontColor, HorizontalOptions = LayoutOptions.Center };
-            Label emailaddr = new Label() { Text = user.Profile["Email"], FontSize = 14, TextColor = FontColor, 
+            Label emailLabel = new Label() { Text = "Email:", FontSize = 14, TextColor = FontColorSecondary, HorizontalOptions = LayoutOptions.Center };
+            Label emailaddr = new Label() { Text = user.Profile["Email"], FontSize = 14, TextColor = FontColorSecondary, 
                 HorizontalOptions = LayoutOptions.Center, Margin = contact };
             vsl_Left.Add(emailLabel);
             email.Add(emailaddr);
             vsl_Left.Add(email);
+            SecondaryFontColorListLabels.Add(emailLabel);
+            SecondaryFontColorListLabels.Add(emailaddr);
         }
         if (user.Profile["PhoneNo"] != "")
         {
             HorizontalStackLayout phone = new HorizontalStackLayout() { HorizontalOptions = LayoutOptions.Center };
-            Label phoneLabel = new Label() { Text = "Phone:", FontSize = 14, TextColor = FontColor, HorizontalOptions = LayoutOptions.Center };
-            Label phonenum = new Label() { Text = user.Profile["PhoneNo"], FontSize = 14, TextColor = FontColor,
+            Label phoneLabel = new Label() { Text = "Phone:", FontSize = 14, TextColor = FontColorSecondary, HorizontalOptions = LayoutOptions.Center };
+            Label phonenum = new Label() { Text = user.Profile["PhoneNo"], FontSize = 14, TextColor = FontColorSecondary,
                 HorizontalOptions = LayoutOptions.Center, Margin = contact };
             vsl_Left.Add(phoneLabel);
             phone.Add(phonenum);
             vsl_Left.Add(phone);
+            SecondaryFontColorListLabels.Add(phoneLabel);
+            SecondaryFontColorListLabels.Add(phonenum);
         }
         if (user.Profile["URL"] != "")
         {
             HorizontalStackLayout urlline = new HorizontalStackLayout() { HorizontalOptions = LayoutOptions.Center };
-            Label websiteLabel = new Label() { Text = "Website:", FontSize = 14, TextColor = FontColor, HorizontalOptions = LayoutOptions.Center };
-            Label website = new Label() { Text = user.Profile["URL"], FontSize = 14, TextColor = FontColor,
+            Label websiteLabel = new Label() { Text = "Website:", FontSize = 14, TextColor = FontColorSecondary, HorizontalOptions = LayoutOptions.Center };
+            Label website = new Label() { Text = user.Profile["URL"], FontSize = 14, TextColor = FontColorSecondary,
                 HorizontalOptions = LayoutOptions.Center, Margin = contact };
             vsl_Left.Add(websiteLabel);
             urlline.Add(website);
             vsl_Left.Add(urlline);
+            SecondaryFontColorListLabels.Add(websiteLabel);
+            SecondaryFontColorListLabels.Add(website);
         }
         // End Contact Information
 
@@ -1361,11 +1367,12 @@ public partial class Canvas : ContentPage
             Text = "Skills",
             FontSize = 20,
             FontAttributes = FontAttributes.Bold,
-            TextColor = black,
+            TextColor = TertiaryColor,
             HorizontalTextAlignment = TextAlignment.Center,
             Margin = new Thickness(10, 10, 10, 0)
         };
         vsl_Left.Add(skillsTitle);
+        TertiaryColorListEditors.Add(skillsTitle);
 
         foreach (var item in user.Skills)
         {
@@ -1380,7 +1387,7 @@ public partial class Canvas : ContentPage
                     Text = item["Skill"],
                     FontSize = 14,
                     FontAttributes = FontAttributes.Bold,
-                    TextColor = MainColor,
+                    TextColor = FontColorSecondary,
                     HorizontalTextAlignment = TextAlignment.Start,
                     Margin = new Thickness(0, 0, 0, 0),
                     WidthRequest = 150
@@ -1388,7 +1395,7 @@ public partial class Canvas : ContentPage
                 Editor skill_proficiency = new Editor()
                 {
                     Text = item["Proficiency"],
-                    TextColor = FontColor,
+                    TextColor = FontColorSecondary,
                     FontSize = 10,
                     VerticalTextAlignment = TextAlignment.End,
                     Margin = new Thickness(25, 0, 0, 0),
@@ -1403,6 +1410,8 @@ public partial class Canvas : ContentPage
                 hsl_skills.Add(skill_name);
                 hsl_skills.Add(skill_proficiency);
                 vsl_Left.Add(hsl_skills);
+                SecondaryFontColorListEditors.Add(skill_name);
+                SecondaryFontColorListEditors.Add(skill_proficiency);
             }
         }
         // End Skills
@@ -1419,11 +1428,12 @@ public partial class Canvas : ContentPage
             Text = "Education",
             FontSize = 20,
             FontAttributes = FontAttributes.Bold,
-            TextColor = black,
+            TextColor = MainColor,
             Margin = new Thickness(0, 30, 0, 0),
             HorizontalTextAlignment = TextAlignment.Start
         };
         vsl_Right.Add(edtitle);
+        MainColorListEditors.Add(edtitle);
 
         // Education Details
         foreach (var item in user.Education)
@@ -1444,6 +1454,7 @@ public partial class Canvas : ContentPage
                     Margin = new Thickness(0, 0, 0, 0),
                     WidthRequest = 250
                 };
+                MainColorListEditors.Add(school_name);
                 Editor school_endyear = new Editor()
                 {
                     Text = item["EduToYYYY"],
@@ -1458,6 +1469,7 @@ public partial class Canvas : ContentPage
                 };
                 top_line_ed.Add(school_name);
                 top_line_ed.Add(school_endyear);
+                PrimaryFontColorListEditors.Add(school_endyear);
                 Editor school_location = new Editor()
                 {
                     Text = item["DegreeCity"] + ", " + item["EduProvince"],
@@ -1467,6 +1479,7 @@ public partial class Canvas : ContentPage
                     Margin = new Thickness(0, -5, 0, 10),
                     WidthRequest = 250
                 };
+                PrimaryFontColorListEditors.Add(school_location);
                 Editor school_degree = new Editor()
                 {
                     Text = item["EducationalLevel"] + " in " + item["FieldOfStudy"],
@@ -1476,6 +1489,7 @@ public partial class Canvas : ContentPage
                     Margin = new Thickness(0, -5, 0, 10),
                     WidthRequest = 300
                 };
+                PrimaryFontColorListEditors.Add(school_degree);
                 vsl_Right.Add(top_line_ed);
                 vsl_Right.Add(school_location);
                 vsl_Right.Add(school_degree);
@@ -1489,11 +1503,13 @@ public partial class Canvas : ContentPage
             Text = "Work Experience",
             FontSize = 20,
             FontAttributes = FontAttributes.Bold,
-            TextColor = black,
+            TextColor = MainColor,
             Margin = new Thickness(0, 20, 0, 0),
             HorizontalTextAlignment = TextAlignment.Start
         };
         vsl_Right.Children.Add(worktitle);
+        MainColorListEditors.Add(worktitle);
+
         foreach (var item in user.Experience)
         {
             if (item["ExpInclude"] == "True")
@@ -1512,6 +1528,7 @@ public partial class Canvas : ContentPage
                     HorizontalTextAlignment = TextAlignment.Start,
                     WidthRequest = 250
                 };
+                MainColorListEditors.Add(work_name);
                 Editor work_years = new Editor()
                 {
                     Text = item["ExpFromMM"] + "/" + item["ExpFromYYYY"] + " - " + item["ExpToMM"] + "/" + item["ExpToYYYY"],
@@ -1524,6 +1541,7 @@ public partial class Canvas : ContentPage
                     AutoSize = EditorAutoSizeOption.Disabled,
                     WidthRequest = 80
                 };
+                PrimaryFontColorListEditors.Add(work_years);
                 top_line_exp.Add(work_name);
                 top_line_exp.Add(work_years);
                 vsl_Right.Add(top_line_exp);
@@ -1538,6 +1556,7 @@ public partial class Canvas : ContentPage
                     WidthRequest = 250
                 };
                 vsl_Right.Add(work_pos);
+                MainColorListEditors.Add(work_pos);
                 Editor work_location = new Editor()
                 {
                     Text = item["ExpCity"] + ", " + item["ExpProvince"] + ", " + item["ExpCountry"],
@@ -1548,6 +1567,7 @@ public partial class Canvas : ContentPage
                     WidthRequest = 250
                 };
                 vsl_Right.Add(work_location);
+                PrimaryFontColorListEditors.Add(work_location);
                 Editor work_desc = new Editor()
                 {
                     Text = item["ExpDescription"],
@@ -1559,6 +1579,7 @@ public partial class Canvas : ContentPage
                     AutoSize = EditorAutoSizeOption.TextChanges,
                 };
                 vsl_Right.Add(work_desc);
+                PrimaryFontColorListEditors.Add(work_desc);
             }
         }
         // End Work Experience
@@ -1569,11 +1590,12 @@ public partial class Canvas : ContentPage
             Text = "Certifications & Awards",
             FontSize = 20,
             FontAttributes = FontAttributes.Bold,
-            TextColor = black,
+            TextColor = MainColor,
             Margin = new Thickness(0, 20, 0, 0),
             HorizontalTextAlignment = TextAlignment.Start
         };
         vsl_Right.Add(certificationsTitle);
+        MainColorListEditors.Add(certificationsTitle);
 
         foreach (var item in user.Certifications)
         {
@@ -1593,6 +1615,7 @@ public partial class Canvas : ContentPage
                     Margin = new Thickness(0, 0, 0, 0),
                     WidthRequest = 250
                 };
+                MainColorListEditors.Add(cert_name);
                 Editor cert_date = new Editor()
                 {
                     Text = "Achieved " + item["CertFromMM"] + "/" + item["CertFromYYYY"],
@@ -1605,6 +1628,7 @@ public partial class Canvas : ContentPage
                     AutoSize = EditorAutoSizeOption.Disabled,
                     WidthRequest = 80
                 };
+                PrimaryFontColorListEditors.Add(cert_date);
                 hsl_certs.Add(cert_name);
                 hsl_certs.Add(cert_date);
                 vsl_Right.Add(hsl_certs);
@@ -1612,13 +1636,14 @@ public partial class Canvas : ContentPage
                 {
                     Text = item["Organization"],
                     FontSize = 12,
-                    TextColor = MainColor,
+                    TextColor = FontColor,
                     HorizontalOptions = LayoutOptions.Start,
                     HorizontalTextAlignment = TextAlignment.Start,
                     Margin = new Thickness(0, 0, 0, 0),
                     WidthRequest = 300
                 };
                 vsl_Right.Add(cert_org);
+                PrimaryFontColorListEditors.Add(cert_org);
             }
         }
         // End Certifications
