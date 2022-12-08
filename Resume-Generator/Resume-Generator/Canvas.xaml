@@ -43,9 +43,9 @@
             <ScrollView 
             VerticalScrollBarVisibility="Always" 
             Grid.Row="1">
-                <VerticalStackLayout x:Name="CanvasBoundary" VerticalOptions="Start">
+                <Grid x:Name="CanvasBoundary" HeightRequest="964" VerticalOptions="Start">
 
-                </VerticalStackLayout>
+                </Grid>
             </ScrollView>
         </Grid>
         <ScrollView 
