@@ -8,12 +8,15 @@ using Path = System.IO.Path;
 using Microsoft.Maui.Graphics;
 using System.Reflection.Metadata.Ecma335;
 using Microsoft.Maui.Controls;
+using System.Diagnostics;
 
 namespace Resume_Generator;
 
 public partial class Canvas : ContentPage
 {
     ResumeManager user;
+    public PdfDocument pdfDocument;
+    public Document document;
     List<Rectangle> MainColorList;
     List<Rectangle> SecondaryColorList;
     List<Frame> MainColorListFrame;
@@ -1679,8 +1682,8 @@ public partial class Canvas : ContentPage
         File.WriteAllBytes(filepath, memoryStream.ToArray());
 
         ImageData imageData = ImageDataFactory.Create(filepath);
-        PdfDocument pdfDocument = new PdfDocument(new PdfWriter(pdffilepath));
-        Document document = new Document(pdfDocument);
+        this.pdfDocument = new PdfDocument(new PdfWriter(pdffilepath));
+        this.document = new Document(pdfDocument);
 
         iText.Layout.Element.Image image = new iText.Layout.Element.Image(imageData);
         image.SetWidth(pdfDocument.GetDefaultPageSize().GetWidth());
@@ -1692,6 +1695,18 @@ public partial class Canvas : ContentPage
         document.Close();
 
         await DisplayAlert("Success","File created successfully in your 'Documents' folder.","Ok");
+
+        try
+        {
+            Process.Start(new ProcessStartInfo { FileName = pdffilepath, UseShellExecute = true });
+        }
+        catch
+        {
+
+        }
+
+
+
 
 
     }

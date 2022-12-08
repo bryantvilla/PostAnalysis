@@ -56,13 +56,14 @@
                                     <Label Grid.Column="0" Text="Position Name:" Style="{StaticResource postanalysislabel}"/>
                                     <Label Grid.Column="1" x:Name="Position" Style="{StaticResource postanalysislabel}"/>
                                 </Grid>
+                                
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="125"/>
                                         <ColumnDefinition Width="225"/>
                                     </Grid.ColumnDefinitions>
-                                    <Label Grid.Column="0" Text="Country:" Style="{StaticResource postanalysislabel}"/>
-                                    <Label Grid.Column="1" x:Name="Country" Style="{StaticResource postanalysislabel}"/>
+                                    <Label Grid.Column="0" Text="City:" Style="{StaticResource postanalysislabel}"/>
+                                    <Label Grid.Column="1" x:Name="City" Style="{StaticResource postanalysislabel}"/>
                                 </Grid>
                                 <Grid>
                                     <Grid.ColumnDefinitions>
@@ -73,13 +74,14 @@
                                     <Label Grid.Column="1" x:Name="Province"  Style="{StaticResource postanalysislabel}"/>
                                 </Grid>
                                 <Grid>
-                                    <Grid.ColumnDefinitions>
+                                <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="125"/>
                                         <ColumnDefinition Width="225"/>
                                     </Grid.ColumnDefinitions>
-                                    <Label Grid.Column="0" Text="City:" Style="{StaticResource postanalysislabel}"/>
-                                    <Label Grid.Column="1" x:Name="City" Style="{StaticResource postanalysislabel}"/>
+                                    <Label Grid.Column="0" Text="Country:" Style="{StaticResource postanalysislabel}"/>
+                                    <Label Grid.Column="1" x:Name="Country" Style="{StaticResource postanalysislabel}"/>
                                 </Grid>
+                                
                             </VerticalStackLayout>
                             <VerticalStackLayout  Grid.Column="1">
                                 <Grid MinimumHeightRequest="200" MinimumWidthRequest="400" Margin="10,10,30,10">
