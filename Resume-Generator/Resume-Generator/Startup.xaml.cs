@@ -12,7 +12,6 @@ public partial class Startup : ContentPage
     string firstName = "";
     string middleName = "";
     string lastName = "";
-    string password = "";
     DBManager db;
     List<BasicUser> Users;
     Dictionary<string, Grid> rows = new Dictionary<string, Grid>();
@@ -93,25 +92,7 @@ public partial class Startup : ContentPage
                 filepath = btn.Key;
             }
         }
-        do
-        {
-            result = await DisplayPromptAsync("Decryption", "Password:");
-            if (result == "password")
-            {
-                await DisplayAlert("Success!", "file successfully decrypted", "OK");
-                Navigation.PushAsync(new MainPage(db.createNewResume(filepath)));
-                action = "Success";
-            }
-            else if (result == null)
-            {
-                action = "canceled";
-            }
-            else
-            {
-                action = await DisplayActionSheet("Incorrect password", "Retry", "Give Up");
-            }
-
-        } while (action == "Retry");
+        Navigation.PushAsync(new MainPage(db.createNewResume(filepath)));
 
     }
 
@@ -235,30 +216,6 @@ public partial class Startup : ContentPage
             if (lastName == "")
             {
                 await DisplayAlert("User Creation", "Last Name Required", "OK");
-                action = "Retry";
-            }
-            else if (lastName == null)
-            {
-                action = "canceled";
-            }
-            else
-            {
-                await requestPassword(sender, e);
-                action = "completed";
-            }
-
-        } while (action == "Retry");
-    }
-
-    private async Task requestPassword(object sender, EventArgs e)
-    {
-        string action = "Retry";
-        do
-        {
-            password = await DisplayPromptAsync("User Creation", "Password:");
-            if (password == "")
-            {
-                await DisplayAlert("User Creation", "Password Required", "OK");
                 action = "Retry";
             }
             else if (lastName == null)

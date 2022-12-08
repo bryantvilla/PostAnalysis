@@ -57,11 +57,6 @@
             <VerticalStackLayout x:Name="results">
                 <Label x:Name="testresult"/>
             </VerticalStackLayout>
-            <Label Text="for now the password will always be password
-                   
-                   
-                   
-                   "/>
         </VerticalStackLayout>
     </VerticalStackLayout>
 </ContentPage>
