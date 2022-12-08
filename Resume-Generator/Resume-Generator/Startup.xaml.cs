@@ -1,3 +1,4 @@
+using Microsoft.Maui.Controls;
 using Microsoft.Maui.Controls.Shapes;
 using Newtonsoft.Json;
 using SkiaSharp;
@@ -26,7 +27,9 @@ public partial class Startup : ContentPage
         Users = db.getAllUsers();
         foreach (var user in Users.ToArray()) {
             createRow(user);
-        }    
+        }
+        NewBtn.Source = ImageSource.FromFile("add_icon.png");
+        DeleteBtn.Source = ImageSource.FromFile("delete_icon.png");
     }
     private void createRow(BasicUser user) {
 
@@ -54,7 +57,7 @@ public partial class Startup : ContentPage
         fullname.SetValue(Grid.ColumnProperty, 2);
         btn.SetValue(Grid.ColumnProperty, 0);
 
-        btn.Source = "C:\\Users\\maspo\\source\\repos\\Resume-Generator\\Resume-Generator\\Resume-Generator\\Resources\\AppIcon\\loadIcon1.png";
+        btn.Source = ImageSource.FromFile("load_icon.png");
 
         lbl1.Text = user.FirstName;
         lbl1.Margin += 2;
