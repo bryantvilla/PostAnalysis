@@ -1,44 +1,123 @@
 ﻿using Microsoft.Maui.Controls;
+using Microsoft.Maui.Devices.Sensors;
+using System.Diagnostics.Metrics;
+using System.Runtime.ConstrainedExecution;
 using static System.Net.Mime.MediaTypeNames;
+
 
 namespace Resume_Generator;
 
 public partial class MainPage : ContentPage
 {
-	ResumeManager db;
+    ResumeManager db;
     Experience ExperienceRecords = new Experience();
     Certifications CertificationRecords = new Certifications();
     Skills SkillsRecords = new Skills();
     Education EducationRecords = new Education();
 
-
-	public MainPage(ResumeManager db){
+    public MainPage(ResumeManager db)
+    {
         InitializeComponent();
         this.db = db;
-		SetProfile();
-		CreateEDUTable(db.Education);
+        SetProfile();
+        CreateEDUTable(db.Education);
         CreateEXPTable(db.Experience);
         CreateSKILLSTable(db.Skills);
         CreateCERTTable(db.Certifications);
 
     }
-	private void CreateEDUTable(List<Dictionary<string,string>> Education)
-	{
+    private void CreateEDUTable(List<Dictionary<string, string>> Education)
+    {
         var bckgrndclr = "Hrz1";
-        foreach (var EducationItem in Education) {
-            createEDURow(EducationItem);
-		}
+        Grid Headers = new Grid();
+        Headers.AddColumnDefinition(new ColumnDefinition(50));//0 selected
+        Headers.AddColumnDefinition(new ColumnDefinition(125));//1 school name
+        Headers.AddColumnDefinition(new ColumnDefinition(100));//2 level
+        Headers.AddColumnDefinition(new ColumnDefinition(125));//3 fieldofstudy
+        Headers.AddColumnDefinition(new ColumnDefinition(75));//4 from
+        Headers.AddColumnDefinition(new ColumnDefinition(70));//5 to
+        Headers.AddColumnDefinition(new ColumnDefinition(70));//6 current
+        Headers.AddColumnDefinition(new ColumnDefinition(70));//7 city
+        Headers.AddColumnDefinition(new ColumnDefinition(70));//8 province
+        Headers.AddColumnDefinition(new ColumnDefinition(75));//9 btns
 
-	}
-	private HorizontalStackLayout createEDURow(Dictionary<string, string> EducationItem) {
+        Label SchoolName = new Label();
+        Label EducationalLevel = new Label();
+        Label FieldOfStudy = new Label();
+        Label From = new Label();
+        Label To = new Label();
+        Label EduCurrent = new Label();//this is a label cause this ISNT the check box its the table value
+        Label DegreeCity = new Label();
+        Label EduProvince = new Label();
+
+        SchoolName.Text = "Institute";
+        EducationalLevel.Text = "Degree";
+        FieldOfStudy.Text = "Field";
+        From.Text = "Start Date";
+        To.Text = "End Date";
+        EduCurrent.Text = "Current";
+        DegreeCity.Text = "City";
+        EduProvince.Text = "Province";
+
+        SchoolName.Style = App.Current.Resources["TableHeader"] as Style;
+        EducationalLevel.Style = App.Current.Resources["TableHeader"] as Style;
+        FieldOfStudy.Style = App.Current.Resources["TableHeader"] as Style;
+        From.Style = App.Current.Resources["TableHeader"] as Style;
+        To.Style = App.Current.Resources["TableHeader"] as Style;
+        EduCurrent.Style = App.Current.Resources["TableHeader"] as Style;
+        DegreeCity.Style = App.Current.Resources["TableHeader"] as Style;
+        EduProvince.Style = App.Current.Resources["TableHeader"] as Style;
+
+        Headers.Children.Add(SchoolName);
+        Headers.Children.Add(EducationalLevel);
+        Headers.Children.Add(FieldOfStudy);
+        Headers.Children.Add(From);
+        Headers.Children.Add(To);
+        Headers.Children.Add(EduCurrent);
+        Headers.Children.Add(DegreeCity);
+        Headers.Children.Add(EduProvince);
+
+        SchoolName.SetValue(Grid.ColumnProperty, 1);
+        EducationalLevel.SetValue(Grid.ColumnProperty, 2);
+        FieldOfStudy.SetValue(Grid.ColumnProperty, 3);
+        From.SetValue(Grid.ColumnProperty, 4);
+        To.SetValue(Grid.ColumnProperty, 5);
+        EduCurrent.SetValue(Grid.ColumnProperty, 6);
+        DegreeCity.SetValue(Grid.ColumnProperty, 7);
+        EduProvince.SetValue(Grid.ColumnProperty, 8);
+
+        EDU.Children.Add(Headers);
+
+        foreach (var EducationItem in Education)
+        {
+            createEDURow(EducationItem);
+        }
+
+    }
+
+    private void createEDURow(Dictionary<string, string> EducationItem)
+    {
 
         HorizontalStackLayout row = new HorizontalStackLayout();
+
+        Grid gridRow = new Grid();
+        gridRow.AddColumnDefinition(new ColumnDefinition(50));//0 selected
+        gridRow.AddColumnDefinition(new ColumnDefinition(125));//1 school name
+        gridRow.AddColumnDefinition(new ColumnDefinition(100));//2 level
+        gridRow.AddColumnDefinition(new ColumnDefinition(125));//3 fieldofstudy
+        gridRow.AddColumnDefinition(new ColumnDefinition(75));//4 from
+        gridRow.AddColumnDefinition(new ColumnDefinition(70));//5 to
+        gridRow.AddColumnDefinition(new ColumnDefinition(70));//6 current
+        gridRow.AddColumnDefinition(new ColumnDefinition(70));//7 city
+        gridRow.AddColumnDefinition(new ColumnDefinition(70));//8 province
+        gridRow.AddColumnDefinition(new ColumnDefinition(75));//9 btns
+
         CheckBox EduInclude = new CheckBox();
         Button btn = new Button();
-        Button btnDel = new Button();
+        ImageButton btnDel = new ImageButton();
         btnDel.Clicked += new EventHandler(EDUdelBtn_Clicked);
         EduInclude.CheckedChanged += new EventHandler<CheckedChangedEventArgs>(EduInclude_Changed);
-        
+
         Label SchoolName = new Label();
         Label EducationalLevel = new Label();
         Label FieldOfStudy = new Label();
@@ -49,7 +128,7 @@ public partial class MainPage : ContentPage
         Label EduCurrent = new Label();//this is a label cause this ISNT the check box its the table value
         Label DegreeCity = new Label();
         Label EduProvince = new Label();
-        
+
         if (EducationItem["EduInclude"] == "True")
         {
             EduInclude.IsChecked = true;
@@ -65,7 +144,7 @@ public partial class MainPage : ContentPage
         EduCurrent.Text = EducationItem["EduCurrent"];
         DegreeCity.Text = EducationItem["DegreeCity"];
         EduProvince.Text = EducationItem["EduProvince"];
-        
+
         SchoolName.Style = App.Current.Resources["TableLabel"] as Style;
         EducationalLevel.Style = App.Current.Resources["TableLabel"] as Style;
         FieldOfStudy.Style = App.Current.Resources["TableLabel"] as Style;
@@ -76,30 +155,61 @@ public partial class MainPage : ContentPage
         EduCurrent.Style = App.Current.Resources["TableLabel"] as Style;
         DegreeCity.Style = App.Current.Resources["TableLabel"] as Style;
         EduProvince.Style = App.Current.Resources["TableLabel"] as Style;
-        
-        btn.Style = App.Current.Resources["LoadBtn"] as Style;
-        btnDel.Style = App.Current.Resources["LoadBtn"] as Style;
-        btnDel.BackgroundColor = new Color(250, 0, 0);
-        row.Children.Add(EduInclude);
-        
-        row.Children.Add(SchoolName);
-        row.Children.Add(EducationalLevel);
-        row.Children.Add(FieldOfStudy);
-        row.Children.Add(EduFromMM);
-        row.Children.Add(EduFromYYYY);
-        row.Children.Add(EduToMM);
-        row.Children.Add(EduToYYYY);
-        row.Children.Add(EduCurrent);
-        row.Children.Add(DegreeCity);
-        row.Children.Add(EduProvince);
 
-        row.Children.Add(btn);
-        row.Children.Add(btnDel);
+        btn.Style = App.Current.Resources["TableButton"] as Style;
+        btnDel.Style = App.Current.Resources["ImageTableButton"] as Style;
+        btnDel.Source = ImageSource.FromFile("delete_icon.png");
+        btnDel.BackgroundColor = new Color(250, 0, 0);
+        gridRow.Children.Add(EduInclude);
+
+
+        gridRow.Children.Add(SchoolName);
+        gridRow.Children.Add(EducationalLevel);
+        gridRow.Children.Add(FieldOfStudy);
+
+        HorizontalStackLayout From = new HorizontalStackLayout();
+        Label fowardslash = new Label();
+        fowardslash.Style = App.Current.Resources["TableLabel"] as Style;
+        fowardslash.Text = "/";
+        From.Children.Add(EduFromMM);
+        From.Children.Add(fowardslash);
+        From.Children.Add(EduFromYYYY);
+        gridRow.Children.Add(From);
+
+        HorizontalStackLayout To = new HorizontalStackLayout();
+        Label fowardslash2 = new Label();
+        fowardslash2.Text = "/";
+        fowardslash2.Style = App.Current.Resources["TableLabel"] as Style;
+        To.Children.Add(EduToMM);
+        To.Children.Add(fowardslash2);
+        To.Children.Add(EduToYYYY);
+        gridRow.Children.Add(To);
+
+        gridRow.Children.Add(EduCurrent);
+        gridRow.Children.Add(DegreeCity);
+        gridRow.Children.Add(EduProvince);
+
+        HorizontalStackLayout temp = new HorizontalStackLayout();
+        //temp.Children.Add(btn);
+        temp.Children.Add(btnDel);
+        gridRow.Children.Add(temp);
+
+        EduInclude.SetValue(Grid.ColumnProperty, 0);
+        SchoolName.SetValue(Grid.ColumnProperty, 1);
+        EducationalLevel.SetValue(Grid.ColumnProperty, 2);
+        FieldOfStudy.SetValue(Grid.ColumnProperty, 3);
+        From.SetValue(Grid.ColumnProperty, 4);
+        To.SetValue(Grid.ColumnProperty, 5);
+        EduCurrent.SetValue(Grid.ColumnProperty, 6);
+        DegreeCity.SetValue(Grid.ColumnProperty, 7);
+        EduProvince.SetValue(Grid.ColumnProperty, 8);
+        temp.SetValue(Grid.ColumnProperty, 9);
+
         //row.Style = App.Current.Resources[stylestr] as Style;
-        EDU.Children.Add(row);
+        EDU.Children.Add(gridRow);
         EducationRecords.AddToRecords(
             EducationItem["ItemGUID"],
-            row, 
+            gridRow,
             btn,
             btnDel,
             SchoolName,
@@ -114,12 +224,71 @@ public partial class MainPage : ContentPage
             EduProvince,
             EduInclude
             );
-        return row;
-	}
+    }
 
     private void CreateEXPTable(List<Dictionary<string, string>> Experience)
     {
         var bckgrndclr = "Hrz1";
+        Grid gridRow = new Grid();
+        gridRow.AddColumnDefinition(new ColumnDefinition(50));//0 Include
+        gridRow.AddColumnDefinition(new ColumnDefinition(125));//1 Company
+        gridRow.AddColumnDefinition(new ColumnDefinition(100));//2 Position
+        gridRow.AddColumnDefinition(new ColumnDefinition(125));//3 Country
+        gridRow.AddColumnDefinition(new ColumnDefinition(70));//4 City
+        gridRow.AddColumnDefinition(new ColumnDefinition(70));//5 Province
+        gridRow.AddColumnDefinition(new ColumnDefinition(75));//6 From
+        gridRow.AddColumnDefinition(new ColumnDefinition(70));//7 To
+        gridRow.AddColumnDefinition(new ColumnDefinition(70));//8 Current
+        gridRow.AddColumnDefinition(new ColumnDefinition(75));//9 btns
+
+        Label Company = new Label();
+        Label Position = new Label();
+        Label ExpCountry = new Label();
+        Label ExpCity = new Label();
+        Label ExpProvince = new Label();
+        Label From = new Label();
+        Label To = new Label();
+        Label ExpCurrent = new Label();
+        Label ExpDescription = new Label();
+
+        Company.Text = "Company";
+        Position.Text = "Position";
+        ExpCountry.Text = "Country";
+        ExpCity.Text = "City";
+        ExpProvince.Text = "Province";
+        From.Text = "Start Date";
+        To.Text = "End Date";
+        ExpCurrent.Text = "Current";
+
+        Company.Style = App.Current.Resources["TableHeader"] as Style;
+        Position.Style = App.Current.Resources["TableHeader"] as Style;
+        ExpCountry.Style = App.Current.Resources["TableHeader"] as Style;
+        ExpCity.Style = App.Current.Resources["TableHeader"] as Style;
+        ExpProvince.Style = App.Current.Resources["TableHeader"] as Style;
+        From.Style = App.Current.Resources["TableHeader"] as Style;
+        To.Style = App.Current.Resources["TableHeader"] as Style;
+        ExpCurrent.Style = App.Current.Resources["TableHeader"] as Style;
+
+        gridRow.Children.Add(Company);
+        gridRow.Children.Add(Position);
+        gridRow.Children.Add(ExpCountry);
+        gridRow.Children.Add(ExpCity);
+        gridRow.Children.Add(ExpProvince);
+        gridRow.Children.Add(From);
+        gridRow.Children.Add(To);
+        gridRow.Children.Add(ExpCurrent);
+
+        Company.SetValue(Grid.ColumnProperty, 1);
+        Position.SetValue(Grid.ColumnProperty, 2);
+        ExpCountry.SetValue(Grid.ColumnProperty, 3);
+        ExpCity.SetValue(Grid.ColumnProperty, 4);
+        ExpProvince.SetValue(Grid.ColumnProperty, 5);
+        From.SetValue(Grid.ColumnProperty, 6);
+        To.SetValue(Grid.ColumnProperty, 7);
+        ExpCurrent.SetValue(Grid.ColumnProperty, 8);
+
+        EXP.Children.Add(gridRow);
+
         foreach (var ExperienceItem in Experience)
         {
             createEXPRow(ExperienceItem);
@@ -127,13 +296,26 @@ public partial class MainPage : ContentPage
 
     }
 
-    private HorizontalStackLayout createEXPRow(Dictionary<string, string> ExperienceItem)
+    private void createEXPRow(Dictionary<string, string> ExperienceItem)
     {
 
         HorizontalStackLayout row = new HorizontalStackLayout();
+
+        Grid gridRow = new Grid();
+        gridRow.AddColumnDefinition(new ColumnDefinition(50));//0 Include
+        gridRow.AddColumnDefinition(new ColumnDefinition(125));//1 Company
+        gridRow.AddColumnDefinition(new ColumnDefinition(100));//2 Position
+        gridRow.AddColumnDefinition(new ColumnDefinition(125));//3 Country
+        gridRow.AddColumnDefinition(new ColumnDefinition(70));//4 City
+        gridRow.AddColumnDefinition(new ColumnDefinition(70));//5 Province
+        gridRow.AddColumnDefinition(new ColumnDefinition(75));//6 From
+        gridRow.AddColumnDefinition(new ColumnDefinition(70));//7 To
+        gridRow.AddColumnDefinition(new ColumnDefinition(70));//8 Current
+        gridRow.AddColumnDefinition(new ColumnDefinition(75));//9 btns
+
         CheckBox ExpInclude = new CheckBox();
         Button btn = new Button();
-        Button btnDel = new Button();
+        ImageButton btnDel = new ImageButton();
         btnDel.Clicked += new EventHandler(EXPdelBtn_Clicked);
         ExpInclude.CheckedChanged += new EventHandler<CheckedChangedEventArgs>(ExpInclude_Changed);
 
@@ -178,30 +360,59 @@ public partial class MainPage : ContentPage
         ExpCurrent.Style = App.Current.Resources["TableLabel"] as Style;
         ExpDescription.Style = App.Current.Resources["TableLabel"] as Style;
 
-        btn.Style = App.Current.Resources["LoadBtn"] as Style;
-        btnDel.Style = App.Current.Resources["LoadBtn"] as Style;
+        btn.Style = App.Current.Resources["TableButton"] as Style;
+        btnDel.Style = App.Current.Resources["ImageTableButton"] as Style;
+        btnDel.Source = ImageSource.FromFile("delete_icon.png");
         btnDel.BackgroundColor = new Color(250, 0, 0);
-        row.Children.Add(ExpInclude);
+        gridRow.Children.Add(ExpInclude);
 
-        row.Children.Add(Company);
-        row.Children.Add(Position);
-        row.Children.Add(ExpCountry);
-        row.Children.Add(ExpCity);
-        row.Children.Add(ExpProvince);
-        row.Children.Add(ExpFromMM);
-        row.Children.Add(ExpFromYYYY);
-        row.Children.Add(ExpToMM);
-        row.Children.Add(ExpToYYYY);
-        row.Children.Add(ExpCurrent);
+        gridRow.Children.Add(Company);
+        gridRow.Children.Add(Position);
+        gridRow.Children.Add(ExpCountry);
+        gridRow.Children.Add(ExpCity);
+        gridRow.Children.Add(ExpProvince);
+
+        HorizontalStackLayout From = new HorizontalStackLayout();
+        Label fowardslash = new Label();
+        fowardslash.Style = App.Current.Resources["TableLabel"] as Style;
+        fowardslash.Text = "/";
+        From.Children.Add(ExpFromMM);
+        From.Children.Add(fowardslash);
+        From.Children.Add(ExpFromYYYY);
+        gridRow.Children.Add(From);
+
+        HorizontalStackLayout To = new HorizontalStackLayout();
+        Label fowardslash2 = new Label();
+        fowardslash2.Text = "/";
+        fowardslash2.Style = App.Current.Resources["TableLabel"] as Style;
+        To.Children.Add(ExpToMM);
+        To.Children.Add(fowardslash2);
+        To.Children.Add(ExpToYYYY);
+        gridRow.Children.Add(To);
+        gridRow.Children.Add(ExpCurrent);
         //row.Children.Add(ExpDescription);
 
-        row.Children.Add(btn);
-        row.Children.Add(btnDel);
+        HorizontalStackLayout temp = new HorizontalStackLayout();
+        //temp.Children.Add(btn);
+        temp.Children.Add(btnDel);
+        gridRow.Children.Add(temp);
+
+        ExpInclude.SetValue(Grid.ColumnProperty, 0);
+        Company.SetValue(Grid.ColumnProperty, 1);
+        Position.SetValue(Grid.ColumnProperty, 2);
+        ExpCountry.SetValue(Grid.ColumnProperty, 3);
+        ExpCity.SetValue(Grid.ColumnProperty, 4);
+        ExpProvince.SetValue(Grid.ColumnProperty, 5);
+        From.SetValue(Grid.ColumnProperty, 6);
+        To.SetValue(Grid.ColumnProperty, 7);
+        ExpCurrent.SetValue(Grid.ColumnProperty, 8);
+        temp.SetValue(Grid.ColumnProperty, 9);
+
         //row.Style = App.Current.Resources[stylestr] as Style;
-        EXP.Children.Add(row);
+        EXP.Children.Add(gridRow);
         ExperienceRecords.AddToRecords(
             ExperienceItem["ItemGUID"],
-            row,
+            gridRow,
             btn,
             btnDel,
             Company,
@@ -217,25 +428,60 @@ public partial class MainPage : ContentPage
             ExpDescription,
             ExpInclude
             );
-        return row;
     }
 
     private void CreateSKILLSTable(List<Dictionary<string, string>> Skills)
     {
         var bckgrndclr = "Hrz1";
+        Grid gridRow = new Grid();
+        gridRow.AddColumnDefinition(new ColumnDefinition(50));//0 Include
+        gridRow.AddColumnDefinition(new ColumnDefinition(125));//1 Category
+        gridRow.AddColumnDefinition(new ColumnDefinition(100));//2 skill
+        gridRow.AddColumnDefinition(new ColumnDefinition(125));//3 Proficiency
+        gridRow.AddColumnDefinition(new ColumnDefinition(75));//4 btns
+
+        Label Category = new Label();
+        Label Skill = new Label();
+        Label Proficiency = new Label();
+
+        Category.Text = "Category";
+        Skill.Text = "Skill";
+        Proficiency.Text = "Proficiency";
+
+        Category.Style = App.Current.Resources["TableHeader"] as Style;
+        Skill.Style = App.Current.Resources["TableHeader"] as Style;
+        Proficiency.Style = App.Current.Resources["TableHeader"] as Style;
+
+        gridRow.Children.Add(Category);
+        gridRow.Children.Add(Skill);
+        gridRow.Children.Add(Proficiency);
+
+        Category.SetValue(Grid.ColumnProperty, 1);
+        Skill.SetValue(Grid.ColumnProperty, 2);
+        Proficiency.SetValue(Grid.ColumnProperty, 3);
+
+        SKILLS.Children.Add(gridRow);
         foreach (var SkillsItem in Skills)
         {
             createSKILLSRow(SkillsItem);
         }
 
     }
-    private HorizontalStackLayout createSKILLSRow(Dictionary<string, string> SkillsItem)
+    private void createSKILLSRow(Dictionary<string, string> SkillsItem)
     {
 
         HorizontalStackLayout row = new HorizontalStackLayout();
+
+        Grid gridRow = new Grid();
+        gridRow.AddColumnDefinition(new ColumnDefinition(50));//0 Include
+        gridRow.AddColumnDefinition(new ColumnDefinition(125));//1 Category
+        gridRow.AddColumnDefinition(new ColumnDefinition(100));//2 skill
+        gridRow.AddColumnDefinition(new ColumnDefinition(125));//3 Proficiency
+        gridRow.AddColumnDefinition(new ColumnDefinition(75));//4 btns
+
         CheckBox SkillsInclude = new CheckBox();
         Button btn = new Button();
-        Button btnDel = new Button();
+        ImageButton btnDel = new ImageButton();
         btnDel.Clicked += new EventHandler(SKILLSdelBtn_Clicked);
         SkillsInclude.CheckedChanged += new EventHandler<CheckedChangedEventArgs>(SkillsInclude_Changed);
 
@@ -255,23 +501,33 @@ public partial class MainPage : ContentPage
         Category.Style = App.Current.Resources["TableLabel"] as Style;
         Skill.Style = App.Current.Resources["TableLabel"] as Style;
         Proficiency.Style = App.Current.Resources["TableLabel"] as Style;
-
-        btn.Style = App.Current.Resources["LoadBtn"] as Style;
-        btnDel.Style = App.Current.Resources["LoadBtn"] as Style;
+        btn.Style = App.Current.Resources["TableButton"] as Style;
+        btnDel.Style = App.Current.Resources["ImageTableButton"] as Style;
+        btnDel.Source = ImageSource.FromFile("delete_icon.png");
         btnDel.BackgroundColor = new Color(250, 0, 0);
-        row.Children.Add(SkillsInclude);
 
-        row.Children.Add(Category);
-        row.Children.Add(Skill);
-        row.Children.Add(Proficiency);
+        gridRow.Children.Add(SkillsInclude);
 
-        row.Children.Add(btn);
-        row.Children.Add(btnDel);
+        gridRow.Children.Add(Category);
+        gridRow.Children.Add(Skill);
+        gridRow.Children.Add(Proficiency);
+
+        HorizontalStackLayout temp = new HorizontalStackLayout();
+        //temp.Children.Add(btn);
+        temp.Children.Add(btnDel);
+        gridRow.Children.Add(temp);
+
+        SkillsInclude.SetValue(Grid.ColumnProperty, 0);
+        Category.SetValue(Grid.ColumnProperty, 1);
+        Skill.SetValue(Grid.ColumnProperty, 2);
+        Proficiency.SetValue(Grid.ColumnProperty, 3);
+        temp.SetValue(Grid.ColumnProperty, 4);
+
         //row.Style = App.Current.Resources[stylestr] as Style;
-        SKILLS.Children.Add(row);
+        SKILLS.Children.Add(gridRow);
         SkillsRecords.AddToRecords(
             SkillsItem["ItemGUID"],
-            row,
+            gridRow,
             btn,
             btnDel,
             Category,
@@ -279,25 +535,75 @@ public partial class MainPage : ContentPage
             Proficiency,
             SkillsInclude
             );
-        return row;
     }
 
     private void CreateCERTTable(List<Dictionary<string, string>> Certifications)
     {
         var bckgrndclr = "Hrz1";
+        Grid gridRow = new Grid();
+        gridRow.AddColumnDefinition(new ColumnDefinition(50));//0 Include
+        gridRow.AddColumnDefinition(new ColumnDefinition(125));//1 certification
+        gridRow.AddColumnDefinition(new ColumnDefinition(100));//2 organization
+        gridRow.AddColumnDefinition(new ColumnDefinition(125));//3 from
+        gridRow.AddColumnDefinition(new ColumnDefinition(125));//3 to
+        gridRow.AddColumnDefinition(new ColumnDefinition(125));//3 notapplicable
+        gridRow.AddColumnDefinition(new ColumnDefinition(75));//4 btns
+
+        Label Certification = new Label();
+        Label Organization = new Label();
+        Label From = new Label();
+        Label To = new Label();
+        Label CertNotApplicable = new Label();
+
+        Certification.Text = "Certification";
+        Organization.Text = "Organization";
+        From.Text = "ISS Date";
+        To.Text = "Exp Date";
+        CertNotApplicable.Text = "N/A";
+
+        Certification.Style = App.Current.Resources["TableHeader"] as Style;
+        Organization.Style = App.Current.Resources["TableHeader"] as Style;
+        From.Style = App.Current.Resources["TableHeader"] as Style;
+        To.Style = App.Current.Resources["TableHeader"] as Style;
+        CertNotApplicable.Style = App.Current.Resources["TableHeader"] as Style;
+
+        gridRow.Children.Add(Certification);
+        gridRow.Children.Add(Organization);
+        gridRow.Children.Add(From);
+        gridRow.Children.Add(To);
+        gridRow.Children.Add(CertNotApplicable);
+
+        Certification.SetValue(Grid.ColumnProperty, 1);
+        Organization.SetValue(Grid.ColumnProperty, 2);
+        From.SetValue(Grid.ColumnProperty, 3);
+        To.SetValue(Grid.ColumnProperty, 4);
+        CertNotApplicable.SetValue(Grid.ColumnProperty, 5);
+
+        //row.Style = App.Current.Resources[stylestr] as Style;
+        CERT.Children.Add(gridRow);
         foreach (var CertificationItem in Certifications)
         {
             createCERTRow(CertificationItem);
         }
 
     }
-    private HorizontalStackLayout createCERTRow(Dictionary<string, string> CertificationItem)
+    private void createCERTRow(Dictionary<string, string> CertificationItem)
     {
 
         HorizontalStackLayout row = new HorizontalStackLayout();
+
+        Grid gridRow = new Grid();
+        gridRow.AddColumnDefinition(new ColumnDefinition(50));//0 Include
+        gridRow.AddColumnDefinition(new ColumnDefinition(125));//1 certification
+        gridRow.AddColumnDefinition(new ColumnDefinition(100));//2 organization
+        gridRow.AddColumnDefinition(new ColumnDefinition(125));//3 from
+        gridRow.AddColumnDefinition(new ColumnDefinition(125));//3 to
+        gridRow.AddColumnDefinition(new ColumnDefinition(125));//3 notapplicable
+        gridRow.AddColumnDefinition(new ColumnDefinition(75));//4 btns
+
         CheckBox CertInclude = new CheckBox();
         Button btn = new Button();
-        Button btnDel = new Button();
+        ImageButton btnDel = new ImageButton();
         btnDel.Clicked += new EventHandler(CERTdelBtn_Clicked);
         CertInclude.CheckedChanged += new EventHandler<CheckedChangedEventArgs>(CertInclude_Changed);
 
@@ -330,26 +636,52 @@ public partial class MainPage : ContentPage
         CertToYYYY.Style = App.Current.Resources["TableLabel"] as Style;
         CertNotApplicable.Style = App.Current.Resources["TableLabel"] as Style;
 
-        btn.Style = App.Current.Resources["LoadBtn"] as Style;
-        btnDel.Style = App.Current.Resources["LoadBtn"] as Style;
+        btn.Style = App.Current.Resources["TableButton"] as Style;
+        btnDel.Style = App.Current.Resources["ImageTableButton"] as Style;
+        btnDel.Source = ImageSource.FromFile("delete_icon.png");
         btnDel.BackgroundColor = new Color(250, 0, 0);
-        row.Children.Add(CertInclude);
+        gridRow.Children.Add(CertInclude);
 
-        row.Children.Add(Certification);
-        row.Children.Add(Organization);
-        row.Children.Add(CertFromMM);
-        row.Children.Add(CertFromYYYY);
-        row.Children.Add(CertToMM);
-        row.Children.Add(CertToYYYY);
-        row.Children.Add(CertNotApplicable);
+        gridRow.Children.Add(Certification);
+        gridRow.Children.Add(Organization);
+        HorizontalStackLayout From = new HorizontalStackLayout();
+        Label fowardslash = new Label();
+        fowardslash.Style = App.Current.Resources["TableLabel"] as Style;
+        fowardslash.Text = "/";
+        From.Children.Add(CertFromMM);
+        From.Children.Add(fowardslash);
+        From.Children.Add(CertFromYYYY);
+        gridRow.Children.Add(From);
 
-        row.Children.Add(btn);
-        row.Children.Add(btnDel);
+        HorizontalStackLayout To = new HorizontalStackLayout();
+        Label fowardslash2 = new Label();
+        fowardslash2.Text = "/";
+        fowardslash2.Style = App.Current.Resources["TableLabel"] as Style;
+        To.Children.Add(CertToMM);
+        To.Children.Add(fowardslash2);
+        To.Children.Add(CertToYYYY);
+        gridRow.Children.Add(To);
+        //row.Children.Add(ExpDescription);
+        gridRow.Children.Add(CertNotApplicable);
+
+        HorizontalStackLayout temp = new HorizontalStackLayout();
+        //temp.Children.Add(btn);
+        temp.Children.Add(btnDel);
+        gridRow.Children.Add(temp);
+
+        CertInclude.SetValue(Grid.ColumnProperty, 0);
+        Certification.SetValue(Grid.ColumnProperty, 1);
+        Organization.SetValue(Grid.ColumnProperty, 2);
+        From.SetValue(Grid.ColumnProperty, 3);
+        To.SetValue(Grid.ColumnProperty, 4);
+        CertNotApplicable.SetValue(Grid.ColumnProperty, 5);
+        temp.SetValue(Grid.ColumnProperty, 6);
+
         //row.Style = App.Current.Resources[stylestr] as Style;
-        CERT.Children.Add(row);
+        CERT.Children.Add(gridRow);
         CertificationRecords.AddToRecords(
             CertificationItem["ItemGUID"],
-            row,
+            gridRow,
             btn,
             btnDel,
             Certification,
@@ -361,18 +693,18 @@ public partial class MainPage : ContentPage
             CertNotApplicable,
             CertInclude
             );
-        return row;
     }
 
-    private void SetProfile() {
+    private void SetProfile()
+    {
 
-		FirstName.Text = db.FirstName;
-		LastName.Text = db.LastName;
-		MiddleName.Text = db.MiddleName;
-		Email.Text = db.Profile["Email"];
-		URL.Text = db.Profile["URL"];
-		PhoneNo.Text = db.Profile["PhoneNo"];
-		StreetAddress1.Text = db.Profile["StreetAddress1"];
+        FirstName.Text = db.FirstName;
+        LastName.Text = db.LastName;
+        MiddleName.Text = db.MiddleName;
+        Email.Text = db.Profile["Email"];
+        URL.Text = db.Profile["URL"];
+        PhoneNo.Text = db.Profile["PhoneNo"];
+        StreetAddress1.Text = db.Profile["StreetAddress1"];
         StreetAddress2.Text = db.Profile["StreetAddress2"];
         City.Text = db.Profile["City"];
         Province.Text = db.Profile["Province"];
@@ -380,53 +712,56 @@ public partial class MainPage : ContentPage
         PostalCode.Text = db.Profile["PostalCode"];
     }
 
-	private void LogoutBtn_Clicked(object sender, EventArgs e)
-	{
+    private void LogoutBtn_Clicked(object sender, EventArgs e)
+    {
         Navigation.PushAsync(new Startup());
     }
 
-	private void CanvasBtn_Clicked(object sender, EventArgs e)
-	{
-		Navigation.PushAsync(new Canvas(db));
-	}
+    private void CanvasBtn_Clicked(object sender, EventArgs e)
+    {
+        Navigation.PushAsync(new Canvas(db));
+    }
 
-	private void PostAnalysisBtn_Clicked(object sender, EventArgs e)
-	{
-		Navigation.PushAsync(new PostAnalysis(db));
-	}
+    private void PostAnalysisBtn_Clicked(object sender, EventArgs e)
+    {
+        Navigation.PushAsync(new PostAnalysis(db));
+    }
 
     private async void ProfileBtn_Clicked(object sender, EventArgs e)
-	{
-		db.UpdateProfile(
+    {
+        db.UpdateProfile(
             FirstName.Text,
-			LastName.Text,
-			MiddleName.Text,
-			Email.Text,
-			URL.Text,
-			PhoneNo.Text,
-			StreetAddress1.Text,
-			StreetAddress2.Text,
-			City.Text,
-			Province.Text,
-			Country.Text,
-			PostalCode.Text
-			);
+            LastName.Text,
+            MiddleName.Text,
+            Email.Text,
+            URL.Text,
+            PhoneNo.Text,
+            StreetAddress1.Text,
+            StreetAddress2.Text,
+            City.Text,
+            Province.Text,
+            Country.Text,
+            PostalCode.Text
+            );
         await DisplayAlert("STATUS", "update successful", "OK");
     }
 
-    private async void EDUdelBtn_Clicked(object sender, EventArgs e) {
+    private async void EDUdelBtn_Clicked(object sender, EventArgs e)
+    {
         string Header = "Warning";
         string paragraph = "Entry will be deleted. This cannot be undone. Continue?";
         bool action = await DisplayAlert(Header, paragraph, "Yes", "No");
         if (action)
         {
-            foreach (var btn in EducationRecords.BtnDel) {
-                if (btn.Value == sender) {
+            foreach (var btn in EducationRecords.BtnDel)
+            {
+                if (btn.Value == sender)
+                {
                     EDU.Children.Remove(EducationRecords.Row[btn.Key]);
                     EducationRecords.DeleteThisGUID(btn.Key);
                     db.RemoveFromEducation(btn.Key);
                 }
-            
+
             }
         }
     }
@@ -457,7 +792,7 @@ public partial class MainPage : ContentPage
     private async void EDUupdateBtn_Clicked(object sender, EventArgs e)
     {
         bool action = true;
-        Dictionary<string,string> Entries = new Dictionary<string, string>();
+        Dictionary<string, string> Entries = new Dictionary<string, string>();
         Entries["SchoolName"] = SchoolName.Text;
         Entries["EducationalLevel"] = EducationalLevel.Text;
         Entries["FieldOfStudy"] = FieldOfStudy.Text;
@@ -477,12 +812,15 @@ public partial class MainPage : ContentPage
             Entries["EduCurrent"] = "True";
         }
         string missingfields = "";
-        foreach (var Entry in Entries) { 
-            if (Entry.Value == "" || Entry.Value == null){
+        foreach (var Entry in Entries)
+        {
+            if (Entry.Value == "" || Entry.Value == null)
+            {
                 missingfields = missingfields + Entry.Key + System.Environment.NewLine;
             }
         }
-        if (missingfields != "") {
+        if (missingfields != "")
+        {
             string paragraph = "You are missing :" + System.Environment.NewLine + missingfields;
             string Header = "CONTINUE?";
             action = await DisplayAlert(Header, paragraph, "Yes", "No");
@@ -751,11 +1089,12 @@ public class Education
     Dictionary<string, Label> DegreeCity;
     Dictionary<string, Label> EduProvince;
     public Dictionary<string, CheckBox> EduInclude;
-    public Dictionary<string, HorizontalStackLayout> Row;
+    public Dictionary<string, Grid> Row;
     Dictionary<string, Button> Btn;
-    public Dictionary<string, Button> BtnDel;
+    public Dictionary<string, ImageButton> BtnDel;
 
-    public Education() {
+    public Education()
+    {
         SchoolName = new Dictionary<string, Label>();
         EducationalLevel = new Dictionary<string, Label>();
         FieldOfStudy = new Dictionary<string, Label>();
@@ -767,16 +1106,16 @@ public class Education
         DegreeCity = new Dictionary<string, Label>();
         EduProvince = new Dictionary<string, Label>();
         EduInclude = new Dictionary<string, CheckBox>();
-        Row = new Dictionary<string, HorizontalStackLayout>();
+        Row = new Dictionary<string, Grid>();
         Btn = new Dictionary<string, Button>();
-        BtnDel = new Dictionary<string, Button>();
+        BtnDel = new Dictionary<string, ImageButton>();
 
     }
 
-    public void AddToRecords(   string ItemGUID,
-                                HorizontalStackLayout row,
+    public void AddToRecords(string ItemGUID,
+                                Grid row,
                                 Button btn,
-                                Button btnDel,
+                                ImageButton btnDel,
                                 Label SchoolName,
                                 Label EducationalLevel,
                                 Label FieldOfStudy,
@@ -787,7 +1126,8 @@ public class Education
                                 Label EduCurrent,
                                 Label DegreeCity,
                                 Label EduProvince,
-                                CheckBox EduInclude) {
+                                CheckBox EduInclude)
+    {
 
         this.Row[ItemGUID] = row;
         this.Btn[ItemGUID] = btn;
@@ -804,7 +1144,8 @@ public class Education
         this.DegreeCity[ItemGUID] = DegreeCity;
         this.EduProvince[ItemGUID] = EduProvince;
     }
-    public void DeleteThisGUID(string ItemGUID) {
+    public void DeleteThisGUID(string ItemGUID)
+    {
         this.Row.Remove(ItemGUID);
         this.Btn.Remove(ItemGUID);
         this.SchoolName.Remove(ItemGUID);
@@ -823,46 +1164,46 @@ public class Education
 }
 public class Experience
 {
-    Dictionary<string ,Label> Company;
-    Dictionary<string ,Label> Position;
-    Dictionary<string ,Label> ExpCountry;
-    Dictionary<string ,Label> ExpCity;
-    Dictionary<string ,Label> ExpProvince;
-    Dictionary<string ,Label> ExpFromMM;
-    Dictionary<string ,Label> ExpFromYYYY;
-    Dictionary<string ,Label> ExpToMM;
-    Dictionary<string ,Label> ExpToYYYY;
-    Dictionary<string ,Label> ExpCurrent;
+    Dictionary<string, Label> Company;
+    Dictionary<string, Label> Position;
+    Dictionary<string, Label> ExpCountry;
+    Dictionary<string, Label> ExpCity;
+    Dictionary<string, Label> ExpProvince;
+    Dictionary<string, Label> ExpFromMM;
+    Dictionary<string, Label> ExpFromYYYY;
+    Dictionary<string, Label> ExpToMM;
+    Dictionary<string, Label> ExpToYYYY;
+    Dictionary<string, Label> ExpCurrent;
     Dictionary<string, Label> ExpDescription;
     public Dictionary<string, CheckBox> ExpInclude;
-    public Dictionary<string, HorizontalStackLayout> Row;
+    public Dictionary<string, Grid> Row;
     Dictionary<string, Button> Btn;
-    public Dictionary<string, Button> BtnDel;
+    public Dictionary<string, ImageButton> BtnDel;
 
     public Experience()
     {
-        Company = new Dictionary<string ,Label>();
-        Position = new Dictionary<string ,Label>();
-        ExpCountry = new Dictionary<string ,Label>();
-        ExpCity = new Dictionary<string ,Label>();
-        ExpProvince = new Dictionary<string ,Label>();
-        ExpFromMM = new Dictionary<string ,Label>();
-        ExpFromYYYY = new Dictionary<string ,Label>();
-        ExpToMM = new Dictionary<string ,Label>();
-        ExpToYYYY = new Dictionary<string ,Label>();
+        Company = new Dictionary<string, Label>();
+        Position = new Dictionary<string, Label>();
+        ExpCountry = new Dictionary<string, Label>();
+        ExpCity = new Dictionary<string, Label>();
+        ExpProvince = new Dictionary<string, Label>();
+        ExpFromMM = new Dictionary<string, Label>();
+        ExpFromYYYY = new Dictionary<string, Label>();
+        ExpToMM = new Dictionary<string, Label>();
+        ExpToYYYY = new Dictionary<string, Label>();
         ExpDescription = new Dictionary<string, Label>();
         ExpCurrent = new Dictionary<string, Label>();
 
         ExpInclude = new Dictionary<string, CheckBox>();
-        Row = new Dictionary<string, HorizontalStackLayout>();
+        Row = new Dictionary<string, Grid>();
         Btn = new Dictionary<string, Button>();
-        BtnDel = new Dictionary<string, Button>();
+        BtnDel = new Dictionary<string, ImageButton>();
 
     }
     public void AddToRecords(string ItemGUID,
-                            HorizontalStackLayout row,
+                            Grid row,
                             Button btn,
-                            Button btnDel,
+                            ImageButton btnDel,
                             Label Company,
                             Label Position,
                             Label ExpCountry,
@@ -919,9 +1260,9 @@ public class Skills
     Dictionary<string, Label> Skill;
     Dictionary<string, Label> Proficiency;
     public Dictionary<string, CheckBox> SkillsInclude;
-    public Dictionary<string, HorizontalStackLayout> Row;
+    public Dictionary<string, Grid> Row;
     Dictionary<string, Button> Btn;
-    public Dictionary<string, Button> BtnDel;
+    public Dictionary<string, ImageButton> BtnDel;
 
     public Skills()
     {
@@ -929,16 +1270,16 @@ public class Skills
         Skill = new Dictionary<string, Label>();
         Proficiency = new Dictionary<string, Label>();
         SkillsInclude = new Dictionary<string, CheckBox>();
-        Row = new Dictionary<string, HorizontalStackLayout>();
+        Row = new Dictionary<string, Grid>();
         Btn = new Dictionary<string, Button>();
-        BtnDel = new Dictionary<string, Button>();
+        BtnDel = new Dictionary<string, ImageButton>();
 
     }
 
     public void AddToRecords(string ItemGUID,
-                                HorizontalStackLayout row,
+                                Grid row,
                                 Button btn,
-                                Button btnDel,
+                                ImageButton btnDel,
                                 Label Category,
                                 Label Proficiency,
                                 Label Skill,
@@ -968,17 +1309,17 @@ public class Skills
 public class Certifications
 {
     List<string> ItemGUID;
-    Dictionary<string ,Label> Certification;
-    Dictionary<string ,Label> Organization;
-    Dictionary<string ,Label> CertFromMM;
-    Dictionary<string ,Label> CertFromYYYY;
-    Dictionary<string ,Label> CertToMM;
-    Dictionary<string ,Label> CertToYYYY;
-    Dictionary<string ,Label> CertNotApplicable;
+    Dictionary<string, Label> Certification;
+    Dictionary<string, Label> Organization;
+    Dictionary<string, Label> CertFromMM;
+    Dictionary<string, Label> CertFromYYYY;
+    Dictionary<string, Label> CertToMM;
+    Dictionary<string, Label> CertToYYYY;
+    Dictionary<string, Label> CertNotApplicable;
     public Dictionary<string, CheckBox> CertInclude;
-    public Dictionary<string, HorizontalStackLayout> Row;
+    public Dictionary<string, Grid> Row;
     Dictionary<string, Button> Btn;
-    public Dictionary<string, Button> BtnDel;
+    public Dictionary<string, ImageButton> BtnDel;
 
     public Certifications()
     {
@@ -990,16 +1331,16 @@ public class Certifications
         CertNotApplicable = new Dictionary<string, Label>();
         CertToYYYY = new Dictionary<string, Label>();
         CertInclude = new Dictionary<string, CheckBox>();
-        Row = new Dictionary<string, HorizontalStackLayout>();
+        Row = new Dictionary<string, Grid>();
         Btn = new Dictionary<string, Button>();
-        BtnDel = new Dictionary<string, Button>();
+        BtnDel = new Dictionary<string, ImageButton>();
 
     }
 
     public void AddToRecords(string ItemGUID,
-                                HorizontalStackLayout row,
+                                Grid row,
                                 Button btn,
-                                Button btnDel,
+                                ImageButton btnDel,
                                 Label Certification,
                                 Label Organization,
                                 Label CertFromMM,
@@ -1037,4 +1378,3 @@ public class Certifications
         this.BtnDel.Remove(ItemGUID);
     }
 }
-

@@ -19,6 +19,27 @@
             <Setter Property="VerticalTextAlignment" Value="Center"/>
             <Setter Property="TextColor" Value="{StaticResource FontColor}"/>
         </Style>
+        <Style TargetType="Label" x:Key="TableHeader">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontAttributes" Value="Bold"/>
+            <Setter Property="VerticalTextAlignment" Value="Start"/>
+            <Setter Property="Margin" Value="0,0,0,10"/>
+            <Setter Property="TextColor" Value="{StaticResource FontColor}"/>
+        </Style>
+        <Style TargetType="ImageButton" x:Key="ImageTableButton">
+            <Setter Property="VerticalOptions" Value="Start"/>
+            <Setter Property="Margin" Value="2,2,10,10"/>
+            <Setter Property="HeightRequest" Value="25"/>
+            <Setter Property="WidthRequest" Value="25"/>
+            <Setter Property="BackgroundColor" Value="{StaticResource SecondColor}"/>
+        </Style>
+        <Style TargetType="Button" x:Key="TableButton">
+            <Setter Property="VerticalOptions" Value="Start"/>
+            <Setter Property="Margin" Value="2,2,10,10"/>
+            <Setter Property="HeightRequest" Value="25"/>
+            <Setter Property="WidthRequest" Value="25"/>
+            <Setter Property="BackgroundColor" Value="{StaticResource SecondColor}"/>
+        </Style>
         <Style TargetType="HorizontalStackLayout" x:Key="Hrz1">
             <Setter Property="BackgroundColor" Value="{StaticResource MainColor}"/>
         </Style>
