@@ -27,14 +27,15 @@
                     <ColumnDefinition/>
                     <ColumnDefinition Width="200"/>
                 </Grid.ColumnDefinitions>
-                <HorizontalStackLayout Grid.Column="0">
+                <HorizontalStackLayout Grid.Column="0" x:Name="TopButtons">
                     <Button x:Name="BackgroundColorBtn" Style="{StaticResource ColorBtn}" Clicked="BackgroundColorBtn_Clicked"/>
                     <Button x:Name="MainColorBtn" Style="{StaticResource ColorBtn}" Clicked="MainColorBtn_Clicked"/>
                     <Button x:Name="SecondaryColorBtn" Style="{StaticResource ColorBtn}" Clicked="SecondaryColorBtn_Clicked"/>
                     <Button x:Name="TertiaryColorBtn" Style="{StaticResource ColorBtn}" Clicked="TertiaryColorBtn_Clicked"/>
                     <Button x:Name="FontColorBtn" Style="{StaticResource ColorBtn}" Clicked="FontColorBtn_Clicked"/>
                     <Button x:Name="FontColorSecondaryBtn" Style="{StaticResource ColorBtn}" Clicked="FontColorSecondaryBtn_Clicked"/>
-
+                    <Picker x:Name="IconPicker" VerticalOptions="Center" Margin="5,0,0,0" SelectedIndex="0" SelectedIndexChanged="IconPicker_SelectedIndexChanged"/>
+                    <Label x:Name="tester" />
                 </HorizontalStackLayout>
                 <Button Grid.Column="1" Text="Generate" Style="{StaticResource Generate}" Clicked="Generate_Clicked"/>
 
@@ -48,20 +49,16 @@
             Grid.Column="2">
             <VerticalStackLayout><!--I WILL COME BACK L8R AND MAKE THIS DYNAMIC-->
                 <Grid>
-                    <Image Source="resume1.jpg" Style="{StaticResource Icon}"/>
-                    <ImageButton x:Name="Icon1" Source="resume1.jpg" Style="{StaticResource IconBtn}" Clicked="Icon1_Clicked"/>
-                </Grid>
-                <Grid>
                     <Image Source="resume2.jpg" Style="{StaticResource Icon}"/>
-                    <ImageButton x:Name="Icon2" Source="resume2.jpg" Style="{StaticResource IconBtn}" Clicked="Icon2_Clicked"/>
-                </Grid>
-                <Grid>
-                    <Image Source="resume4.jpg" Style="{StaticResource Icon}"/>
-                    <ImageButton x:Name="Icon4" Source="resume4.jpg" Style="{StaticResource IconBtn}" Clicked="Icon4_Clicked"/>
+                    <ImageButton x:Name="Icon1" Source="resume2.jpg" Style="{StaticResource IconBtn}" Clicked="Icon1_Clicked"/>
                 </Grid>
                 <Grid>
                     <Image Source="resume5.png" Style="{StaticResource Icon}"/>
-                    <ImageButton x:Name="Icon5" Source="resume5.png" Style="{StaticResource IconBtn}"/>
+                    <ImageButton x:Name="Icon2" Source="resume5.png" Style="{StaticResource IconBtn}" Clicked="Icon2_Clicked"/>
+                </Grid>
+                <Grid>
+                    <Image Source="resume1.jpg" Style="{StaticResource Icon}"/>
+                    <ImageButton x:Name="Icon4" Source="resume1.jpg" Style="{StaticResource IconBtn}" Clicked="Icon4_Clicked"/>
                 </Grid>
             </VerticalStackLayout>
         </ScrollView>

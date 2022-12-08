@@ -78,7 +78,7 @@ namespace Resume_Generator
             int index = DBPath.LastIndexOf("bin");
             if (index >= 0)
                 DBPath = DBPath.Substring(0, index); // or index + 1 to keep slash
-            DBPath = DBPath + "Resources\\DB";
+            DBPath = DBPath + "Resources//DB";
             return DBPath;
         }
 

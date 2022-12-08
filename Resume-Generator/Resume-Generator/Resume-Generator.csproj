@@ -36,15 +36,37 @@
 	<ItemGroup>
 		<!-- App Icon -->
 		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
+		<MauiImage Include="Resources\AppIcon\addicon.png" />
+		<MauiImage Include="Resources\AppIcon\add_icon.png" />
+		<MauiImage Include="Resources\AppIcon\delete_icon.png" />
+		<MauiImage Include="Resources\AppIcon\deleteicon.png" />
+		<MauiImage Include="Resources\AppIcon\load_icon.png" />
+		<MauiImage Include="Resources\Main Icons\analysis_one.png" />
 		<MauiImage Include="Resources\AppIcon\mail_icon2.png" />
 		<MauiImage Include="Resources\AppIcon\phone_icon.png" />
 		<MauiImage Include="Resources\AppIcon\web_icon.png" />
+		<MauiImage Include="Resources\Main Icons\analysis_two.png" />
+		<MauiImage Include="Resources\Main Icons\analysis_three.png" />
+		<MauiImage Include="Resources\Main Icons\dentist.png" />
+		<MauiImage Include="Resources\Main Icons\gavel.png" />
+		<MauiImage Include="Resources\Main Icons\hard_hat_worker.png" />
+		<MauiImage Include="Resources\Main Icons\instructor.png" />
+		<MauiImage Include="Resources\Main Icons\it.png" />
+		<MauiImage Include="Resources\Main Icons\law.png" />
+		<MauiImage Include="Resources\Main Icons\scientist_one.png" />
+		<MauiImage Include="Resources\Main Icons\scientist_two.png" />
+		<MauiImage Include="Resources\Main Icons\stethoscope.png" />
+		<MauiImage Include="Resources\Main Icons\syringe.png" />
+		<MauiImage Include="Resources\Main Icons\vet.png" />
 
 		<!-- Splash Screen -->
 		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" />
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
+		<MauiImage Update="Resources\Images\dotnet_bot.svg" BaseSize="168,208" />
+
+		<!-- Custom Fonts -->
 		<MauiFont Include="Resources\Fonts\*" />
 
 		<!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
@@ -61,10 +83,29 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="Resources\AppIcon\addIcon.png" />
+	  <None Remove="Resources\AppIcon\add_icon.png" />
+	  <None Remove="Resources\AppIcon\deleteIcon.png" />
+	  <None Remove="Resources\AppIcon\delete_icon.png" />
 	  <None Remove="Resources\AppIcon\house_icon.png" />
+	  <None Remove="Resources\AppIcon\load_icon.png" />
 	  <None Remove="Resources\AppIcon\mail_icon2.png" />
 	  <None Remove="Resources\AppIcon\phone_icon.png" />
 	  <None Remove="Resources\AppIcon\web_icon.png" />
+	  <None Remove="Resources\Main Icons\analysis_one.png" />
+	  <None Remove="Resources\Main Icons\analysis_three.png" />
+	  <None Remove="Resources\Main Icons\analysis_two.png" />
+	  <None Remove="Resources\Main Icons\Dentist.png" />
+	  <None Remove="Resources\Main Icons\Gavel.png" />
+	  <None Remove="Resources\Main Icons\hard_hat_worker.png" />
+	  <None Remove="Resources\Main Icons\Instructor.png" />
+	  <None Remove="Resources\Main Icons\IT.png" />
+	  <None Remove="Resources\Main Icons\Law.png" />
+	  <None Remove="Resources\Main Icons\scientist_one.png" />
+	  <None Remove="Resources\Main Icons\scientist_two.png" />
+	  <None Remove="Resources\Main Icons\Stethoscope.png" />
+	  <None Remove="Resources\Main Icons\Syringe.png" />
+	  <None Remove="Resources\Main Icons\Vet.png" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -101,9 +142,9 @@
 
 	<ItemGroup>
 	  <PackageReference Include="ColorPicker.Maui" Version="1.0.0" />
+	  <PackageReference Include="HtmlAgilityPack" Version="1.11.46" />
 	  <PackageReference Include="itext7" Version="7.2.4" />
 	  <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
-	  <PackageReference Include="HtmlAgilityPack" Version="1.11.46" />
 	  <PackageReference Include="nor0x.Maui.ColorPicker" Version="1.0.1" />
 	</ItemGroup>
 
